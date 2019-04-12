@@ -8,7 +8,12 @@ import argparse
 from providers.AWS.AwsGlue import AwsGlue
 from providers.AWS.AwsBase import AwsBase
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("OEDI")
+
+print(__name__)
+
+#logging.getLogger().setLevel(logging.DEBUG)
+#logging.basicConfig(level=logging.DEBUG)
 
 class OEDI():
     LOGO = '''
@@ -42,14 +47,16 @@ class OEDI():
 
         glue = AwsGlue(self.boto3_session, self.oedi_database_name)
         glue.create_database()
+        glue.create_tracking_the_sun_table()
 
-        #glue.create_tracking_the_sun_table()
+
 
     def clean(self):
         print('cleaning up')
 
 
 if __name__ == '__main__':
+    print('logconfig')
     logging.config.dictConfig({
         'version': 1,
         'disable_existing_loggers': True,
@@ -68,11 +75,6 @@ if __name__ == '__main__':
             }
         },
         'loggers': {
-            '__main__': {
-                'level': 'DEBUG',
-                'propagate': True,
-                'handlers': ['console']
-            },
             'OEDI': {
                 'level': 'DEBUG',
                 'propagate': True,
