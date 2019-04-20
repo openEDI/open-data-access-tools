@@ -22,7 +22,7 @@ class TestClass(object):
                 }
             }
         )
-        print(response)
+        #print(response)
 
         x = 0
         theAnswer = ''
