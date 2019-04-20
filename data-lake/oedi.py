@@ -41,7 +41,7 @@ class OEDI():
         self.oedi_database_name = self.cfg['aws']['oedi_database_name']
         self.region = self.cfg['aws']['region']
         # shared session object:
-        self.boto3_session = boto3.Session(profile_name='oedi', region_name=self.region)
+        self.boto3_session = boto3.Session(region_name=self.region)
 
     def build_catalog(self):
 
