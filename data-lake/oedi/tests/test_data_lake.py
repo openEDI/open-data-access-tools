@@ -31,7 +31,7 @@ class TestClass(object):
                 response3 = client.get_query_execution(
                     QueryExecutionId=response['QueryExecutionId']
                 )
-                #pprint(response3)
+                pprint(response3)
                 response2 = client.get_query_results(
                     QueryExecutionId=response['QueryExecutionId']
                 )
