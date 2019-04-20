@@ -1,7 +1,8 @@
 aws:
   region: us-west-2
   emr:
-  oedi_database_name: oedi
+  oedi_database_name: oedidb
   datasets_to_include:
     - tracking_the_sun
     - utility_rate_database
+    - pv_rooftop
