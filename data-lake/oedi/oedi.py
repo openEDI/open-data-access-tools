@@ -48,6 +48,7 @@ class OEDI():
         glue = AwsGlue(self.boto3_session, self.oedi_database_name)
         glue.create_database()
         glue.create_tracking_the_sun_table()
+        glue.create_pv_rooftop_buildings_table()
 
 
 
