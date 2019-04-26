@@ -11,7 +11,6 @@ class TestClass(object):
 
     def test_tracking_the_sun_query(self):
         response = client.start_query_execution(
-            #QueryString='SELECT "system size" * FROM "oedidb"."oedi_tracking_the_sun" where "sales tax cost" = 725.386027;',
             QueryString = 'SELECT "system size" FROM "oedidb"."oedi_tracking_the_sun" where "sales tax cost" = 725.386027',
             QueryExecutionContext={
                 'Database': 'oedidb'
