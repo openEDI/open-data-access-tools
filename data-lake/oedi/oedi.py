@@ -31,8 +31,8 @@ class OEDI():
         with open(self.project_filename, 'r') as f:
             self.cfg = yaml.load(f)
 
-        print(self.cfg.keys())
-        print(self.cfg['aws'].keys())
+        #print(self.cfg.keys())
+        #print(self.cfg['aws'].keys())
         if 'oedi_database_name' not in self.cfg['aws'].keys():
             raise KeyError('Key `oedi_database_name` not specified in project file `{}`'.format(configuration_file))
         if 'datasets_to_include' not in self.cfg['aws'].keys():
@@ -48,6 +48,7 @@ class OEDI():
         glue = AwsGlue(self.boto3_session, self.oedi_database_name)
         glue.create_database()
         glue.create_tracking_the_sun_table()
+        glue.create_pv_rooftop_buildings_table()
 
 
 

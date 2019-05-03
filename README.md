@@ -7,6 +7,7 @@ XXX License
 
 Please visit the data catalog for the data here:  [https://openei.org/wiki/Open_Energy_Data_Initiative_(OEDI)](https://openei.org/wiki/Open_Energy_Data_Initiative_(OEDI))
 
-
+To execute using the repo's yaml:
+python3 oedi.py oedi.yaml
 
 
