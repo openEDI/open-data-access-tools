@@ -304,7 +304,7 @@ class AwsGlue(AwsBase):
                     "OutputFormat": "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat",
                     "NumberOfBuckets": -1,
                     "SerdeInfo": {
-                        "SerializationLibrary": "org.apache.hadoop.hive.serde2.serde2.OpenCSVSerde",
+                        "SerializationLibrary": "org.apache.hadoop.hive.serde2.OpenCSVSerde",
                         "Parameters": {
                             "field.delim": ","
                         }
