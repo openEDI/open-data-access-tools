@@ -3,3 +3,6 @@
 *.idea
 venv
 venv/*
+
+# Jupyter Notebook
+.ipynb_checkpoints/

@@ -1,0 +1,15 @@
+setup.py
+oedi/__init__.py
+oedi/oedi.py
+oedi.egg-info/PKG-INFO
+oedi.egg-info/SOURCES.txt
+oedi.egg-info/dependency_links.txt
+oedi.egg-info/top_level.txt
+oedi/providers/__init__.py
+oedi/providers/AWS/AwsAthena.py
+oedi/providers/AWS/AwsBase.py
+oedi/providers/AWS/AwsEmr.py
+oedi/providers/AWS/AwsGlue.py
+oedi/providers/AWS/__init__.py
+oedi/tests/__init__.py
+oedi/tests/test_data_lake.py
