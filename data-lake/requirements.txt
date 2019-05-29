@@ -6,3 +6,4 @@ jupyter
 ipywidgets
 floium
 bokeh
+geopandas
