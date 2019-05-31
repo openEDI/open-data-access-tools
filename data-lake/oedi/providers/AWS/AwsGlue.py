@@ -47,63 +47,63 @@ class AwsGlue(AwsBase):
                 "StorageDescriptor": {
                     "Columns": [
                         {
-                            "Name": "data provider",
+                            "Name": "data_provider",
                             "Type": "string"
                         },
                         {
-                            "Name": "system id (from data provider)",
+                            "Name": "system_id_from_data_provider)",
                             "Type": "string"
                         },
                         {
-                            "Name": "system id (tracking the sun)",
+                            "Name": "system_id_tracking_the_sun",
                             "Type": "string"
                         },
                         {
-                            "Name": "installation date",
+                            "Name": "installation_date",
                             "Type": "string"
                         },
                         {
-                            "Name": "system size",
+                            "Name": "system_size",
                             "Type": "double"
                         },
                         {
-                            "Name": "total installed price",
+                            "Name": "total_installed_price",
                             "Type": "double"
                         },
                         {
-                            "Name": "appraised value flag",
+                            "Name": "appraised_value_flag",
                             "Type": "boolean"
                         },
                         {
-                            "Name": "sales tax cost",
+                            "Name": "sales_tax_cost",
                             "Type": "double"
                         },
                         {
-                            "Name": "rebate or grant",
+                            "Name": "rebate_or_grant",
                             "Type": "double"
                         },
                         {
-                            "Name": "performance-based incentive (annual payment)",
+                            "Name": "performance_based_incentive_annual_payment",
                             "Type": "double"
                         },
                         {
-                            "Name": "performance-based incentives (duration)",
+                            "Name": "performance_based_incentives_duration",
                             "Type": "bigint"
                         },
                         {
-                            "Name": "feed-in tariff (annual payment)",
+                            "Name": "feed_in_tariff_annual_payment",
                             "Type": "bigint"
                         },
                         {
-                            "Name": "feed-in tariff (duration)",
+                            "Name": "feed_in_tariff_duration",
                             "Type": "bigint"
                         },
                         {
-                            "Name": "customer segment",
+                            "Name": "customer_segment",
                             "Type": "string"
                         },
                         {
-                            "Name": "new construction",
+                            "Name": "new_construction",
                             "Type": "bigint"
                         },
                         {
@@ -111,19 +111,19 @@ class AwsGlue(AwsBase):
                             "Type": "bigint"
                         },
                         {
-                            "Name": "tracking type",
+                            "Name": "tracking_type",
                             "Type": "string"
                         },
                         {
-                            "Name": "ground mounted",
+                            "Name": "ground_mounted",
                             "Type": "bigint"
                         },
                         {
-                            "Name": "battery system",
+                            "Name": "battery_system",
                             "Type": "bigint"
                         },
                         {
-                            "Name": "zip code",
+                            "Name": "zip_code",
                             "Type": "bigint"
                         },
                         {
@@ -139,163 +139,163 @@ class AwsGlue(AwsBase):
                             "Type": "string"
                         },
                         {
-                            "Name": "utility service territory",
+                            "Name": "utility_service_territory",
                             "Type": "string"
                         },
                         {
-                            "Name": "third-party owned",
+                            "Name": "third_party_owned",
                             "Type": "bigint"
                         },
                         {
-                            "Name": "installer name",
+                            "Name": "installer_name",
                             "Type": "string"
                         },
                         {
-                            "Name": "self-installed",
+                            "Name": "self_installed",
                             "Type": "bigint"
                         },
                         {
-                            "Name": "azimuth #1",
+                            "Name": "azimuth_1",
                             "Type": "double"
                         },
                         {
-                            "Name": "azimuth #2",
+                            "Name": "azimuth_2",
                             "Type": "bigint"
                         },
                         {
-                            "Name": "azimuth #3",
+                            "Name": "azimuth_3",
                             "Type": "bigint"
                         },
                         {
-                            "Name": "tilt #1",
+                            "Name": "tilt_1",
                             "Type": "double"
                         },
                         {
-                            "Name": "tilt #2",
+                            "Name": "tilt_2",
                             "Type": "bigint"
                         },
                         {
-                            "Name": "tilt #3",
+                            "Name": "tilt_3",
                             "Type": "bigint"
                         },
                         {
-                            "Name": "module manufacturer #1",
+                            "Name": "module_manufacturer_1",
                             "Type": "string"
                         },
                         {
-                            "Name": "module model #1",
+                            "Name": "module_model_1",
                             "Type": "string"
                         },
                         {
-                            "Name": "module manufacturer #2",
+                            "Name": "module_manufacturer_2",
                             "Type": "string"
                         },
                         {
-                            "Name": "module model #2",
+                            "Name": "module_model_2",
                             "Type": "string"
                         },
                         {
-                            "Name": "module manufacturer #3",
+                            "Name": "module_manufacturer_3",
                             "Type": "bigint"
                         },
                         {
-                            "Name": "module model #3",
+                            "Name": "module_model_3",
                             "Type": "bigint"
                         },
                         {
-                            "Name": "additional module model",
+                            "Name": "additional_module_model",
                             "Type": "bigint"
                         },
                         {
-                            "Name": "module technology #1",
+                            "Name": "module_technology_1",
                             "Type": "string"
                         },
                         {
-                            "Name": "module technology #2",
+                            "Name": "module_technology_2",
                             "Type": "string"
                         },
                         {
-                            "Name": "module technology #3",
+                            "Name": "module_technology_3",
                             "Type": "bigint"
                         },
                         {
-                            "Name": "bipv module #1",
+                            "Name": "bipv_module_1",
                             "Type": "bigint"
                         },
                         {
-                            "Name": "bipv module #2",
+                            "Name": "bipv_module_2",
                             "Type": "bigint"
                         },
                         {
-                            "Name": "bipv module #3",
+                            "Name": "bipv_module_3",
                             "Type": "bigint"
                         },
                         {
-                            "Name": "module efficiency #1",
+                            "Name": "module_efficiency_1",
                             "Type": "double"
                         },
                         {
-                            "Name": "module efficiency #2",
+                            "Name": "module_efficiency_2",
                             "Type": "double"
                         },
                         {
-                            "Name": "module efficiency #3",
+                            "Name": "module_efficiency_3",
                             "Type": "bigint"
                         },
                         {
-                            "Name": "inverter manufacturer #1",
+                            "Name": "inverter_manufacturer_1",
                             "Type": "string"
                         },
                         {
-                            "Name": "inverter model #1",
+                            "Name": "inverter_model_1",
                             "Type": "string"
                         },
                         {
-                            "Name": "inverter quantity #1",
+                            "Name": "inverter_quantity_1",
                             "Type": "bigint"
                         },
                         {
-                            "Name": "inverter manufacturer #2",
+                            "Name": "inverter_manufacturer_2",
                             "Type": "string"
                         },
                         {
-                            "Name": "inverter model #2",
+                            "Name": "inverter_model_2",
                             "Type": "string"
                         },
                         {
-                            "Name": "inverter quantity #2",
+                            "Name": "inverter_quantity_2",
                             "Type": "bigint"
                         },
                         {
-                            "Name": "inverter manufacturer #3",
+                            "Name": "inverter_manufacturer_3",
                             "Type": "string"
                         },
                         {
-                            "Name": "inverter model #3",
+                            "Name": "inverter_model_3",
                             "Type": "string"
                         },
                         {
-                            "Name": "inverter quantity #3",
+                            "Name": "inverter_quantity_3",
                             "Type": "bigint"
                         },
                         {
-                            "Name": "additional inverter model",
+                            "Name": "additional_inverter_model",
                             "Type": "bigint"
                         },
                         {
-                            "Name": "microinverter #1",
+                            "Name": "microinverter_1",
                             "Type": "bigint"
                         },
                         {
-                            "Name": "microinverter #2",
+                            "Name": "microinverter_2",
                             "Type": "bigint"
                         },
                         {
-                            "Name": "microinverter #3",
+                            "Name": "microinverter_3",
                             "Type": "bigint"
                         },
                         {
-                            "Name": "dc optimizer",
+                            "Name": "dc_optimizer",
                             "Type": "bigint"
                         }
                     ],
