@@ -51,7 +51,7 @@ class AwsGlue(AwsBase):
                             "Type": "string"
                         },
                         {
-                            "Name": "system_id_from_data_provider)",
+                            "Name": "system_id_from_data_provider",
                             "Type": "string"
                         },
                         {
