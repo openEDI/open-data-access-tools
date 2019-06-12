@@ -88,15 +88,15 @@ class AwsGlue(AwsBase):
                         },
                         {
                             "Name": "performance_based_incentives_duration",
-                            "Type": "bigint"
+                            "Type": "int"
                         },
                         {
                             "Name": "feed_in_tariff_annual_payment",
-                            "Type": "bigint"
+                            "Type": "int"
                         },
                         {
                             "Name": "feed_in_tariff_duration",
-                            "Type": "bigint"
+                            "Type": "int"
                         },
                         {
                             "Name": "customer_segment",
@@ -104,11 +104,11 @@ class AwsGlue(AwsBase):
                         },
                         {
                             "Name": "new_construction",
-                            "Type": "bigint"
+                            "Type": "int"
                         },
                         {
                             "Name": "tracking",
-                            "Type": "bigint"
+                            "Type": "int"
                         },
                         {
                             "Name": "tracking_type",
@@ -116,15 +116,15 @@ class AwsGlue(AwsBase):
                         },
                         {
                             "Name": "ground_mounted",
-                            "Type": "bigint"
+                            "Type": "int"
                         },
                         {
                             "Name": "battery_system",
-                            "Type": "bigint"
+                            "Type": "int"
                         },
                         {
                             "Name": "zip_code",
-                            "Type": "bigint"
+                            "Type": "string"
                         },
                         {
                             "Name": "city",
@@ -144,7 +144,7 @@ class AwsGlue(AwsBase):
                         },
                         {
                             "Name": "third_party_owned",
-                            "Type": "bigint"
+                            "Type": "int"
                         },
                         {
                             "Name": "installer_name",
@@ -152,7 +152,7 @@ class AwsGlue(AwsBase):
                         },
                         {
                             "Name": "self_installed",
-                            "Type": "bigint"
+                            "Type": "int"
                         },
                         {
                             "Name": "azimuth_1",
@@ -160,11 +160,11 @@ class AwsGlue(AwsBase):
                         },
                         {
                             "Name": "azimuth_2",
-                            "Type": "bigint"
+                            "Type": "double"
                         },
                         {
                             "Name": "azimuth_3",
-                            "Type": "bigint"
+                            "Type": "double"
                         },
                         {
                             "Name": "tilt_1",
@@ -172,11 +172,11 @@ class AwsGlue(AwsBase):
                         },
                         {
                             "Name": "tilt_2",
-                            "Type": "bigint"
+                            "Type": "double"
                         },
                         {
                             "Name": "tilt_3",
-                            "Type": "bigint"
+                            "Type": "double"
                         },
                         {
                             "Name": "module_manufacturer_1",
@@ -196,15 +196,15 @@ class AwsGlue(AwsBase):
                         },
                         {
                             "Name": "module_manufacturer_3",
-                            "Type": "bigint"
+                            "Type": "string"
                         },
                         {
                             "Name": "module_model_3",
-                            "Type": "bigint"
+                            "Type": "string"
                         },
                         {
                             "Name": "additional_module_model",
-                            "Type": "bigint"
+                            "Type": "int"
                         },
                         {
                             "Name": "module_technology_1",
@@ -216,19 +216,19 @@ class AwsGlue(AwsBase):
                         },
                         {
                             "Name": "module_technology_3",
-                            "Type": "bigint"
+                            "Type": "string"
                         },
                         {
                             "Name": "bipv_module_1",
-                            "Type": "bigint"
+                            "Type": "int"
                         },
                         {
                             "Name": "bipv_module_2",
-                            "Type": "bigint"
+                            "Type": "int"
                         },
                         {
                             "Name": "bipv_module_3",
-                            "Type": "bigint"
+                            "Type": "int"
                         },
                         {
                             "Name": "module_efficiency_1",
@@ -240,7 +240,7 @@ class AwsGlue(AwsBase):
                         },
                         {
                             "Name": "module_efficiency_3",
-                            "Type": "bigint"
+                            "Type": "double"
                         },
                         {
                             "Name": "inverter_manufacturer_1",
@@ -252,7 +252,7 @@ class AwsGlue(AwsBase):
                         },
                         {
                             "Name": "inverter_quantity_1",
-                            "Type": "bigint"
+                            "Type": "int"
                         },
                         {
                             "Name": "inverter_manufacturer_2",
@@ -264,7 +264,7 @@ class AwsGlue(AwsBase):
                         },
                         {
                             "Name": "inverter_quantity_2",
-                            "Type": "bigint"
+                            "Type": "int"
                         },
                         {
                             "Name": "inverter_manufacturer_3",
@@ -276,27 +276,27 @@ class AwsGlue(AwsBase):
                         },
                         {
                             "Name": "inverter_quantity_3",
-                            "Type": "bigint"
+                            "Type": "int"
                         },
                         {
                             "Name": "additional_inverter_model",
-                            "Type": "bigint"
+                            "Type": "int"
                         },
                         {
                             "Name": "microinverter_1",
-                            "Type": "bigint"
+                            "Type": "int"
                         },
                         {
                             "Name": "microinverter_2",
-                            "Type": "bigint"
+                            "Type": "int"
                         },
                         {
                             "Name": "microinverter_3",
-                            "Type": "bigint"
+                            "Type": "int"
                         },
                         {
                             "Name": "dc_optimizer",
-                            "Type": "bigint"
+                            "Type": "int"
                         }
                     ],
                     "Location": "s3://oedi-dev-tracking-the-sun/",
@@ -306,11 +306,11 @@ class AwsGlue(AwsBase):
                     "SerdeInfo": {
                         "SerializationLibrary": "org.apache.hadoop.hive.serde2.OpenCSVSerde",
                         "Parameters": {
-                            "field.delim": ","
+                            "separatorChar": ",",
+                            "quoteChar": "\"",
+                            "escapeChar": "\\"
                         }
                     },
-
-
                 },
                 "Parameters": {
                     "areColumnsQuoted": "false",
