@@ -6,18 +6,18 @@ session = boto3.Session(profile_name='nrel-aws-dev', region_name='us-west-2')
 client = session.client('glue')
 
 response = client.get_table(DatabaseName='oedi',
-    Name='pv_rooftop_buildings'
-                            )
+    Name='pv_rooftops_aspects'
+    )
 
 response2 = client.get_partitions(
 
     DatabaseName='oedi',
-    TableName='pv_rooftop_buildings'
+    TableName='pv_rooftops_aspects'
 )
 response3 = client.get_partitions(
 
     DatabaseName='oedi',
-    TableName='pv_rooftop_buildings',
+    TableName='pv_rooftops_aspects',
     NextToken=response2['NextToken']
 )
 partitionsarray = []
