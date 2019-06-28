@@ -44,6 +44,7 @@ class AwsGlue(AwsBase):
             DatabaseName=self.database_name,
             TableInput={
                 "Name": self.tracking_the_sun_table_name,
+                "TableType": "EXTERNAL_TABLE",
                 "StorageDescriptor": {
                     "Columns": [
                         {
