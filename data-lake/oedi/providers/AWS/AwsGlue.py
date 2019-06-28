@@ -299,7 +299,7 @@ class AwsGlue(AwsBase):
                             "Type": "bigint"
                         }
                     ],
-                    "Location": self.tracking_the_sun_table_name,
+                    "Location": self.tracking_the_sun_bucket,
                     "InputFormat": "org.apache.hadoop.mapred.TextInputFormat",
                     "OutputFormat": "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat",
                     "NumberOfBuckets": -1,
