@@ -28,8 +28,329 @@ class AwsGlue(AwsBase):
             if e.response['Error']['Code'] == 'AlreadyExistsException':
                 logger.info("Database already exists and will be modified")
 
-    def create_tracking_the_sun_table(self):
+    def get_tracking_the_sun_columns(self):
+        """
 
+        :return:
+        """
+        return [
+            {
+                "Name": "data_provider",
+                "Type": "varchar(120)"
+            },
+            {
+                "Name": "system_id_from_data_provider",
+                "Type": "varchar(120)"
+            },
+            {
+                "Name": "system_id_tracking_the_sun",
+                "Type": "varchar(120)"
+            },
+            {
+                "Name": "installation_date",
+                "Type": "date"
+            },
+            {
+                "Name": "system_size",
+                "Type": "double"
+            },
+            {
+                "Name": "total_installed_price",
+                "Type": "double"
+            },
+            {
+                "Name": "appraised_value_flag",
+                "Type": "boolean"
+            },
+            {
+                "Name": "sales_tax_cost",
+                "Type": "double"
+            },
+            {
+                "Name": "rebate_or_grant",
+                "Type": "double"
+            },
+            {
+                "Name": "performance_based_incentive_annual_payment",
+                "Type": "double"
+            },
+            {
+                "Name": "performance_based_incentives_duration",
+                "Type": "int"
+            },
+            {
+                "Name": "feed_in_tariff_annual_payment",
+                "Type": "double"
+            },
+            {
+                "Name": "feed_in_tariff_duration",
+                "Type": "int"
+            },
+            {
+                "Name": "customer_segment",
+                "Type": "varchar(120)"
+            },
+            {
+                "Name": "new_construction",
+                "Type": "int"
+            },
+            {
+                "Name": "tracking",
+                "Type": "int"
+            },
+            {
+                "Name": "tracking_type",
+                "Type": "varchar(120)"
+            },
+            {
+                "Name": "ground_mounted",
+                "Type": "int"
+            },
+            {
+                "Name": "battery_system",
+                "Type": "int"
+            },
+            {
+                "Name": "zip_code",
+                "Type": "varchar(10)"
+            },
+            {
+                "Name": "city",
+                "Type": "varchar(30)"
+            },
+            {
+                "Name": "county",
+                "Type": "varchar(30)"
+            },
+            {
+                "Name": "utility_service_territory",
+                "Type": "varchar(120)"
+            },
+            {
+                "Name": "third_party_owned",
+                "Type": "int"
+            },
+            {
+                "Name": "installer_name",
+                "Type": "varchar(120)"
+            },
+            {
+                "Name": "self_installed",
+                "Type": "int"
+            },
+            {
+                "Name": "azimuth_1",
+                "Type": "double"
+            },
+            {
+                "Name": "azimuth_2",
+                "Type": "double"
+            },
+            {
+                "Name": "azimuth_3",
+                "Type": "double"
+            },
+            {
+                "Name": "tilt_1",
+                "Type": "double"
+            },
+            {
+                "Name": "tilt_2",
+                "Type": "double"
+            },
+            {
+                "Name": "tilt_3",
+                "Type": "double"
+            },
+            {
+                "Name": "module_manufacturer_1",
+                "Type": "varchar(120)"
+            },
+            {
+                "Name": "module_model_1",
+                "Type": "varchar(120)"
+            },
+            {
+                "Name": "module_manufacturer_2",
+                "Type": "varchar(120)"
+            },
+            {
+                "Name": "module_model_2",
+                "Type": "varchar(120)"
+            },
+            {
+                "Name": "module_manufacturer_3",
+                "Type": "varchar(120)"
+            },
+            {
+                "Name": "module_model_3",
+                "Type": "varchar(120)"
+            },
+            {
+                "Name": "additional_module_model",
+                "Type": "int"
+            },
+            {
+                "Name": "module_technology_1",
+                "Type": "varchar(120)"
+            },
+            {
+                "Name": "module_technology_2",
+                "Type": "varchar(120)"
+            },
+            {
+                "Name": "module_technology_3",
+                "Type": "varchar(120)"
+            },
+            {
+                "Name": "bipv_module_1",
+                "Type": "int"
+            },
+            {
+                "Name": "bipv_module_2",
+                "Type": "int"
+            },
+            {
+                "Name": "bipv_module_3",
+                "Type": "int"
+            },
+            {
+                "Name": "module_efficiency_1",
+                "Type": "double"
+            },
+            {
+                "Name": "module_efficiency_2",
+                "Type": "double"
+            },
+            {
+                "Name": "module_efficiency_3",
+                "Type": "double"
+            },
+            {
+                "Name": "inverter_manufacturer_1",
+                "Type": "varchar(120)"
+            },
+            {
+                "Name": "inverter_model_1",
+                "Type": "varchar(120)"
+            },
+            {
+                "Name": "inverter_quantity_1",
+                "Type": "int"
+            },
+            {
+                "Name": "inverter_manufacturer_2",
+                "Type": "varchar(120)"
+            },
+            {
+                "Name": "inverter_model_2",
+                "Type": "varchar(120)"
+            },
+            {
+                "Name": "inverter_quantity_2",
+                "Type": "int"
+            },
+            {
+                "Name": "inverter_manufacturer_3",
+                "Type": "varchar(120)"
+            },
+            {
+                "Name": "inverter_model_3",
+                "Type": "varchar(120)"
+            },
+            {
+                "Name": "inverter_quantity_3",
+                "Type": "int"
+            },
+            {
+                "Name": "additional_inverter_model",
+                "Type": "int"
+            },
+            {
+                "Name": "microinverter_1",
+                "Type": "int"
+            },
+            {
+                "Name": "microinverter_2",
+                "Type": "int"
+            },
+            {
+                "Name": "microinverter_3",
+                "Type": "int"
+            },
+            {
+                "Name": "dc_optimizer",
+                "Type": "int"
+            }
+        ]
+
+    def get_tracking_the_sun_partition_template(self):
+        """
+        
+        :return: 
+        """
+        return {
+            "StorageDescriptor": {
+                "Columns": self.get_tracking_the_sun_columns(),
+                "Location": "",
+                "InputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
+                "OutputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat",
+                "Compressed": False,
+                "NumberOfBuckets": -1,
+                "SerdeInfo": {
+                    "SerializationLibrary": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe",
+                    "Parameters": {"serialization.format": "1"},
+                },
+                "BucketColumns": [],
+                "SortColumns": [],
+                "Parameters": {
+                    "averageRecordSize": "",
+                    "classification": "parquet",
+                    "compressionType": "none",
+                    "objectCount": "1",
+                    "recordCount": "",
+                    "sizeKey": "",
+                    "typeOfData": "file"
+                },
+                "SkewedInfo": {},
+                "StoredAsSubDirectories": False
+            },
+            "Values": [""]
+        }
+
+    def create_tracking_the_sun_table(self):
+        """
+
+        :return:
+        """
+        partitionsArray = [
+            {"averageRecordSize": "61", "name": "NH", "recordCount": "4633", "sizeKey": "179431"},
+            {"averageRecordSize": "43", "name": "CO", "recordCount": "40714", "sizeKey": "860834"},
+            {"averageRecordSize": "58", "name": "WI", "recordCount": "4874", "sizeKey": "190614"},
+            {"averageRecordSize": "57", "name": "VT", "recordCount": "3956", "sizeKey": "142625"},
+            {"averageRecordSize": "58", "name": "TX", "recordCount": "18829", "sizeKey": "687949"},
+            {"averageRecordSize": "48", "name": "NM", "recordCount": "15514", "sizeKey": "367604"},
+            {"averageRecordSize": "65", "name": "FL", "recordCount": "2566", "sizeKey": "116225"},
+            {"averageRecordSize": "94", "name": "KS", "recordCount": "158", "sizeKey": "21336"},
+            {"averageRecordSize": "4298", "name": "-9999", "recordCount": "1", "sizeKey": "16693"},
+            {"averageRecordSize": "69", "name": "MA", "recordCount": "79031", "sizeKey": "2638086"},
+            {"averageRecordSize": "65", "name": "ME", "recordCount": "555", "sizeKey": "36639"},
+            {"averageRecordSize": "83", "name": "PA", "recordCount": "7333", "sizeKey": "393687"},
+            {"averageRecordSize": "68", "name": "OR", "recordCount": "5083", "sizeKey": "211245"},
+            {"averageRecordSize": "32", "name": "DC", "recordCount": "3431", "sizeKey": "75788"},
+            {"averageRecordSize": "60", "name": "NY", "recordCount": "78321", "sizeKey": "2544422"},
+            {"averageRecordSize": "69", "name": "CT", "recordCount": "24372", "sizeKey": "1043219"},
+            {"averageRecordSize": "163", "name": "AR", "recordCount": "103", "sizeKey": "25880"},
+            {"averageRecordSize": "56", "name": "MN", "recordCount": "3770", "sizeKey": "132711"},
+            {"averageRecordSize": "34", "name": "MD", "recordCount": "11562", "sizeKey": "227661"},
+            {"averageRecordSize": "60", "name": "DE", "recordCount": "2680", "sizeKey": "99717"},
+            {"averageRecordSize": "30", "name": "UT", "recordCount": "19177", "sizeKey": "333156"},
+            {"averageRecordSize": "45", "name": "AZ", "recordCount": "114167", "sizeKey": "2830640"},
+            {"averageRecordSize": "72", "name": "IL", "recordCount": "1207", "sizeKey": "67828"},
+            {"averageRecordSize": "76", "name": "CA", "recordCount": "746893", "sizeKey": "29906339"},
+            {"averageRecordSize": "82", "name": "OH", "recordCount": "2483", "sizeKey": "81898"},
+            {"averageRecordSize": "37", "name": "MO", "recordCount": "7250", "sizeKey": "117994"}
+        ]
         try:
             logger.info(f"Recreating table: {self.tracking_the_sun_table_name}")
             response = self.glue.delete_table(
@@ -40,294 +361,76 @@ class AwsGlue(AwsBase):
             if e.response['Error']['Code'] == 'EntityNotFoundException':
                 logger.debug(r"Skipping table deletion as it does not exist: {self.tracking_the_sun_table_name}")
 
+        logger.info("Creating tracking_the_sun table")
+
         response = self.glue.create_table(
             DatabaseName=self.database_name,
             TableInput={
                 "Name": self.tracking_the_sun_table_name,
-                "StorageDescriptor": {
-                    "Columns": [
-                        {
-                            "Name": "data_provider",
-                            "Type": "string"
-                        },
-                        {
-                            "Name": "system_id_from_data_provider",
-                            "Type": "string"
-                        },
-                        {
-                            "Name": "system_id_tracking_the_sun",
-                            "Type": "string"
-                        },
-                        {
-                            "Name": "installation_date",
-                            "Type": "string"
-                        },
-                        {
-                            "Name": "system_size",
-                            "Type": "double"
-                        },
-                        {
-                            "Name": "total_installed_price",
-                            "Type": "double"
-                        },
-                        {
-                            "Name": "appraised_value_flag",
-                            "Type": "boolean"
-                        },
-                        {
-                            "Name": "sales_tax_cost",
-                            "Type": "double"
-                        },
-                        {
-                            "Name": "rebate_or_grant",
-                            "Type": "double"
-                        },
-                        {
-                            "Name": "performance_based_incentive_annual_payment",
-                            "Type": "double"
-                        },
-                        {
-                            "Name": "performance_based_incentives_duration",
-                            "Type": "int"
-                        },
-                        {
-                            "Name": "feed_in_tariff_annual_payment",
-                            "Type": "int"
-                        },
-                        {
-                            "Name": "feed_in_tariff_duration",
-                            "Type": "int"
-                        },
-                        {
-                            "Name": "customer_segment",
-                            "Type": "string"
-                        },
-                        {
-                            "Name": "new_construction",
-                            "Type": "int"
-                        },
-                        {
-                            "Name": "tracking",
-                            "Type": "int"
-                        },
-                        {
-                            "Name": "tracking_type",
-                            "Type": "string"
-                        },
-                        {
-                            "Name": "ground_mounted",
-                            "Type": "int"
-                        },
-                        {
-                            "Name": "battery_system",
-                            "Type": "int"
-                        },
-                        {
-                            "Name": "zip_code",
-                            "Type": "string"
-                        },
-                        {
-                            "Name": "city",
-                            "Type": "string"
-                        },
-                        {
-                            "Name": "county",
-                            "Type": "string"
-                        },
-                        {
-                            "Name": "state",
-                            "Type": "string"
-                        },
-                        {
-                            "Name": "utility_service_territory",
-                            "Type": "string"
-                        },
-                        {
-                            "Name": "third_party_owned",
-                            "Type": "int"
-                        },
-                        {
-                            "Name": "installer_name",
-                            "Type": "string"
-                        },
-                        {
-                            "Name": "self_installed",
-                            "Type": "int"
-                        },
-                        {
-                            "Name": "azimuth_1",
-                            "Type": "double"
-                        },
-                        {
-                            "Name": "azimuth_2",
-                            "Type": "double"
-                        },
-                        {
-                            "Name": "azimuth_3",
-                            "Type": "double"
-                        },
-                        {
-                            "Name": "tilt_1",
-                            "Type": "double"
-                        },
-                        {
-                            "Name": "tilt_2",
-                            "Type": "double"
-                        },
-                        {
-                            "Name": "tilt_3",
-                            "Type": "double"
-                        },
-                        {
-                            "Name": "module_manufacturer_1",
-                            "Type": "string"
-                        },
-                        {
-                            "Name": "module_model_1",
-                            "Type": "string"
-                        },
-                        {
-                            "Name": "module_manufacturer_2",
-                            "Type": "string"
-                        },
-                        {
-                            "Name": "module_model_2",
-                            "Type": "string"
-                        },
-                        {
-                            "Name": "module_manufacturer_3",
-                            "Type": "string"
-                        },
-                        {
-                            "Name": "module_model_3",
-                            "Type": "string"
-                        },
-                        {
-                            "Name": "additional_module_model",
-                            "Type": "int"
-                        },
-                        {
-                            "Name": "module_technology_1",
-                            "Type": "string"
-                        },
-                        {
-                            "Name": "module_technology_2",
-                            "Type": "string"
-                        },
-                        {
-                            "Name": "module_technology_3",
-                            "Type": "string"
-                        },
-                        {
-                            "Name": "bipv_module_1",
-                            "Type": "int"
-                        },
-                        {
-                            "Name": "bipv_module_2",
-                            "Type": "int"
-                        },
-                        {
-                            "Name": "bipv_module_3",
-                            "Type": "int"
-                        },
-                        {
-                            "Name": "module_efficiency_1",
-                            "Type": "double"
-                        },
-                        {
-                            "Name": "module_efficiency_2",
-                            "Type": "double"
-                        },
-                        {
-                            "Name": "module_efficiency_3",
-                            "Type": "double"
-                        },
-                        {
-                            "Name": "inverter_manufacturer_1",
-                            "Type": "string"
-                        },
-                        {
-                            "Name": "inverter_model_1",
-                            "Type": "string"
-                        },
-                        {
-                            "Name": "inverter_quantity_1",
-                            "Type": "int"
-                        },
-                        {
-                            "Name": "inverter_manufacturer_2",
-                            "Type": "string"
-                        },
-                        {
-                            "Name": "inverter_model_2",
-                            "Type": "string"
-                        },
-                        {
-                            "Name": "inverter_quantity_2",
-                            "Type": "int"
-                        },
-                        {
-                            "Name": "inverter_manufacturer_3",
-                            "Type": "string"
-                        },
-                        {
-                            "Name": "inverter_model_3",
-                            "Type": "string"
-                        },
-                        {
-                            "Name": "inverter_quantity_3",
-                            "Type": "int"
-                        },
-                        {
-                            "Name": "additional_inverter_model",
-                            "Type": "int"
-                        },
-                        {
-                            "Name": "microinverter_1",
-                            "Type": "int"
-                        },
-                        {
-                            "Name": "microinverter_2",
-                            "Type": "int"
-                        },
-                        {
-                            "Name": "microinverter_3",
-                            "Type": "int"
-                        },
-                        {
-                            "Name": "dc_optimizer",
-                            "Type": "int"
-                        }
-                    ],
-                    "Location": self.tracking_the_sun_table_name,
-                    "InputFormat": "org.apache.hadoop.mapred.TextInputFormat",
-                    "OutputFormat": "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat",
-                    "NumberOfBuckets": -1,
-                    "SerdeInfo": {
-                        "SerializationLibrary": "org.apache.hadoop.hive.serde2.OpenCSVSerde",
-                        "Parameters": {
-                            "separatorChar": ",",
-                            "quoteChar": "\"",
-                            "escapeChar": "\\"
-                        }
-                    },
-                },
+                "PartitionKeys": [{"Name": "state", "Type": "varchar(20)"}],
                 "Parameters": {
-                    "areColumnsQuoted": "false",
-                    "averageRecordSize": "677",
-                    "classification": "csv",
-                    "columnsOrdered": "true",
-                    "compressionType": "zip",
-                    "delimiter": ",",
-                    "exclusions": "[\"s3://*/*.pdf\"]",
-                    "objectCount": "2",
-                    "recordCount": "53300",
-                    "sizeKey": "51232868",
-                    "skip.header.line.count": "1",
-                    "typeOfData": "file"
-                }
-
+                    'averageRecordSize': '57',
+                    'classification': 'parquet',
+                    'compressionType': 'none',
+                    'delimiter': ',',
+                    'objectCount': '26',
+                    'recordCount': '1198663',
+                    'sizeKey': '43350221',
+                    'skip.header.line.count': '1',
+                    'typeOfData': 'file'
+                },
+                "StorageDescriptor": {
+                    "BucketColumns": [],
+                    "Columns": self.get_tracking_the_sun_columns(),
+                    "Compressed": False,
+                    "InputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
+                    "Location": self.tracking_the_sun_bucket,
+                    "NumberOfBuckets": -1,
+                    "OutputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat",
+                    "Parameters": {
+                        "CrawlerSchemaDeserializerVersion": "1.0",
+                        "CrawlerSchemaSerializerVersion": "1.0",
+                        "UPDATED_BY_CRAWLER": "tts",
+                        "averageRecordSize": "57",
+                        "classification": "parquet",
+                        "compressionType": "none",
+                        "delimiter": ",",
+                        "objectCount": "26",
+                        "recordCount": "1198663",
+                        "sizeKey": "43350221",
+                        "skip.header.line.count": "1",
+                        "typeOfData": "file"
+                    },
+                    "SerdeInfo": {
+                        "Parameters": {
+                            "serialization.format": "1",
+                            "timestamp.formats": "yyyy-MM-dd"
+                        },
+                        "SerializationLibrary": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe"
+                    },
+                    "SortColumns": [],
+                    "StoredAsSubDirectories": False
+                },
+                "TableType": "EXTERNAL_TABLE"
             }
+        )
+
+        logger.info("Creating tracking_the_sun partitions")
+        
+        templateArray = []
+        for partition in partitionsArray:
+            thisTemplate = self.get_tracking_the_sun_partition_template()
+            thisTemplate["StorageDescriptor"]["Location"] = f"{self.tracking_the_sun_bucket}/state={partition['name']}/"
+            thisTemplate["StorageDescriptor"]["Parameters"]["averageRecordSize"] = partition["averageRecordSize"]
+            thisTemplate["StorageDescriptor"]["Parameters"]["recordCount"] = partition["recordCount"]
+            thisTemplate["StorageDescriptor"]["Parameters"]["sizeKey"] = partition["sizeKey"]
+            thisTemplate["Values"][0] = partition["name"]
+            templateArray.append(thisTemplate)
+        logger.info("Submitting tracking_the_sun partitions batch")
+        response2 = self.glue.batch_create_partition(
+            DatabaseName=self.database_name,
+            TableName=self.tracking_the_sun_table_name,
+            PartitionInputList=templateArray
         )
 
     def get_pv_rooftop_bldg_partition_template(self):
