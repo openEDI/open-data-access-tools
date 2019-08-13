@@ -52,6 +52,7 @@ class OEDI():
         glue.create_pv_rooftop_rasd_table()
         glue.create_pv_rooftop_aspects_table()
         glue.create_pv_rooftop_developable_planes_table()
+        glue.create_rsf_array_table()
 
     def clean(self):
         print('cleaning up')

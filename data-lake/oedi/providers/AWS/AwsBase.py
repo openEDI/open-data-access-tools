@@ -9,4 +9,12 @@ class AwsBase(object):
         self.pv_rooftops_buildings_table_name = "pv_rooftops_buildings"
         self.pv_rooftops_dev_planes_table_name = "pv_rooftops_developable_planes"
         self.pv_rooftops_aspects_table_name = "pv_rooftops_aspects"
+        self.rsf_array_bucket = "s3://oedi-rsf-array/"
+        self.rsf_array_table_name = 'nrel_rsf_array'
+        self.stf_array_bucket = "s3://oedi-stf-array/"
+        self.stf_array_table_name = 'nrel_stf_array'
+        self.garage_array_bucket = "s3://oedi-garage-array/"
+        self.garage_array_table_name = 'nrel_garage_array/'
+        self.windsite_array_bucket = "s3://oedi-windsite-array/"
+        self.windsite_array_table_name = 'nrel_windsite_array'
 
