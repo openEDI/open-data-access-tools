@@ -2,7 +2,7 @@ class AwsBase(object):
 
     def __init__(self):
         self.tracking_the_sun_bucket = "s3://oedi-dev-tracking-the-sun/"
-        self.tracking_the_sun_table_name = "oedi_tracking_the_sun"
+        self.tracking_the_sun_table_name = "tracking_the_sun"
 
         self.lead_bucket = "s3://oedi-dev-lead/"
         self.lead_ami68_state_city_county_table_name = "lead_ami68_state_city_county"
