@@ -433,6 +433,993 @@ class AwsGlue(AwsBase):
             PartitionInputList=templateArray
         )
 
+    def get_lead_ami68_state_city_county_partition_template(self):
+        """
+
+        :return:
+        """
+        return {
+            "StorageDescriptor": {
+                "Columns": [
+                    {
+                        "Name": "state",
+                        "Type": "string",
+                    },
+                    {
+                        "Name": "placeid",
+                        "Type": "string",
+                    },
+                    {
+                        "Name": "placename",
+                        "Type": "string",
+                    },
+                    {
+                        "Name": "ybl_index",
+                        "Type": "int",
+                    },
+                    {
+                        "Name": "bld_index",
+                        "Type": "int",
+                    },
+                    {
+                        "Name": "hfl_index",
+                        "Type": "int",
+                    },
+                    {
+                        "Name": "ami68",
+                        "Type": "string",
+                    },
+                    {
+                        "Name": "units",
+                        "Type": "string",
+                    },
+                    {
+                        "Name": "hincp",
+                        "Type": "double",
+                    },
+                    {
+                        "Name": "elep",
+                        "Type": "double",
+                    },
+                    {
+                        "Name": "elep_cal",
+                        "Type": "double",
+                    },
+                    {
+                        "Name": "gasp",
+                        "Type": "double",
+                    },
+                    {
+                        "Name": "gasp_cal",
+                        "Type": "double",
+                    },
+                    {
+                        "Name": "gasp_u_cal",
+                        "Type": "double",
+                    },
+                    {
+                        "Name": "fulp",
+                        "Type": "double",
+                    },
+                    {
+                        "Name": "count",
+                        "Type": "double",
+                    }
+                ],
+                "Location": "",
+                "InputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
+                "OutputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat",
+                "Compressed": False,
+                "NumberOfBuckets": -1,
+                "SerdeInfo": {
+                    "SerializationLibrary": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe",
+                    "Parameters": {"serialization.format": "1"},
+                },
+                "BucketColumns": [],
+                "SortColumns": [],
+                "Parameters": {
+                    "averageRecordSize": "",
+                    "classification": "parquet",
+                    "compressionType": "none",
+                    "objectCount": "1",
+                    "recordCount": "",
+                    "sizeKey": "",
+                    "typeOfData": "file"
+                },
+                "SkewedInfo": {},
+                "StoredAsSubDirectories": False
+            },
+            "Values": [""]
+        }
+
+    def get_lead_ami68_tract_partition_template(self):
+        """
+
+        :return:
+        """
+        return {
+            "StorageDescriptor": {
+                "Columns": [
+                    {
+                        "Name": "geo_id",
+                        "Type": "string",
+                    },
+                    {
+                        "Name": "puma10",
+                        "Type": "string",
+                    },
+                    {
+                        "Name": "fmr",
+                        "Type": "string",
+                    },
+                    {
+                        "Name": "ybl_index",
+                        "Type": "int",
+                    },
+                    {
+                        "Name": "bld_index",
+                        "Type": "int",
+                    },
+                    {
+                        "Name": "hfl_index",
+                        "Type": "int",
+                    },
+                    {
+                        "Name": "ami68",
+                        "Type": "string",
+                    },
+                    {
+                        "Name": "units",
+                        "Type": "string",
+                    },
+                    {
+                        "Name": "hincp",
+                        "Type": "double",
+                    },
+                    {
+                        "Name": "elep",
+                        "Type": "double",
+                    },
+                    {
+                        "Name": "elep_cal",
+                        "Type": "double",
+                    },
+                    {
+                        "Name": "gasp",
+                        "Type": "double",
+                    },
+                    {
+                        "Name": "gasp_cal",
+                        "Type": "double",
+                    },
+                    {
+                        "Name": "gasp_u_cal",
+                        "Type": "double",
+                    },
+                    {
+                        "Name": "fulp",
+                        "Type": "double",
+                    },
+                    {
+                        "Name": "count",
+                        "Type": "double",
+                    }
+                ],
+                "Location": "",
+                "InputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
+                "OutputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat",
+                "Compressed": False,
+                "NumberOfBuckets": -1,
+                "SerdeInfo": {
+                    "SerializationLibrary": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe",
+                    "Parameters": {"serialization.format": "1"},
+                },
+                "BucketColumns": [],
+                "SortColumns": [],
+                "Parameters": {
+                    "averageRecordSize": "",
+                    "classification": "parquet",
+                    "compressionType": "none",
+                    "objectCount": "1",
+                    "recordCount": "",
+                    "sizeKey": "",
+                    "typeOfData": "file"
+                },
+                "SkewedInfo": {},
+                "StoredAsSubDirectories": False
+            },
+            "Values": [""]
+        }
+
+    def get_lead_fpl15_state_city_county_partition_template(self):
+        """
+
+        :return:
+        """
+        return {
+            "StorageDescriptor": {
+                "Columns": [
+                    {
+                        "Name": "state",
+                        "Type": "string",
+                    },
+                    {
+                        "Name": "placeid",
+                        "Type": "string",
+                    },
+                    {
+                        "Name": "placename",
+                        "Type": "string",
+                    },
+                    {
+                        "Name": "ybl_index",
+                        "Type": "int",
+                    },
+                    {
+                        "Name": "bld_index",
+                        "Type": "int",
+                    },
+                    {
+                        "Name": "hfl_index",
+                        "Type": "int",
+                    },
+                    {
+                        "Name": "fpl15",
+                        "Type": "string",
+                    },
+                    {
+                        "Name": "units",
+                        "Type": "string",
+                    },
+                    {
+                        "Name": "hincp",
+                        "Type": "double",
+                    },
+                    {
+                        "Name": "elep",
+                        "Type": "double",
+                    },
+                    {
+                        "Name": "elep_cal",
+                        "Type": "double",
+                    },
+                    {
+                        "Name": "gasp",
+                        "Type": "double",
+                    },
+                    {
+                        "Name": "gasp_cal",
+                        "Type": "double",
+                    },
+                    {
+                        "Name": "gasp_u_cal",
+                        "Type": "double",
+                    },
+                    {
+                        "Name": "fulp",
+                        "Type": "double",
+                    },
+                    {
+                        "Name": "count",
+                        "Type": "double",
+                    }
+                ],
+                "Location": "",
+                "InputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
+                "OutputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat",
+                "Compressed": False,
+                "NumberOfBuckets": -1,
+                "SerdeInfo": {
+                    "SerializationLibrary": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe",
+                    "Parameters": {"serialization.format": "1"},
+                },
+                "BucketColumns": [],
+                "SortColumns": [],
+                "Parameters": {
+                    "averageRecordSize": "",
+                    "classification": "parquet",
+                    "compressionType": "none",
+                    "objectCount": "1",
+                    "recordCount": "",
+                    "sizeKey": "",
+                    "typeOfData": "file"
+                },
+                "SkewedInfo": {},
+                "StoredAsSubDirectories": False
+            },
+            "Values": [""]
+        }
+
+    def get_lead_fpl15_tract_partition_template(self):
+        """
+
+        :return:
+        """
+        return {
+            "StorageDescriptor": {
+                "Columns": [
+                    {
+                        "Name": "geo_id",
+                        "Type": "string",
+                    },
+                    {
+                        "Name": "puma10",
+                        "Type": "string",
+                    },
+                    {
+                        "Name": "fmr",
+                        "Type": "string",
+                    },
+                    {
+                        "Name": "ybl_index",
+                        "Type": "int",
+                    },
+                    {
+                        "Name": "bld_index",
+                        "Type": "int",
+                    },
+                    {
+                        "Name": "hfl_index",
+                        "Type": "int",
+                    },
+                    {
+                        "Name": "fpl15",
+                        "Type": "string",
+                    },
+                    {
+                        "Name": "units",
+                        "Type": "string",
+                    },
+                    {
+                        "Name": "hincp",
+                        "Type": "double",
+                    },
+                    {
+                        "Name": "elep",
+                        "Type": "double",
+                    },
+                    {
+                        "Name": "elep_cal",
+                        "Type": "double",
+                    },
+                    {
+                        "Name": "gasp",
+                        "Type": "double",
+                    },
+                    {
+                        "Name": "gasp_cal",
+                        "Type": "double",
+                    },
+                    {
+                        "Name": "gasp_u_cal",
+                        "Type": "double",
+                    },
+                    {
+                        "Name": "fulp",
+                        "Type": "double",
+                    },
+                    {
+                        "Name": "count",
+                        "Type": "double",
+                    }
+                ],
+                "Location": "",
+                "InputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
+                "OutputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat",
+                "Compressed": False,
+                "NumberOfBuckets": -1,
+                "SerdeInfo": {
+                    "SerializationLibrary": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe",
+                    "Parameters": {"serialization.format": "1"},
+                },
+                "BucketColumns": [],
+                "SortColumns": [],
+                "Parameters": {
+                    "averageRecordSize": "",
+                    "classification": "parquet",
+                    "compressionType": "none",
+                    "objectCount": "1",
+                    "recordCount": "",
+                    "sizeKey": "",
+                    "typeOfData": "file"
+                },
+                "SkewedInfo": {},
+                "StoredAsSubDirectories": False
+            },
+            "Values": [""]
+        }
+
+    def create_lead_ami68_state_city_county_table(self):
+        """
+
+        :return:
+        """
+        partitionsArray = [
+            {"averageRecordSize": "34", "recordCount": "300669", "sizeKey": "7454056", "name": "SC"},
+            {"averageRecordSize": "33", "recordCount": "79335", "sizeKey": "1858768", "name": "DE"},
+            {"averageRecordSize": "18", "recordCount": "11031", "sizeKey": "131687", "name": "DC"},
+            {"averageRecordSize": "32", "recordCount": "605825", "sizeKey": "13503712", "name": "KS"},
+            {"averageRecordSize": "37", "recordCount": "57986", "sizeKey": "1682783", "name": "NV"},
+            {"averageRecordSize": "35", "recordCount": "476137", "sizeKey": "11810809", "name": "AR"},
+            {"averageRecordSize": "29", "recordCount": "308708", "sizeKey": "6149004", "name": "NH"},
+            {"averageRecordSize": "31", "recordCount": "130849", "sizeKey": "2844046", "name": "WY"},
+            {"averageRecordSize": "34", "recordCount": "621771", "sizeKey": "14611892", "name": "OK"},
+            {"averageRecordSize": "42", "recordCount": "1048575", "sizeKey": "25763741", "name": "NY"},
+            {"averageRecordSize": "32", "recordCount": "364138", "sizeKey": "8500917", "name": "OR"},
+            {"averageRecordSize": "35", "recordCount": "771428", "sizeKey": "17551354", "name": "NC"},
+            {"averageRecordSize": "29", "recordCount": "592197", "sizeKey": "11157709", "name": "NE"},
+            {"averageRecordSize": "45", "recordCount": "1048575", "sizeKey": "28984056", "name": "TX"},
+            {"averageRecordSize": "31", "recordCount": "283727", "sizeKey": "6208620", "name": "UT"},
+            {"averageRecordSize": "33", "recordCount": "255725", "sizeKey": "6197788", "name": "CT"},
+            {"averageRecordSize": "31", "recordCount": "281159", "sizeKey": "6074082", "name": "ID"},
+            {"averageRecordSize": "33", "recordCount": "74338", "sizeKey": "1879070", "name": "RI"},
+            {"averageRecordSize": "31", "recordCount": "450080", "sizeKey": "9985682", "name": "WA"},
+            {"averageRecordSize": "36", "recordCount": "469349", "sizeKey": "11723096", "name": "AL"},
+            {"averageRecordSize": "35", "recordCount": "151509", "sizeKey": "4064756", "name": "AZ"},
+            {"averageRecordSize": "34", "recordCount": "543533", "sizeKey": "12832441", "name": "KY"},
+            {"averageRecordSize": "38", "recordCount": "631831", "sizeKey": "15977960", "name": "GA"},
+            {"averageRecordSize": "34", "recordCount": "300313", "sizeKey": "7590958", "name": "LA"},
+            {"averageRecordSize": "33", "recordCount": "281205", "sizeKey": "6789040", "name": "WV"},
+            {"averageRecordSize": "26", "recordCount": "193819", "sizeKey": "2988693", "name": "AK"},
+            {"averageRecordSize": "35", "recordCount": "670213", "sizeKey": "15706583", "name": "NJ"},
+            {"averageRecordSize": "28", "recordCount": "323892", "sizeKey": "5784672", "name": "VT"},
+            {"averageRecordSize": "36", "recordCount": "688357", "sizeKey": "16235484", "name": "IN"},
+            {"averageRecordSize": "32", "recordCount": "183879", "sizeKey": "4099111", "name": "PR"},
+            {"averageRecordSize": "34", "recordCount": "458014", "sizeKey": "11241065", "name": "TN"},
+            {"averageRecordSize": "33", "recordCount": "152342", "sizeKey": "3609541", "name": "NM"},
+            {"averageRecordSize": "40", "recordCount": "1048575", "sizeKey": "25051749", "name": "OH"},
+            {"averageRecordSize": "39", "recordCount": "1003392", "sizeKey": "23798305", "name": "MO"},
+            {"averageRecordSize": "36", "recordCount": "1048575", "sizeKey": "22635882", "name": "WI"},
+            {"averageRecordSize": "33", "recordCount": "404684", "sizeKey": "9712062", "name": "CO"},
+            {"averageRecordSize": "34", "recordCount": "590380", "sizeKey": "13739972", "name": "FL"},
+            {"averageRecordSize": "32", "recordCount": "219757", "sizeKey": "4918346", "name": "MT"},
+            {"averageRecordSize": "35", "recordCount": "312240", "sizeKey": "8212844", "name": "MS"},
+            {"averageRecordSize": "24", "recordCount": "28812", "sizeKey": "493183", "name": "HI"},
+            {"averageRecordSize": "32", "recordCount": "1048575", "sizeKey": "21271869", "name": "IA"},
+            {"averageRecordSize": "33", "recordCount": "540296", "sizeKey": "12511548", "name": "MA"},
+            {"averageRecordSize": "33", "recordCount": "241241", "sizeKey": "5733915", "name": "MD"},
+            {"averageRecordSize": "40", "recordCount": "968763", "sizeKey": "22475489", "name": "MI"},
+            {"averageRecordSize": "44", "recordCount": "959634", "sizeKey": "25774683", "name": "CA"},
+            {"averageRecordSize": "29", "recordCount": "385532", "sizeKey": "7498541", "name": "SD"},
+            {"averageRecordSize": "27", "recordCount": "425572", "sizeKey": "7076019", "name": "ND"},
+            {"averageRecordSize": "41", "recordCount": "1048575", "sizeKey": "25781267", "name": "IL"},
+            {"averageRecordSize": "27", "recordCount": "513004", "sizeKey": "9077975", "name": "ME"},
+            {"averageRecordSize": "33", "recordCount": "1048575", "sizeKey": "21145741", "name": "MN"},
+            {"averageRecordSize": "32", "recordCount": "485244", "sizeKey": "11212067", "name": "VA"},
+            {"averageRecordSize": "41", "recordCount": "1048575", "sizeKey": "26043868", "name": "PA"},
+        ]
+        try:
+            logger.info(f"Recreating table: {self.lead_ami68_state_city_county_table_name}")
+            response = self.glue.delete_table(
+                DatabaseName=self.database_name,
+                Name=self.lead_ami68_state_city_county_table_name
+            )
+        except ClientError as e:
+            if e.response["Error"]["Code"] == "EntityNotFoundException":
+                logger.debug(f"Skipping table deletion as it does not exist: {self.lead_ami68_state_city_county_table_name}")
+
+        logger.info(f"Creating {self.lead_ami68_state_city_county_table_name} table...")
+
+        response = self.glue.create_table(
+            DatabaseName=self.database_name,
+            TableInput={
+                "Name": self.lead_ami68_state_city_county_table_name,
+                "PartitionKeys": [{"Name": "abv", "Type": "string"}],
+                "Parameters": {
+                    "averageRecordSize": "28",
+                    "classification": "parquet",
+                    "compressionType": "none",
+                    "objectCount": "52",
+                    "recordCount": "26180510",
+                    "sizeKey": "605158501",
+                    "typeOfData": "file"
+                },
+                "StorageDescriptor": {
+                    "BucketColumns": [],
+                    "Columns": [
+                        {"Name": "state", "Type": "string"},
+                        {"Name": "placeid", "Type": "string"},
+                        {"Name": "placename", "Type": "string"},
+                        {"Name": "ybl_index", "Type": "int"},
+                        {"Name": "bld_index", "Type": "int"},
+                        {"Name": "hfl_index", "Type": "int"},
+                        {"Name": "ami68", "Type": "string"},
+                        {"Name": "units", "Type": "string"},
+                        {"Name": "hincp", "Type": "double"},
+                        {"Name": "elep", "Type": "double"},
+                        {"Name": "elep_cal", "Type": "double"},
+                        {"Name": "gasp", "Type": "double"},
+                        {"Name": "gasp_cal", "Type": "double"},
+                        {"Name": "gasp_u_cal", "Type": "double"},
+                        {"Name": "fulp", "Type": "double"},
+                        {"Name": "count", "Type": "double"}
+                    ],
+                    "Compressed": False,
+                    "InputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
+                    "Location": self.lead_bucket + "ami68-state-city-county/",
+                    "NumberOfBuckets": -1,
+                    "OutputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat",
+                    "Parameters": {
+                        "averageRecordSize": "28",
+                        "classification": "parquet",
+                        "compressionType": "none",
+                        "objectCount": "52",
+                        "recordCount": "26180510",
+                        "sizeKey": "605158501",
+                        "typeOfData": "file"
+                    },
+                    "SerdeInfo": {
+                        "Parameters": {"serialization.format": "1"},
+                        "SerializationLibrary": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe"
+                    },
+                    "SortColumns": [],
+                    "StoredAsSubDirectories": False
+                },
+                "TableType": "EXTERNAL_TABLE"
+            }
+        )
+
+        logger.info(f"Creating {self.lead_ami68_state_city_county_table_name} partitions")
+
+        templateArray = []
+        for partition in partitionsArray:
+            thisTemplate = self.get_lead_ami68_state_city_county_partition_template()
+            thisTemplate["StorageDescriptor"]["Location"] = f"{self.lead_bucket}/ami68-state-city-county/abv={partition['name']}/"
+            thisTemplate["StorageDescriptor"]["Parameters"]["averageRecordSize"] = partition["averageRecordSize"]
+            thisTemplate["StorageDescriptor"]["Parameters"]["recordCount"] = partition["recordCount"]
+            thisTemplate["StorageDescriptor"]["Parameters"]["sizeKey"] = partition["sizeKey"]
+            thisTemplate["Values"][0] = partition["name"]
+            templateArray.append(thisTemplate)
+        logger.info(f"Submitting {self.lead_ami68_state_city_county_table_name} partitions batch")
+        response2 = self.glue.batch_create_partition(
+            DatabaseName=self.database_name,
+            TableName=self.lead_ami68_state_city_county_table_name,
+            PartitionInputList=templateArray
+        )
+
+    def create_lead_ami68_tract_table(self):
+        """
+
+        :return:
+        """
+        partitionsArray = [
+            {"averageRecordSize": "33", "recordCount": "296284", "sizeKey": "6250900", "name": "ME"},
+            {"averageRecordSize": "46", "recordCount": "1048575", "sizeKey": "26198116", "name": "MI"},
+            {"averageRecordSize": "39", "recordCount": "262242", "sizeKey": "7389822", "name": "UT"},
+            {"averageRecordSize": "43", "recordCount": "1048575", "sizeKey": "23645739", "name": "WI"},
+            {"averageRecordSize": "42", "recordCount": "254116", "sizeKey": "7931330", "name": "NV"},
+            {"averageRecordSize": "38", "recordCount": "166849", "sizeKey": "4558377", "name": "SD"},
+            {"averageRecordSize": "44", "recordCount": "1048575", "sizeKey": "24832897", "name": "NJ"},
+            {"averageRecordSize": "34", "recordCount": "268849", "sizeKey": "6138072", "name": "NH"},
+            {"averageRecordSize": "40", "recordCount": "580740", "sizeKey": "14418690", "name": "OR"},
+            {"averageRecordSize": "45", "recordCount": "1048575", "sizeKey": "26512993", "name": "PA"},
+            {"averageRecordSize": "43", "recordCount": "363496", "sizeKey": "10786455", "name": "KS"},
+            {"averageRecordSize": "42", "recordCount": "1048575", "sizeKey": "24938870", "name": "FL"},
+            {"averageRecordSize": "47", "recordCount": "1048575", "sizeKey": "29039729", "name": "TX"},
+            {"averageRecordSize": "42", "recordCount": "599206", "sizeKey": "14996631", "name": "CT"},
+            {"averageRecordSize": "37", "recordCount": "140451", "sizeKey": "3685530", "name": "DE"},
+            {"averageRecordSize": "43", "recordCount": "494993", "sizeKey": "13275503", "name": "SC"},
+            {"averageRecordSize": "43", "recordCount": "588431", "sizeKey": "16095128", "name": "AZ"},
+            {"averageRecordSize": "40", "recordCount": "264223", "sizeKey": "7722106", "name": "WV"},
+            {"averageRecordSize": "39", "recordCount": "86118", "sizeKey": "2426677", "name": "WY"},
+            {"averageRecordSize": "36", "recordCount": "113252", "sizeKey": "2832820", "name": "DC"},
+            {"averageRecordSize": "44", "recordCount": "337051", "sizeKey": "10006404", "name": "AR"},
+            {"averageRecordSize": "45", "recordCount": "991543", "sizeKey": "26111343", "name": "VA"},
+            {"averageRecordSize": "33", "recordCount": "185692", "sizeKey": "4086679", "name": "VT"},
+            {"averageRecordSize": "38", "recordCount": "210142", "sizeKey": "5648867", "name": "MT"},
+            {"averageRecordSize": "46", "recordCount": "1048575", "sizeKey": "27225138", "name": "OH"},
+            {"averageRecordSize": "43", "recordCount": "519928", "sizeKey": "14283424", "name": "OK"},
+            {"averageRecordSize": "40", "recordCount": "246867", "sizeKey": "7035662", "name": "NM"},
+            {"averageRecordSize": "42", "recordCount": "982249", "sizeKey": "21970524", "name": "MN"},
+            {"averageRecordSize": "34", "recordCount": "168428", "sizeKey": "3943884", "name": "ND"},
+            {"averageRecordSize": "35", "recordCount": "173934", "sizeKey": "4131604", "name": "HI"},
+            {"averageRecordSize": "43", "recordCount": "726355", "sizeKey": "18580707", "name": "MD"},
+            {"averageRecordSize": "37", "recordCount": "206624", "sizeKey": "5516032", "name": "ID"},
+            {"averageRecordSize": "39", "recordCount": "296990", "sizeKey": "8099538", "name": "NE"},
+            {"averageRecordSize": "36", "recordCount": "303142", "sizeKey": "6879759", "name": "PR"},
+            {"averageRecordSize": "47", "recordCount": "853641", "sizeKey": "24265000", "name": "GA"},
+            {"averageRecordSize": "47", "recordCount": "1048575", "sizeKey": "28600914", "name": "CA"},
+            {"averageRecordSize": "45", "recordCount": "440184", "sizeKey": "12657127", "name": "LA"},
+            {"averageRecordSize": "42", "recordCount": "937269", "sizeKey": "22030275", "name": "WA"},
+            {"averageRecordSize": "45", "recordCount": "1048575", "sizeKey": "25045880", "name": "MA"},
+            {"averageRecordSize": "46", "recordCount": "732283", "sizeKey": "20315239", "name": "MO"},
+            {"averageRecordSize": "44", "recordCount": "690905", "sizeKey": "18770903", "name": "TN"},
+            {"averageRecordSize": "44", "recordCount": "504640", "sizeKey": "14134793", "name": "AL"},
+            {"averageRecordSize": "45", "recordCount": "1048575", "sizeKey": "26063677", "name": "NY"},
+            {"averageRecordSize": "44", "recordCount": "621837", "sizeKey": "16491962", "name": "CO"},
+            {"averageRecordSize": "43", "recordCount": "280427", "sizeKey": "8553865", "name": "MS"},
+            {"averageRecordSize": "34", "recordCount": "133055", "sizeKey": "2974618", "name": "AK"},
+            {"averageRecordSize": "39", "recordCount": "533805", "sizeKey": "13283056", "name": "IA"},
+            {"averageRecordSize": "46", "recordCount": "1048575", "sizeKey": "26980239", "name": "IL"},
+            {"averageRecordSize": "43", "recordCount": "574795", "sizeKey": "15768342", "name": "KY"},
+            {"averageRecordSize": "44", "recordCount": "1048575", "sizeKey": "26149174", "name": "NC"},
+            {"averageRecordSize": "38", "recordCount": "173372", "sizeKey": "4472042", "name": "RI"},
+            {"averageRecordSize": "45", "recordCount": "755027", "sizeKey": "20333949", "name": "IN"},
+        ]
+        try:
+            logger.info(f"Recreating table: {self.lead_ami68_tract_table_name}")
+            response = self.glue.delete_table(
+                DatabaseName=self.database_name,
+                Name=self.lead_ami68_tract_table_name
+            )
+        except ClientError as e:
+            if e.response["Error"]["Code"] == "EntityNotFoundException":
+                logger.debug(f"Skipping table deletion as it does not exist: {self.lead_ami68_tract_table_name}")
+
+        logger.info(f"Creating {self.lead_ami68_tract_table_name} table...")
+
+        response = self.glue.create_table(
+            DatabaseName=self.database_name,
+            TableInput={
+                "Name": self.lead_ami68_tract_table_name,
+                "PartitionKeys": [{"Name": "abv", "Type": "string"}],
+                "Parameters": {
+                    "averageRecordSize": "35",
+                    "classification": "parquet",
+                    "compressionType": "none",
+                    "objectCount": "52",
+                    "recordCount": "29642335",
+                    "sizeKey": "764087005",
+                    "typeOfData": "file"
+                },
+                "StorageDescriptor": {
+                    "BucketColumns": [],
+                    "Columns": [
+                        {"Name": "geo_id", "Type": "string"},
+                        {"Name": "puma10", "Type": "string"},
+                        {"Name": "fmr", "Type": "string"},
+                        {"Name": "ybl_index", "Type": "int"},
+                        {"Name": "bld_index", "Type": "int"},
+                        {"Name": "hfl_index", "Type": "int"},
+                        {"Name": "ami68", "Type": "string"},
+                        {"Name": "units", "Type": "string"},
+                        {"Name": "hincp", "Type": "double"},
+                        {"Name": "elep", "Type": "double"},
+                        {"Name": "elep_cal", "Type": "double"},
+                        {"Name": "gasp", "Type": "double"},
+                        {"Name": "gasp_cal", "Type": "double"},
+                        {"Name": "gasp_u_cal", "Type": "double"},
+                        {"Name": "fulp", "Type": "double"},
+                        {"Name": "count", "Type": "double"}
+                    ],
+                    "Compressed": False,
+                    "InputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
+                    "Location": self.lead_bucket + "ami68-tract/",
+                    "NumberOfBuckets": -1,
+                    "OutputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat",
+                    "Parameters": {
+                        "averageRecordSize": "35",
+                        "classification": "parquet",
+                        "compressionType": "none",
+                        "objectCount": "52",
+                        "recordCount": "29642335",
+                        "sizeKey": "764087005",
+                        "typeOfData": "file"
+                    },
+                    "SerdeInfo": {
+                        "Parameters": {"serialization.format": "1"},
+                        "SerializationLibrary": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe"
+                    },
+                    "SortColumns": [],
+                    "StoredAsSubDirectories": False
+                },
+                "TableType": "EXTERNAL_TABLE"
+            }
+        )
+
+        logger.info(f"Creating {self.lead_ami68_tract_table_name} partitions")
+
+        templateArray = []
+        for partition in partitionsArray:
+            thisTemplate = self.get_lead_ami68_tract_partition_template()
+            thisTemplate["StorageDescriptor"][
+                "Location"] = f"{self.lead_bucket}/ami68-tract/abv={partition['name']}/"
+            thisTemplate["StorageDescriptor"]["Parameters"]["averageRecordSize"] = partition["averageRecordSize"]
+            thisTemplate["StorageDescriptor"]["Parameters"]["recordCount"] = partition["recordCount"]
+            thisTemplate["StorageDescriptor"]["Parameters"]["sizeKey"] = partition["sizeKey"]
+            thisTemplate["Values"][0] = partition["name"]
+            templateArray.append(thisTemplate)
+        logger.info(f"Submitting {self.lead_ami68_tract_table_name} partitions batch")
+        response2 = self.glue.batch_create_partition(
+            DatabaseName=self.database_name,
+            TableName=self.lead_ami68_tract_table_name,
+            PartitionInputList=templateArray
+        )
+
+    def create_lead_fpl15_state_city_county_table(self):
+        """
+
+        :return:
+        """
+        partitionsArray = [
+            {"averageRecordSize": "39", "recordCount": "969927", "sizeKey": "21607076", "name": "MI"},
+            {"averageRecordSize": "30", "recordCount": "450972", "sizeKey": "9461556", "name": "WA"},
+            {"averageRecordSize": "31", "recordCount": "241914", "sizeKey": "5367524", "name": "MD"},
+            {"averageRecordSize": "30", "recordCount": "485559", "sizeKey": "10321671", "name": "VA"},
+            {"averageRecordSize": "40", "recordCount": "1048575", "sizeKey": "24728651", "name": "NY"},
+            {"averageRecordSize": "25", "recordCount": "193862", "sizeKey": "2725711", "name": "AK"},
+            {"averageRecordSize": "30", "recordCount": "181510", "sizeKey": "3749571", "name": "PR"},
+            {"averageRecordSize": "43", "recordCount": "960880", "sizeKey": "24750760", "name": "CA"},
+            {"averageRecordSize": "34", "recordCount": "476884", "sizeKey": "11086790", "name": "AR"},
+            {"averageRecordSize": "33", "recordCount": "300918", "sizeKey": "7171494", "name": "SC"},
+            {"averageRecordSize": "33", "recordCount": "300760", "sizeKey": "7189777", "name": "LA"},
+            {"averageRecordSize": "32", "recordCount": "1048575", "sizeKey": "19846447", "name": "MN"},
+            {"averageRecordSize": "32", "recordCount": "405163", "sizeKey": "9045369", "name": "CO"},
+            {"averageRecordSize": "27", "recordCount": "513895", "sizeKey": "8364991", "name": "ME"},
+            {"averageRecordSize": "28", "recordCount": "309329", "sizeKey": "5703979", "name": "NH"},
+            {"averageRecordSize": "34", "recordCount": "670392", "sizeKey": "15000079", "name": "NJ"},
+            {"averageRecordSize": "31", "recordCount": "1048575", "sizeKey": "19682963", "name": "IA"},
+            {"averageRecordSize": "29", "recordCount": "281811", "sizeKey": "5668531", "name": "ID"},
+            {"averageRecordSize": "35", "recordCount": "689293", "sizeKey": "15380962", "name": "IN"},
+            {"averageRecordSize": "34", "recordCount": "58108", "sizeKey": "1483326", "name": "NV"},
+            {"averageRecordSize": "31", "recordCount": "256757", "sizeKey": "5766901", "name": "CT"},
+            {"averageRecordSize": "35", "recordCount": "1048575", "sizeKey": "21241905", "name": "WI"},
+            {"averageRecordSize": "32", "recordCount": "281442", "sizeKey": "6332540", "name": "WV"},
+            {"averageRecordSize": "30", "recordCount": "219989", "sizeKey": "4372777", "name": "MT"},
+            {"averageRecordSize": "31", "recordCount": "364602", "sizeKey": "8020450", "name": "OR"},
+            {"averageRecordSize": "32", "recordCount": "543537", "sizeKey": "11919091", "name": "KY"},
+            {"averageRecordSize": "27", "recordCount": "387214", "sizeKey": "6371039", "name": "SD"},
+            {"averageRecordSize": "34", "recordCount": "312260", "sizeKey": "7609247", "name": "MS"},
+            {"averageRecordSize": "44", "recordCount": "1048575", "sizeKey": "26999626", "name": "TX"},
+            {"averageRecordSize": "31", "recordCount": "541876", "sizeKey": "11788514", "name": "MA"},
+            {"averageRecordSize": "28", "recordCount": "593423", "sizeKey": "10171221", "name": "NE"},
+            {"averageRecordSize": "30", "recordCount": "283396", "sizeKey": "5892985", "name": "UT"},
+            {"averageRecordSize": "18", "recordCount": "11022", "sizeKey": "123252", "name": "DC"},
+            {"averageRecordSize": "37", "recordCount": "632334", "sizeKey": "15208162", "name": "GA"},
+            {"averageRecordSize": "31", "recordCount": "74637", "sizeKey": "1732346", "name": "RI"},
+            {"averageRecordSize": "40", "recordCount": "1048575", "sizeKey": "24255516", "name": "OH"},
+            {"averageRecordSize": "32", "recordCount": "79600", "sizeKey": "1793874", "name": "DE"},
+            {"averageRecordSize": "33", "recordCount": "458436", "sizeKey": "10683477", "name": "TN"},
+            {"averageRecordSize": "34", "recordCount": "151549", "sizeKey": "3907391", "name": "AZ"},
+            {"averageRecordSize": "37", "recordCount": "1005308", "sizeKey": "22565166", "name": "MO"},
+            {"averageRecordSize": "34", "recordCount": "772307", "sizeKey": "16878317", "name": "NC"},
+            {"averageRecordSize": "33", "recordCount": "590588", "sizeKey": "13301823", "name": "FL"},
+            {"averageRecordSize": "27", "recordCount": "323994", "sizeKey": "5436063", "name": "VT"},
+            {"averageRecordSize": "32", "recordCount": "152340", "sizeKey": "3480547", "name": "NM"},
+            {"averageRecordSize": "23", "recordCount": "28827", "sizeKey": "463033", "name": "HI"},
+            {"averageRecordSize": "40", "recordCount": "1048575", "sizeKey": "24590637", "name": "IL"},
+            {"averageRecordSize": "26", "recordCount": "426960", "sizeKey": "6453520", "name": "ND"},
+        ]
+        try:
+            logger.info(f"Recreating table: {self.lead_fpl15_state_city_county_table_name}")
+            response = self.glue.delete_table(
+                DatabaseName=self.database_name,
+                Name=self.lead_fpl15_state_city_county_table_name
+            )
+        except ClientError as e:
+            if e.response["Error"]["Code"] == "EntityNotFoundException":
+                logger.debug(f"Skipping table deletion as it does not exist: {self.lead_fpl15_state_city_county_table_name}")
+
+        logger.info(f"Creating {self.lead_fpl15_state_city_county_table_name} table...")
+
+        response = self.glue.create_table(
+            DatabaseName=self.database_name,
+            TableInput={
+                "Name": self.lead_fpl15_state_city_county_table_name,
+                "PartitionKeys": [{"Name": "abv", "Type": "string"}],
+                "Parameters": {
+                    "averageRecordSize": "27",
+                    "classification": "parquet",
+                    "compressionType": "none",
+                    "objectCount": "47",
+                    "recordCount": "23323600",
+                    "sizeKey": "505696648",
+                    "typeOfData": "file"
+                },
+                "StorageDescriptor": {
+                    "BucketColumns": [],
+                    "Columns": [
+                        {"Name": "state", "Type": "string"},
+                        {"Name": "placeid", "Type": "string"},
+                        {"Name": "placename", "Type": "string"},
+                        {"Name": "ybl_index", "Type": "int"},
+                        {"Name": "bld_index", "Type": "int"},
+                        {"Name": "hfl_index", "Type": "int"},
+                        {"Name": "fpl15", "Type": "string"},
+                        {"Name": "units", "Type": "string"},
+                        {"Name": "hincp", "Type": "double"},
+                        {"Name": "elep", "Type": "double"},
+                        {"Name": "elep_cal", "Type": "double"},
+                        {"Name": "gasp", "Type": "double"},
+                        {"Name": "gasp_cal", "Type": "double"},
+                        {"Name": "gasp_u_cal", "Type": "double"},
+                        {"Name": "fulp", "Type": "double"},
+                        {"Name": "count", "Type": "double"}
+                    ],
+                    "Compressed": False,
+                    "InputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
+                    "Location": self.lead_bucket + "fpl15-state-city-county/",
+                    "NumberOfBuckets": -1,
+                    "OutputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat",
+                    "Parameters": {
+                        "averageRecordSize": "27",
+                        "classification": "parquet",
+                        "compressionType": "none",
+                        "objectCount": "47",
+                        "recordCount": "23323600",
+                        "sizeKey": "505696648",
+                        "typeOfData": "file"
+                    },
+                    "SerdeInfo": {
+                        "Parameters": {"serialization.format": "1"},
+                        "SerializationLibrary": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe"
+                    },
+                    "SortColumns": [],
+                    "StoredAsSubDirectories": False
+                },
+                "TableType": "EXTERNAL_TABLE"
+            }
+        )
+
+        logger.info(f"Creating {self.lead_fpl15_state_city_county_table_name} partitions")
+
+        templateArray = []
+        for partition in partitionsArray:
+            thisTemplate = self.get_lead_fpl15_state_city_county_partition_template()
+            thisTemplate["StorageDescriptor"][
+                "Location"] = f"{self.lead_bucket}/fpl15-state-city-county/abv={partition['name']}/"
+            thisTemplate["StorageDescriptor"]["Parameters"]["averageRecordSize"] = partition["averageRecordSize"]
+            thisTemplate["StorageDescriptor"]["Parameters"]["recordCount"] = partition["recordCount"]
+            thisTemplate["StorageDescriptor"]["Parameters"]["sizeKey"] = partition["sizeKey"]
+            thisTemplate["Values"][0] = partition["name"]
+            templateArray.append(thisTemplate)
+        logger.info(f"Submitting {self.lead_fpl15_state_city_county_table_name} partitions batch")
+        response2 = self.glue.batch_create_partition(
+            DatabaseName=self.database_name,
+            TableName=self.lead_fpl15_state_city_county_table_name,
+            PartitionInputList=templateArray
+        )
+
+    def create_lead_fpl15_tract_table(self):
+        """
+
+        :return:
+        """
+        partitionsArray = [
+            {"averageRecordSize": "40", "recordCount": "581457", "sizeKey": "13944998", "name": "OR"},
+            {"averageRecordSize": "45", "recordCount": "1048575", "sizeKey": "28137365", "name": "CA"},
+            {"averageRecordSize": "45", "recordCount": "1048575", "sizeKey": "25925803", "name": "PA"},
+            {"averageRecordSize": "44", "recordCount": "440760", "sizeKey": "12536201", "name": "LA"},
+            {"averageRecordSize": "45", "recordCount": "1048575", "sizeKey": "25627092", "name": "MI"},
+            {"averageRecordSize": "41", "recordCount": "254243", "sizeKey": "7670204", "name": "NV"},
+            {"averageRecordSize": "33", "recordCount": "169045", "sizeKey": "3752038", "name": "ND"},
+            {"averageRecordSize": "41", "recordCount": "937929", "sizeKey": "21281977", "name": "WA"},
+            {"averageRecordSize": "41", "recordCount": "363839", "sizeKey": "10014042", "name": "KS"},
+            {"averageRecordSize": "35", "recordCount": "112875", "sizeKey": "2729091", "name": "DC"},
+            {"averageRecordSize": "44", "recordCount": "990754", "sizeKey": "24855686", "name": "VA"},
+            {"averageRecordSize": "42", "recordCount": "520296", "sizeKey": "13725915", "name": "OK"},
+            {"averageRecordSize": "44", "recordCount": "1048575", "sizeKey": "24027190", "name": "MA"},
+            {"averageRecordSize": "40", "recordCount": "600667", "sizeKey": "14299672", "name": "CT"},
+            {"averageRecordSize": "46", "recordCount": "853779", "sizeKey": "23590562", "name": "GA"},
+            {"averageRecordSize": "43", "recordCount": "504335", "sizeKey": "13712281", "name": "AL"},
+            {"averageRecordSize": "42", "recordCount": "574172", "sizeKey": "15071817", "name": "KY"},
+            {"averageRecordSize": "35", "recordCount": "173925", "sizeKey": "4036164", "name": "HI"},
+            {"averageRecordSize": "44", "recordCount": "755321", "sizeKey": "19717084", "name": "IN"},
+            {"averageRecordSize": "36", "recordCount": "210445", "sizeKey": "5155585", "name": "MT"},
+            {"averageRecordSize": "43", "recordCount": "727150", "sizeKey": "17722176", "name": "MD"},
+            {"averageRecordSize": "36", "recordCount": "206839", "sizeKey": "5108321", "name": "ID"},
+            {"averageRecordSize": "37", "recordCount": "173554", "sizeKey": "4338615", "name": "RI"},
+            {"averageRecordSize": "32", "recordCount": "296748", "sizeKey": "5971265", "name": "ME"},
+            {"averageRecordSize": "37", "recordCount": "297320", "sizeKey": "7484473", "name": "NE"},
+            {"averageRecordSize": "39", "recordCount": "247036", "sizeKey": "6805201", "name": "NM"},
+            {"averageRecordSize": "41", "recordCount": "1048575", "sizeKey": "22901904", "name": "WI"},
+            {"averageRecordSize": "32", "recordCount": "185740", "sizeKey": "3983378", "name": "VT"},
+            {"averageRecordSize": "46", "recordCount": "1048575", "sizeKey": "26215216", "name": "IL"},
+            {"averageRecordSize": "44", "recordCount": "1048575", "sizeKey": "25680183", "name": "NC"},
+            {"averageRecordSize": "32", "recordCount": "133142", "sizeKey": "2889078", "name": "AK"},
+            {"averageRecordSize": "45", "recordCount": "1048575", "sizeKey": "26844750", "name": "OH"},
+            {"averageRecordSize": "42", "recordCount": "337246", "sizeKey": "9548964", "name": "AR"},
+            {"averageRecordSize": "34", "recordCount": "167440", "sizeKey": "3972645", "name": "SD"},
+            {"averageRecordSize": "43", "recordCount": "588415", "sizeKey": "15795552", "name": "AZ"},
+            {"averageRecordSize": "39", "recordCount": "264171", "sizeKey": "7252140", "name": "WV"},
+            {"averageRecordSize": "40", "recordCount": "984969", "sizeKey": "21259589", "name": "MN"},
+            {"averageRecordSize": "35", "recordCount": "299735", "sizeKey": "6476530", "name": "PR"},
+            {"averageRecordSize": "41", "recordCount": "1048575", "sizeKey": "24490911", "name": "FL"},
+            {"averageRecordSize": "36", "recordCount": "86361", "sizeKey": "2244296", "name": "WY"},
+            {"averageRecordSize": "47", "recordCount": "1048575", "sizeKey": "28560432", "name": "TX"},
+            {"averageRecordSize": "33", "recordCount": "268991", "sizeKey": "5802735", "name": "NH"},
+            {"averageRecordSize": "37", "recordCount": "140692", "sizeKey": "3597066", "name": "DE"},
+            {"averageRecordSize": "44", "recordCount": "732755", "sizeKey": "19431720", "name": "MO"},
+            {"averageRecordSize": "44", "recordCount": "1048575", "sizeKey": "25528854", "name": "NY"},
+            {"averageRecordSize": "41", "recordCount": "494795", "sizeKey": "13033759", "name": "SC"},
+            {"averageRecordSize": "44", "recordCount": "690904", "sizeKey": "18299982", "name": "TN"},
+            {"averageRecordSize": "41", "recordCount": "280463", "sizeKey": "8162815", "name": "MS"},
+            {"averageRecordSize": "44", "recordCount": "1048575", "sizeKey": "24058084", "name": "NJ"},
+            {"averageRecordSize": "38", "recordCount": "534978", "sizeKey": "12602162", "name": "IA"},
+            {"averageRecordSize": "38", "recordCount": "262139", "sizeKey": "7092207", "name": "UT"},
+            {"averageRecordSize": "42", "recordCount": "621885", "sizeKey": "15738650", "name": "CO"},
+        ]
+        try:
+            logger.info(f"Recreating table: {self.lead_fpl15_tract_table_name}")
+            response = self.glue.delete_table(
+                DatabaseName=self.database_name,
+                Name=self.lead_fpl15_tract_table_name
+            )
+        except ClientError as e:
+            if e.response["Error"]["Code"] == "EntityNotFoundException":
+                logger.debug(
+                    f"Skipping table deletion as it does not exist: {self.lead_fpl15_tract_table_name}")
+
+        logger.info(f"Creating {self.lead_fpl15_tract_table_name} table...")
+
+        response = self.glue.create_table(
+            DatabaseName=self.database_name,
+            TableInput={
+                "Name": self.lead_fpl15_tract_table_name,
+                "PartitionKeys": [{"Name": "abv", "Type": "string"}],
+                "Parameters": {
+                    "averageRecordSize": "33",
+                    "classification": "parquet",
+                    "compressionType": "none",
+                    "objectCount": "52",
+                    "recordCount": "29650210",
+                    "sizeKey": "738704420",
+                    "typeOfData": "file"
+                },
+                "StorageDescriptor": {
+                    "BucketColumns": [],
+                    "Columns": [
+                        {"Name": "geo_id", "Type": "string"},
+                        {"Name": "puma10", "Type": "string"},
+                        {"Name": "fmr", "Type": "string"},
+                        {"Name": "ybl_index", "Type": "int"},
+                        {"Name": "bld_index", "Type": "int"},
+                        {"Name": "hfl_index", "Type": "int"},
+                        {"Name": "fpl15", "Type": "string"},
+                        {"Name": "units", "Type": "string"},
+                        {"Name": "hincp", "Type": "double"},
+                        {"Name": "elep", "Type": "double"},
+                        {"Name": "elep_cal", "Type": "double"},
+                        {"Name": "gasp", "Type": "double"},
+                        {"Name": "gasp_cal", "Type": "double"},
+                        {"Name": "gasp_u_cal", "Type": "double"},
+                        {"Name": "fulp", "Type": "double"},
+                        {"Name": "count", "Type": "double"}
+                    ],
+                    "Compressed": False,
+                    "InputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
+                    "Location": self.lead_bucket + "fpl15-tract/",
+                    "NumberOfBuckets": -1,
+                    "OutputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat",
+                    "Parameters": {
+                        "averageRecordSize": "33",
+                        "classification": "parquet",
+                        "compressionType": "none",
+                        "objectCount": "52",
+                        "recordCount": "29650210",
+                        "sizeKey": "738704420",
+                        "typeOfData": "file"
+                    },
+                    "SerdeInfo": {
+                        "Parameters": {"serialization.format": "1"},
+                        "SerializationLibrary": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe"
+                    },
+                    "SortColumns": [],
+                    "StoredAsSubDirectories": False
+                },
+                "TableType": "EXTERNAL_TABLE"
+            }
+        )
+
+        logger.info(f"Creating {self.lead_fpl15_tract_table_name} partitions")
+
+        templateArray = []
+        for partition in partitionsArray:
+            thisTemplate = self.get_lead_fpl15_tract_partition_template()
+            thisTemplate["StorageDescriptor"][
+                "Location"] = f"{self.lead_bucket}/fpl15-tract/abv={partition['name']}/"
+            thisTemplate["StorageDescriptor"]["Parameters"]["averageRecordSize"] = partition["averageRecordSize"]
+            thisTemplate["StorageDescriptor"]["Parameters"]["recordCount"] = partition["recordCount"]
+            thisTemplate["StorageDescriptor"]["Parameters"]["sizeKey"] = partition["sizeKey"]
+            thisTemplate["Values"][0] = partition["name"]
+            templateArray.append(thisTemplate)
+        logger.info(f"Submitting {self.lead_fpl15_tract_table_name} partitions batch")
+        response2 = self.glue.batch_create_partition(
+            DatabaseName=self.database_name,
+            TableName=self.lead_fpl15_tract_table_name,
+            PartitionInputList=templateArray
+        )
+
     def get_pv_rooftop_bldg_partition_template(self):
         return {
             'StorageDescriptor': {'BucketColumns': [],

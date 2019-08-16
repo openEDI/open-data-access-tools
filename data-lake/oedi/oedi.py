@@ -47,11 +47,15 @@ class OEDI():
 
         glue = AwsGlue(self.boto3_session, self.oedi_database_name)
         glue.create_database()
-        glue.create_tracking_the_sun_table()
-        glue.create_pv_rooftop_buildings_table()
-        glue.create_pv_rooftop_rasd_table()
-        glue.create_pv_rooftop_aspects_table()
-        glue.create_pv_rooftop_developable_planes_table()
+        # glue.create_tracking_the_sun_table()
+        # glue.create_pv_rooftop_buildings_table()
+        # glue.create_pv_rooftop_rasd_table()
+        # glue.create_pv_rooftop_aspects_table()
+        # glue.create_pv_rooftop_developable_planes_table()
+        glue.create_lead_ami68_state_city_county_table()
+        glue.create_lead_ami68_tract_table()
+        glue.create_lead_fpl15_state_city_county_table()
+        glue.create_lead_fpl15_tract_table()
 
     def clean(self):
         print('cleaning up')

@@ -4,5 +4,6 @@ aws:
   oedi_database_name: oedidb
   datasets_to_include:
     - tracking_the_sun
+    - lead
     - utility_rate_database
     - pv_rooftop
