@@ -358,8 +358,8 @@ class AwsGlue(AwsBase):
                 Name=self.tracking_the_sun_table_name
             )
         except ClientError as e:
-            if e.response['Error']['Code'] == 'EntityNotFoundException':
-                logger.debug(r"Skipping table deletion as it does not exist: {self.tracking_the_sun_table_name}")
+            if e.response["Error"]["Code"] == "EntityNotFoundException":
+                logger.debug(f"Skipping table deletion as it does not exist: {self.tracking_the_sun_table_name}")
 
         logger.info("Creating tracking_the_sun table")
 
@@ -369,15 +369,15 @@ class AwsGlue(AwsBase):
                 "Name": self.tracking_the_sun_table_name,
                 "PartitionKeys": [{"Name": "state", "Type": "varchar(20)"}],
                 "Parameters": {
-                    'averageRecordSize': '57',
-                    'classification': 'parquet',
-                    'compressionType': 'none',
-                    'delimiter': ',',
-                    'objectCount': '26',
-                    'recordCount': '1198663',
-                    'sizeKey': '43350221',
-                    'skip.header.line.count': '1',
-                    'typeOfData': 'file'
+                    "averageRecordSize": "57",
+                    "classification": "parquet",
+                    "compressionType": "none",
+                    "delimiter": ",",
+                    "objectCount": "26",
+                    "recordCount": "1198663",
+                    "sizeKey": "43350221",
+                    "skip.header.line.count": "1",
+                    "typeOfData": "file"
                 },
                 "StorageDescriptor": {
                     "BucketColumns": [],
@@ -415,7 +415,7 @@ class AwsGlue(AwsBase):
             }
         )
 
-        logger.info("Creating tracking_the_sun partitions")
+        logger.info(f"Creating {self.tracking_the_sun_table_name} partitions")
         
         templateArray = []
         for partition in partitionsArray:
@@ -426,7 +426,7 @@ class AwsGlue(AwsBase):
             thisTemplate["StorageDescriptor"]["Parameters"]["sizeKey"] = partition["sizeKey"]
             thisTemplate["Values"][0] = partition["name"]
             templateArray.append(thisTemplate)
-        logger.info("Submitting tracking_the_sun partitions batch")
+        logger.info(f"Submitting {self.tracking_the_sun_table_name} partitions batch")
         response2 = self.glue.batch_create_partition(
             DatabaseName=self.database_name,
             TableName=self.tracking_the_sun_table_name,
