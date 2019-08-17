@@ -471,7 +471,7 @@ class AwsGlue(AwsBase):
                     },
                     {
                         "Name": "units",
-                        "Type": "string",
+                        "Type": "double",
                     },
                     {
                         "Name": "hincp",
@@ -570,7 +570,7 @@ class AwsGlue(AwsBase):
                     },
                     {
                         "Name": "units",
-                        "Type": "string",
+                        "Type": "double",
                     },
                     {
                         "Name": "hincp",
@@ -669,7 +669,7 @@ class AwsGlue(AwsBase):
                     },
                     {
                         "Name": "units",
-                        "Type": "string",
+                        "Type": "double",
                     },
                     {
                         "Name": "hincp",
@@ -768,7 +768,7 @@ class AwsGlue(AwsBase):
                     },
                     {
                         "Name": "units",
-                        "Type": "string",
+                        "Type": "double",
                     },
                     {
                         "Name": "hincp",
@@ -924,7 +924,7 @@ class AwsGlue(AwsBase):
                         {"Name": "bld_index", "Type": "int"},
                         {"Name": "hfl_index", "Type": "int"},
                         {"Name": "ami68", "Type": "string"},
-                        {"Name": "units", "Type": "string"},
+                        {"Name": "units", "Type": "double"},
                         {"Name": "hincp", "Type": "double"},
                         {"Name": "elep", "Type": "double"},
                         {"Name": "elep_cal", "Type": "double"},
@@ -1072,7 +1072,7 @@ class AwsGlue(AwsBase):
                         {"Name": "bld_index", "Type": "int"},
                         {"Name": "hfl_index", "Type": "int"},
                         {"Name": "ami68", "Type": "string"},
-                        {"Name": "units", "Type": "string"},
+                        {"Name": "units", "Type": "double"},
                         {"Name": "hincp", "Type": "double"},
                         {"Name": "elep", "Type": "double"},
                         {"Name": "elep_cal", "Type": "double"},
@@ -1216,7 +1216,7 @@ class AwsGlue(AwsBase):
                         {"Name": "bld_index", "Type": "int"},
                         {"Name": "hfl_index", "Type": "int"},
                         {"Name": "fpl15", "Type": "string"},
-                        {"Name": "units", "Type": "string"},
+                        {"Name": "units", "Type": "double"},
                         {"Name": "hincp", "Type": "double"},
                         {"Name": "elep", "Type": "double"},
                         {"Name": "elep_cal", "Type": "double"},
@@ -1366,7 +1366,7 @@ class AwsGlue(AwsBase):
                         {"Name": "bld_index", "Type": "int"},
                         {"Name": "hfl_index", "Type": "int"},
                         {"Name": "fpl15", "Type": "string"},
-                        {"Name": "units", "Type": "string"},
+                        {"Name": "units", "Type": "double"},
                         {"Name": "hincp", "Type": "double"},
                         {"Name": "elep", "Type": "double"},
                         {"Name": "elep_cal", "Type": "double"},
