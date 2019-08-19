@@ -1,0 +1,6 @@
+{
+"type": "FeatureCollection",
+"features": [
+{ "type": "Feature", "properties": { "id": "DC", "name": "District of Columbia" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -77.119751, 38.93435 ], [ -77.040882, 38.995845 ], [ -76.909393, 38.892852 ], [ -77.039006, 38.791645 ], [ -77.039464, 38.869732 ], [ -77.119751, 38.93435 ] ] ] } }
+]
+}
