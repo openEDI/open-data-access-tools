@@ -272,5 +272,6 @@ class TestClass(object):
 
         assert theAnswer == 3747901
 
+
 a = TestClass()
 a.test_stf_array_query()
