@@ -211,6 +211,49 @@ class AwsGlue(AwsBase):
         )
 
 
+    def create_tracking_the_sun_crawler(self):
+
+        crawler_name = f'{self.database_name}_tracking_the_sun_crawler'
+
+        logger.info(f"Creating crawler {crawler_name}")
+
+        try:
+
+            response = self.glue.create_crawler(
+                Name=crawler_name,
+                Role=self.crawler_role_arn,
+                DatabaseName=self.database_name,
+                Description='',
+                Targets={
+                  'S3Targets': [
+                      {
+                          'Path': self.tracking_the_sun_bucket
+                      },
+                  ],
+
+                },
+                #Schedule='string',
+
+                #TablePrefix='string',
+                SchemaChangePolicy={
+                      'UpdateBehavior': 'UPDATE_IN_DATABASE',
+                      'DeleteBehavior': 'DELETE_FROM_DATABASE'
+                }
+
+            )
+
+        except ClientError as e:
+            if e.response['Error']['Code'] == 'AlreadyExistsException':
+                logger.info(f'Crawler {crawler_name} already exists, skipping.')
+
+        logger.info(f"Starting crawler {crawler_name}")
+
+        response2 = self.glue.start_crawler(
+          Name=crawler_name
+        )
+
+
+    '''
     def create_tracking_the_sun_table(self):
 
       try:
@@ -513,6 +556,8 @@ class AwsGlue(AwsBase):
 
           }
       )
+      
+    '''
 
     def get_pv_rooftop_bldg_partition_template(self):
       return {
