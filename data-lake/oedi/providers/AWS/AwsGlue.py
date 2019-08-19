@@ -37,6 +37,7 @@ class AwsGlue(AwsBase):
 
         managed_policies = []
         managed_policies.append('arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole')
+        managed_policies.append('arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess')
 
         logger.info(f"Creating role: {role_name}")
         self.crawler_role_arn = self.iam_helper.role_stitcher(
@@ -50,7 +51,7 @@ class AwsGlue(AwsBase):
     ## Crawler based tables
     def create_nrel_garage_array_crawler(self):
 
-        crawler_name = f'{self.database_name}nrel_garage_pv_array_timeseries_crawler'
+        crawler_name = f'{self.database_name}_nrel_garage_pv_array_timeseries_crawler'
 
         try:
             logger.info(f"Creating crawler {crawler_name}")
