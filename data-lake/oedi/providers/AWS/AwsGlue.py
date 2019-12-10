@@ -82,7 +82,6 @@ class AwsGlue(AwsBase):
             if e.response['Error']['Code'] == 'AlreadyExistsException':
                 logger.info(f'Crawler {crawler_name} already exists, skipping.')
 
-
         logger.info(f"Starting crawler {crawler_name}")
 
         response2 = self.glue.start_crawler(
