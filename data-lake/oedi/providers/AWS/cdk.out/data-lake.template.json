@@ -1,0 +1,203 @@
+{
+  "Resources": {
+    "oedidbgluedbBucketFC5B2073": {
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Retain",
+      "DeletionPolicy": "Retain",
+      "Metadata": {
+        "aws:cdk:path": "data-lake/oedi_db/glue-db/Bucket/Resource"
+      }
+    },
+    "oedidbgluedbBEDF35FC": {
+      "Type": "AWS::Glue::Database",
+      "Properties": {
+        "CatalogId": "246460460343",
+        "DatabaseInput": {
+          "LocationUri": {
+            "Fn::Join": [
+              "",
+              [
+                "s3://",
+                {
+                  "Ref": "oedidbgluedbBucketFC5B2073"
+                },
+                "/oedi-project"
+              ]
+            ]
+          },
+          "Name": "oedi-project"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "data-lake/oedi_db/glue-db/Resource"
+      }
+    },
+    "oedidboedioediprojectcralwerrole8D3527E6": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "glue.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":iam::aws:policy/service-role/AWSGlueServiceRole"
+              ]
+            ]
+          },
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":iam::aws:policy/AmazonS3ReadOnlyAccess"
+              ]
+            ]
+          }
+        ],
+        "RoleName": "oedi_oedi-project_cralwer_role"
+      },
+      "Metadata": {
+        "aws:cdk:path": "data-lake/oedi_db/oedi_oedi-project_cralwer_role/Resource"
+      }
+    },
+    "oedidboedinrelgaragearray55CDBA2E": {
+      "Type": "AWS::Glue::Crawler",
+      "Properties": {
+        "Role": {
+          "Ref": "oedidboedioediprojectcralwerrole8D3527E6"
+        },
+        "Targets": {
+          "S3Targets": [
+            {
+              "Path": "s3://oedi-garage-array/"
+            }
+          ]
+        },
+        "DatabaseName": "oedi-project",
+        "Name": "oedi-nrel-garage-array"
+      },
+      "Metadata": {
+        "aws:cdk:path": "data-lake/oedi_db/oedi-nrel-garage-array"
+      }
+    },
+    "oedidboedinrelrsfarrayAADFB3FE": {
+      "Type": "AWS::Glue::Crawler",
+      "Properties": {
+        "Role": {
+          "Ref": "oedidboedioediprojectcralwerrole8D3527E6"
+        },
+        "Targets": {
+          "S3Targets": [
+            {
+              "Path": "s3://oedi-rsf-array/"
+            }
+          ]
+        },
+        "DatabaseName": "oedi-project",
+        "Name": "oedi-nrel-rsf-array"
+      },
+      "Metadata": {
+        "aws:cdk:path": "data-lake/oedi_db/oedi-nrel-rsf-array"
+      }
+    },
+    "oedidboedinrelstfarray40C1890B": {
+      "Type": "AWS::Glue::Crawler",
+      "Properties": {
+        "Role": {
+          "Ref": "oedidboedioediprojectcralwerrole8D3527E6"
+        },
+        "Targets": {
+          "S3Targets": [
+            {
+              "Path": "s3://oedi-stf-array/"
+            }
+          ]
+        },
+        "DatabaseName": "oedi-project",
+        "Name": "oedi-nrel-stf-array"
+      },
+      "Metadata": {
+        "aws:cdk:path": "data-lake/oedi_db/oedi-nrel-stf-array"
+      }
+    },
+    "oedidboedinrelwindsitearray49FD5FC2": {
+      "Type": "AWS::Glue::Crawler",
+      "Properties": {
+        "Role": {
+          "Ref": "oedidboedioediprojectcralwerrole8D3527E6"
+        },
+        "Targets": {
+          "S3Targets": [
+            {
+              "Path": "s3://oedi-windsite-array/"
+            }
+          ]
+        },
+        "DatabaseName": "oedi-project",
+        "Name": "oedi-nrel-windsite-array"
+      },
+      "Metadata": {
+        "aws:cdk:path": "data-lake/oedi_db/oedi-nrel-windsite-array"
+      }
+    },
+    "oedidboeditrackingthesun3B1603B5": {
+      "Type": "AWS::Glue::Crawler",
+      "Properties": {
+        "Role": {
+          "Ref": "oedidboedioediprojectcralwerrole8D3527E6"
+        },
+        "Targets": {
+          "S3Targets": [
+            {
+              "Path": "s3://oedi-dev-tracking-the-sun/"
+            }
+          ]
+        },
+        "DatabaseName": "oedi-project",
+        "Name": "oedi-tracking-the-sun"
+      },
+      "Metadata": {
+        "aws:cdk:path": "data-lake/oedi_db/oedi-tracking-the-sun"
+      }
+    },
+    "oedidboedipvrooftops58908962": {
+      "Type": "AWS::Glue::Crawler",
+      "Properties": {
+        "Role": {
+          "Ref": "oedidboedioediprojectcralwerrole8D3527E6"
+        },
+        "Targets": {
+          "S3Targets": [
+            {
+              "Path": "s3://oedi-dev-pv-rooftop/"
+            }
+          ]
+        },
+        "DatabaseName": "oedi-project",
+        "Name": "oedi-pv-rooftops"
+      },
+      "Metadata": {
+        "aws:cdk:path": "data-lake/oedi_db/oedi-pv-rooftops"
+      }
+    }
+  }
+}

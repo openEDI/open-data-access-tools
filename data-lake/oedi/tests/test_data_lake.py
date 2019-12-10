@@ -31,7 +31,7 @@ class TestClass(object):
                 response3 = client.get_query_execution(
                     QueryExecutionId=response['QueryExecutionId']
                 )
-                pprint(response3)
+                #pprint(response3)
                 response2 = client.get_query_results(
                     QueryExecutionId=response['QueryExecutionId']
                 )
@@ -45,7 +45,7 @@ class TestClass(object):
                 #print(e)
                 if 'QUEUED' in str(e):
                     time.sleep(5)
-                    print('sleeping')
+                    #print('sleeping')
                 elif 'FAILED' in str(e):
                     raise
                 else:
@@ -76,7 +76,7 @@ class TestClass(object):
                 response3 = client.get_query_execution(
                     QueryExecutionId=response['QueryExecutionId']
                 )
-                pprint(response3)
+                #pprint(response3)
                 response2 = client.get_query_results(
                     QueryExecutionId=response['QueryExecutionId']
                 )
@@ -90,12 +90,12 @@ class TestClass(object):
                 #print(e)
                 if 'QUEUED' in str(e):
                     time.sleep(5)
-                    print('sleeping')
+                    #print('sleeping')
                 elif 'FAILED' in str(e):
                     raise
                 else:
                     time.sleep(5)
-        print(theAnswer)
+        #print(theAnswer)
 
         assert theAnswer == '118'
 
@@ -108,25 +108,25 @@ class TestClass(object):
 
         )
 
-        pprint(response)
+        #pprint(response)
         next_token = response['NextToken']
-        pprint(next_token)
+        #pprint(next_token)
 
         for part in response['Partitions']:
             count = count + 1
 
-        print("NEXT")
+        #print("NEXT")
         response2 = gclient.get_partitions(
 
             DatabaseName='oedidb',
             TableName='pv_rooftops_buildings',
             NextToken=next_token
         )
-        pprint(response2)
+        #pprint(response2)
         for part in response2['Partitions']:
             count = count + 1
 
-        print(count)
+        #print(count)
         # TODO: Insure this is actually supposed to be the correct count... :)
         assert count == 168
 
@@ -144,7 +144,7 @@ class TestClass(object):
                 }
             }
         )
-        print(response)
+        #print(response)
         x = 0
         theAnswer = ''
         while x < 10:
@@ -152,7 +152,7 @@ class TestClass(object):
                 response3 = client.get_query_execution(
                     QueryExecutionId=response['QueryExecutionId']
                 )
-                pprint(response3)
+                #pprint(response3)
                 response2 = client.get_query_results(
                     QueryExecutionId=response['QueryExecutionId']
                 )
@@ -166,13 +166,13 @@ class TestClass(object):
                 #print(e)
                 if 'QUEUED' in str(e):
                     time.sleep(5)
-                    print('sleeping')
+                    #print('sleeping')
                 elif 'FAILED' in str(e):
                     raise
                 else:
                     time.sleep(5)
 
-        print(theAnswer)
+        #print(theAnswer)
 
         assert theAnswer == '14662'
 
@@ -192,7 +192,7 @@ class TestClass(object):
                 }
             }
         )
-        print(response)
+        #print(response)
         x = 0
         theAnswer = ''
         while x < 10:
@@ -200,7 +200,7 @@ class TestClass(object):
                 response3 = client.get_query_execution(
                     QueryExecutionId=response['QueryExecutionId']
                 )
-                pprint(response3)
+                #pprint(response3)
                 response2 = client.get_query_results(
                     QueryExecutionId=response['QueryExecutionId']
                 )
@@ -214,13 +214,13 @@ class TestClass(object):
                 #print(e)
                 if 'QUEUED' in str(e):
                     time.sleep(5)
-                    print('sleeping')
+                    #print('sleeping')
                 elif 'FAILED' in str(e):
                     raise
                 else:
                     time.sleep(5)
 
-        print(theAnswer)
+        #print(theAnswer)
 
         assert theAnswer == '25290'
 
@@ -240,7 +240,7 @@ class TestClass(object):
                 }
             }
         )
-        print(response)
+        #print(response)
         x = 0
         theAnswer = ''
         while x < 10:
@@ -248,7 +248,7 @@ class TestClass(object):
                 response3 = client.get_query_execution(
                     QueryExecutionId=response['QueryExecutionId']
                 )
-                pprint(response3)
+                #pprint(response3)
                 response2 = client.get_query_results(
                     QueryExecutionId=response['QueryExecutionId']
                 )
@@ -262,13 +262,13 @@ class TestClass(object):
                 #print(e)
                 if 'QUEUED' in str(e):
                     time.sleep(5)
-                    print('sleeping')
+                    #print('sleeping')
                 elif 'FAILED' in str(e):
                     raise
                 else:
                     time.sleep(5)
 
-        print(theAnswer)
+        #print(theAnswer)
 
         assert theAnswer == '3747901'
 
@@ -288,7 +288,7 @@ class TestClass(object):
                 }
             }
         )
-        print(response)
+        #print(response)
         x = 0
         theAnswer = ''
         while x < 10:
@@ -296,7 +296,7 @@ class TestClass(object):
                 response3 = client.get_query_execution(
                     QueryExecutionId=response['QueryExecutionId']
                 )
-                pprint(response3)
+                #pprint(response3)
                 response2 = client.get_query_results(
                     QueryExecutionId=response['QueryExecutionId']
                 )
@@ -310,13 +310,13 @@ class TestClass(object):
                 #print(e)
                 if 'QUEUED' in str(e):
                     time.sleep(5)
-                    print('sleeping')
+                    #print('sleeping')
                 elif 'FAILED' in str(e):
                     raise
                 else:
                     time.sleep(5)
 
-        print(theAnswer)
+        #print(theAnswer)
 
         assert theAnswer == '3011847'
 
