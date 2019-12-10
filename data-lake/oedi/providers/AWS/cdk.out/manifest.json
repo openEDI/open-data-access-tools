@@ -19,8 +19,8 @@
             "type": "aws:cdk:logicalId",
             "data": "oedidbgluedbBucketFC5B2073",
             "trace": [
-              "new Bucket (/private/var/folders/h4/g79h6bl14nl730m0xwmrnrn00jwx60/T/jsii-kernel-hblHQU/node_modules/@aws-cdk/aws-s3/lib/bucket.js:366:26)",
-              "new Database (/private/var/folders/h4/g79h6bl14nl730m0xwmrnrn00jwx60/T/jsii-kernel-hblHQU/node_modules/@aws-cdk/aws-glue/lib/database.js:18:28)",
+              "new Bucket (/private/var/folders/h4/g79h6bl14nl730m0xwmrnrn00jwx60/T/jsii-kernel-dGHxvw/node_modules/@aws-cdk/aws-s3/lib/bucket.js:366:26)",
+              "new Database (/private/var/folders/h4/g79h6bl14nl730m0xwmrnrn00jwx60/T/jsii-kernel-dGHxvw/node_modules/@aws-cdk/aws-glue/lib/database.js:18:28)",
               "obj._wrapSandboxCode (/Users/drager/anaconda3/lib/python3.7/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7749:49)",
               "Kernel._wrapSandboxCode (/Users/drager/anaconda3/lib/python3.7/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8202:20)",
               "Kernel._create (/Users/drager/anaconda3/lib/python3.7/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7749:26)",
@@ -37,7 +37,7 @@
             "type": "aws:cdk:logicalId",
             "data": "oedidbgluedbBEDF35FC",
             "trace": [
-              "new Database (/private/var/folders/h4/g79h6bl14nl730m0xwmrnrn00jwx60/T/jsii-kernel-hblHQU/node_modules/@aws-cdk/aws-glue/lib/database.js:22:26)",
+              "new Database (/private/var/folders/h4/g79h6bl14nl730m0xwmrnrn00jwx60/T/jsii-kernel-dGHxvw/node_modules/@aws-cdk/aws-glue/lib/database.js:22:26)",
               "obj._wrapSandboxCode (/Users/drager/anaconda3/lib/python3.7/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7749:49)",
               "Kernel._wrapSandboxCode (/Users/drager/anaconda3/lib/python3.7/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8202:20)",
               "Kernel._create (/Users/drager/anaconda3/lib/python3.7/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7749:26)",
@@ -54,7 +54,7 @@
             "type": "aws:cdk:logicalId",
             "data": "oedidboedioediprojectcralwerrole8D3527E6",
             "trace": [
-              "new Role (/private/var/folders/h4/g79h6bl14nl730m0xwmrnrn00jwx60/T/jsii-kernel-hblHQU/node_modules/@aws-cdk/aws-iam/lib/role.js:35:22)",
+              "new Role (/private/var/folders/h4/g79h6bl14nl730m0xwmrnrn00jwx60/T/jsii-kernel-dGHxvw/node_modules/@aws-cdk/aws-iam/lib/role.js:35:22)",
               "obj._wrapSandboxCode (/Users/drager/anaconda3/lib/python3.7/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7749:49)",
               "Kernel._wrapSandboxCode (/Users/drager/anaconda3/lib/python3.7/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8202:20)",
               "Kernel._create (/Users/drager/anaconda3/lib/python3.7/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7749:26)",
