@@ -49,16 +49,17 @@ class OEDI():
 
         glue.create_database()
         glue.create_crawler_role()
+        glue.create_tracking_the_sun_crawler()
         glue.create_nrel_garage_array_crawler()
         glue.create_nrel_rsf_array_crawler()
         glue.create_nrel_stf_array_crawler()
         glue.create_nrel_nwtc_array_crawler()
-        #glue.create_rsf_array_table()
+
         #glue.create_tracking_the_sun_table()
-        #glue.create_pv_rooftop_buildings_table()
-        #glue.create_pv_rooftop_rasd_table()
-        #glue.create_pv_rooftop_aspects_table()
-        #glue.create_pv_rooftop_developable_planes_table()
+        glue.create_pv_rooftop_buildings_table()
+        glue.create_pv_rooftop_rasd_table()
+        glue.create_pv_rooftop_aspects_table()
+        glue.create_pv_rooftop_developable_planes_table()
 
 
     def clean(self):
