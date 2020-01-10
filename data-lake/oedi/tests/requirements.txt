@@ -1,0 +1,3 @@
+pyyaml
+boto3
+pytestgit statu
