@@ -19,4 +19,3 @@ app = core.App()
 DataLakeStack(app, "oedidatalake", env={'region': 'us-west-2' })
 
 app.synth()
-
