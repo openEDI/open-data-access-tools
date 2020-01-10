@@ -1,33 +1,39 @@
 import boto3
 from pprint import pprint
 
+tablename = 'oedi_garage_array'
+
 session = boto3.Session(profile_name='nrel-aws-dev', region_name='us-west-2')
 
 client = session.client('glue')
 
 response = client.get_table(DatabaseName='oedi',
-    Name='pv_rooftops_aspects'
+    Name=tablename
     )
 
 response2 = client.get_partitions(
 
     DatabaseName='oedi',
-    TableName='pv_rooftops_aspects'
+    TableName=tablename
 )
 response3 = client.get_partitions(
 
     DatabaseName='oedi',
-    TableName='pv_rooftops_aspects',
+    TableName=tablename,
     NextToken=response2['NextToken']
 )
+
 partitionsarray = []
 pprint(response)
 pprint(response2)
 for res in response2['Partitions']:
+    print("RESSSSSSSSSSSSS")
     print(res)
     try:
         print(res['StorageDescriptor']['Parameters']['averageRecordSize'])
-        partitionsarray.append(dict(name=res['Values'][0],
+        partitionsarray.append(dict(name=res['Values'],
+                                    compressionType=res['StorageDescriptor']['Parameters']['compressionType'],
+                                    objectCount=res['StorageDescriptor']['Parameters']['objectCount'],
                                     averageRecordSize=res['StorageDescriptor']['Parameters']['averageRecordSize'],
                                     recordCount=res['StorageDescriptor']['Parameters']['recordCount'],
                                     sizeKey=res['StorageDescriptor']['Parameters']['sizeKey']))

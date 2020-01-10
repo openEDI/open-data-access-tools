@@ -1,0 +1,7 @@
+pyyaml
+boto3
+pytest
+aws_cdk.aws_athena
+aws_cdk.aws_glue
+aws_cdk.aws_s3
+aws_cdk.aws_iam
