@@ -16,7 +16,7 @@ LOGO = '''
 print(LOGO)
 
 app = core.App()
-DataLakeStack(app, "data-lake", env={'region': 'us-west-2' })
+DataLakeStack(app, "oedidatalake", env={'region': 'us-west-2' })
 
 app.synth()
 
