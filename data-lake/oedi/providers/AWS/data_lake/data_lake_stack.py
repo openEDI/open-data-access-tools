@@ -18,7 +18,7 @@ class DataLakeStack(core.Stack):
         oedi_data_lake = DataLakeConstruct(
             self,
             'oedi_db',
-            database_name='oedi-project',
+            database_name=self.oedi_database_name,
             version='0.0.1'
 
         )
