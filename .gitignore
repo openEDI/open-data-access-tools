@@ -1,7 +1,7 @@
 *.DS_Store
 *.pyc
 *.idea
-venv
+venv*/*
 venv/*
 *.env*
 *cdk.out*
