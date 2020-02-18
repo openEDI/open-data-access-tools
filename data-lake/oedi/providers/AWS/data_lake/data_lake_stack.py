@@ -33,5 +33,8 @@ class DataLakeStack(core.Stack):
         crawlers.append(oedi_data_lake.create_crawler('oedi-nrel-stf-array', 's3://oedi-stf-array/'))
         crawlers.append(oedi_data_lake.create_crawler('oedi-nrel-windsite-array', 's3://oedi-windsite-array/'))
         crawlers.append(oedi_data_lake.create_crawler('oedi-tracking-the-sun', 's3://oedi-dev-tracking-the-sun/'))
-        crawlers.append(oedi_data_lake.create_crawler('oedi-pv-rooftops', 's3://oedi-dev-pv-rooftop/'))
+        crawlers.append(oedi_data_lake.create_crawler('oedi-pv-rooftops-aspects', 's3://nrel-pv-rooftops/aspects/'))
+        crawlers.append(oedi_data_lake.create_crawler('oedi-pv-rooftops-buildings', 's3://nrel-pv-rooftops/buildings/'))
+        crawlers.append(oedi_data_lake.create_crawler('oedi-pv-rooftops-developable-planes', 's3://nrel-pv-rooftops/developable_planes/'))
+        crawlers.append(oedi_data_lake.create_crawler('oedi-pv-rooftops-rasd', 's3://nrel-pv-rooftops/rasd/'))
 
