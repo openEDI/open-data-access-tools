@@ -6,3 +6,6 @@ venv/*
 *.env*
 *cdk.out*
 .vscode/
+
+# Jupyter notebook
+.ipynb_checkpoints
