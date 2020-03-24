@@ -42,7 +42,7 @@ class DataLakeConstruct(core.Construct):
 
 
 
-    def create_crawler(self, name, location):
+    def create_crawler(self, name, location, table_prefix=None):
 
         crawler = glue.CfnCrawler(
                                   self,
@@ -52,6 +52,6 @@ class DataLakeConstruct(core.Construct):
                                   targets={
                                         "s3Targets": [{"path": location}]
                                   },
-                                  database_name=self._database_name
+                                  database_name=self._database_name,
+                                  table_prefix=table_prefix
         )
-
