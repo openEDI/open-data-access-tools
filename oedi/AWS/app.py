@@ -2,20 +2,25 @@
 
 from aws_cdk import core
 
-from data_lake.data_lake_stack import DataLakeStack
+from oedi.config import data_lake_config
+from oedi.AWS.data_lake.stack import DataLakeStack
 
-LOGO = '''
+
+LOGO = """
 
 ,---.                   ,---.                             ,--.      |             |     o|    o     |    o           
 |   |,---.,---.,---.    |--- ,---.,---.,---.,---.,   .    |   |,---.|--- ,---.    |,---..|--- .,---.|--- ..    ,,---.
 |   ||   ||---'|   |    |    |   ||---'|    |   ||   |    |   |,---||    ,---|    ||   |||    |,---||    | \  / |---'
 `---'|---'`---'`   '    `---'`   '`---'`    `---|`---|    `--' `---^`---'`---^    ``   '``---'``---^`---'`  `'  `---'
      |                                      `---'`---'                                                                
-    '''
+"""
 
 print(LOGO)
 
 app = core.App()
-DataLakeStack(app, "oedidatalake", env={ 'region': 'us-west-2' })
+
+data_lake_name = data_lake_config.data_lake_name
+aws_region = data_lake_config.aws_region
+DataLakeStack(app, data_lake_name, env={"region": aws_region})
 
 app.synth()
