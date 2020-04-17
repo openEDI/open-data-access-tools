@@ -33,6 +33,6 @@ setuptools.setup(
         "Topic :: Data Lake :: Open Energy Data Initiative",
         "Topic :: Utilities"
     ],
-    entry_points={"console_scripts": ["oedi = oedi.cli:cli"]},
+    entry_points={"console_scripts": ["oedi = oedi.cli.oedi:cli"]},
     test_suite="tests"
 )
