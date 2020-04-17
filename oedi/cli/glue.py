@@ -8,22 +8,9 @@ from oedi.AWS.utils.glue import (
     check_crawler_state,
     list_available_tables
 )
-from oedi.AWS.utils.athena import run_pyathena
 
 
-@click.group()
-def cli():
-    pass
-
-
-@cli.command()
-def show_config():
-    """Show data lake configuration."""
-    template = data_lake_config.to_string()
-    print(template)
-
-
-@cli.command()
+@click.command()
 def list_crawlers():
     """List available crawlers."""
     crawlers = list_available_crawlers()
@@ -35,7 +22,7 @@ def list_crawlers():
         print(" - " + crawler)
 
 
-@cli.command()
+@click.command()
 @click.option(
     "-n", "--crawler-name",
     type=click.STRING,
@@ -84,7 +71,7 @@ def run_crawler(crawler_name, background_run=False):
             break
 
 
-@cli.command()
+@click.command()
 def run_crawlers():
     """Run all crawlers in data lake."""
     crawlers = list_available_crawlers()
@@ -101,7 +88,7 @@ def run_crawlers():
     print("All crawlers started!")
 
 
-@cli.command()
+@click.command()
 def list_tables():
     """List available tables."""
     tables = list_available_tables(
@@ -110,55 +97,3 @@ def list_tables():
     
     for table in tables:
         print(" - " + table)
-
-
-@cli.command()
-@click.option(
-    "-q", "--query-string",
-    type=click.STRING,
-    required=True,
-    help="Valid SQL query string."
-)
-@click.option(
-    "-o", "--output-location",
-    type=click.STRING,
-    required=False,
-    default=None,
-    help="A S3 staging directory."
-)
-@click.option(
-    "-r", "--region-name",
-    type=click.STRING,
-    required=False,
-    default=None,
-    help="AWS region name, i.e. us-west-2"
-)
-@click.option(
-    "--head",
-    type=click.BOOL,
-    is_flag=True,
-    default=False,
-    show_default=True,
-    help="Show pandas DataFrame head only."
-)
-def run_query(query_string, output_location=None, region_name=None, head=False):
-    """Run SQL query and show result."""
-    region_name = data_lake_config.aws_region
-    if not output_location:
-        output_location = data_lake_config.output_location
-    
-    # The user may not configure Output Location in config
-    if not output_location:
-        raise ValueError("Invalid '--output-location' option value.")
-    
-    result = run_pyathena(
-        query_string=query_string,
-        s3_staging_dir=output_location,
-        region_name=region_name
-    )
-    
-    if head:
-        print(result.head())
-        return
-    
-    print(result)
