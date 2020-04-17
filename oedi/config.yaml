@@ -9,4 +9,4 @@ PROVIDER-AWS:
   - s3://nrel-pv-rooftops/buildings/
   - s3://nrel-pv-rooftops/developable_planes/
   - s3://nrel-pv-rooftops/rasd/
-  Output Location: s3://nrel-tests/
+  Staging Location: s3://user-owned-bucket/subfolder/

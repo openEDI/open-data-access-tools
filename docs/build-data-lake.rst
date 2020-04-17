@@ -21,7 +21,7 @@ configure the data lake based on your needs. We provide a template
       - s3://nrel-pv-rooftops/buildings/
       - s3://nrel-pv-rooftops/developable_planes/
       - s3://nrel-pv-rooftops/rasd/
-      Output Location: s3://your-output-bucket/folder/
+      Staging Location: s3://your-output-bucket/folder/
 
 OEDI may have multiple providers in the future. For now, we only focus on ``PROVIDER-AWS``.
 Those configurations will be applied to AWS and related services in your data lake.
@@ -30,7 +30,7 @@ Those configurations will be applied to AWS and related services in your data la
     * ``Data Lake Name``: the stack name of AWS CloudFormation.
     * ``Database Name``: the database name created in AWS Glue.
     * ``Dataset Locations``: the AWS S3 locations with columnar dataset.
-    * ``Output Location`` (optional): the AWS S3 location used by Athena for query outputs.
+    * ``Staging Location`` (optional): the AWS S3 location used by Athena for query outputs.
 
 Please update the values in ``config.yaml`` based your requirements.
 

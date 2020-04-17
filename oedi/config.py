@@ -67,8 +67,8 @@ class DataLakeConfig(OEDIConfig):
         return self.data.get("Dataset Locations", [])
     
     @property
-    def output_location(self):
-        return self.data.get("Output Location", None)
+    def staging_location(self):
+        return self.data.get("Staging Location", None)
 
 
 data_lake_config = DataLakeConfig(
