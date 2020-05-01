@@ -110,8 +110,9 @@ def list_available_crawlers():
         create_crawler_name(s3url=dataset_location)
         for dataset_location in data_lake_config.dataset_locations
     ])
-    
-    available_crawlers = list(all_crawlers.intersection(potential_crawlers))
+
+    available_crawlers = list(set(all_crawlers).intersection(set(potential_crawlers)))
+
     return sorted(available_crawlers)
 
 
