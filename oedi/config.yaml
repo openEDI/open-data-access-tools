@@ -1,0 +1,12 @@
+PROVIDER-AWS:
+  AWS Region: us-west-2
+  Data Lake Name: oedi-data-lake-test
+  Database Name: oedi_database_test
+  Dataset Locations:
+  - s3://lbnl-tracking-the-sun/2018/
+  - s3://lbnl-tracking-the-sun/2019/
+  - s3://nrel-pv-rooftops/aspects/
+  - s3://nrel-pv-rooftops/buildings/
+  - s3://nrel-pv-rooftops/developable_planes/
+  - s3://nrel-pv-rooftops/rasd/
+  Output Location: s3://nrel-tests/
