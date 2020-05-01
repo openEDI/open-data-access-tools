@@ -11,6 +11,8 @@ __pycache__/
 *.so
 
 *venv*
+=======
+
 # Distribution / packaging
 .Python
 build/
