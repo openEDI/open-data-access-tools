@@ -46,21 +46,12 @@ class OEDIGlue(AWSClientBase):
 
     def list_crawlers(self):
         """List available crawlers"""
-        # All crawlers on Glue
-        # try:
-        #     all_crawlers = set(self.client.list_crawlers()["CrawlerNames"])
-        # except ClientError as e:
-        #     all_crawlers = set()
-
         # Crawlers definited in OEDI datalake.
         oedi_crawler_names = set([
             generate_crawler_name(s3url=dataset_location)
             for dataset_location in data_lake_config.dataset_locations
         ])
 
-        # Available crawler names after deploy.
-        # available_crawlers = list(all_crawlers.intersection(potential_crawlers))
-        
         # Access to each crawler details
         available_crawlers = []
         for crawler_name in oedi_crawler_names:
