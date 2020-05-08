@@ -1,5 +1,7 @@
 boto3
 click
+pandas
+prettytable
 pyyaml
 pyathena
 aws_cdk.core
