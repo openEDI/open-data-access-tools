@@ -82,7 +82,7 @@ For example,
 
     [10 rows x 63 columns]
 
-The query results would be stored in ``Output Location`` configured in ``config.yaml``. You can also specify this location 
+The query results would be stored in ``Staging Location`` configured in ``config.yaml``. You can also specify this location 
 via ``--output-location`` or ``-o`` in this command, like this:
 
 .. code-block:: bash

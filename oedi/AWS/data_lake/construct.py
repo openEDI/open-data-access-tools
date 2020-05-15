@@ -6,7 +6,7 @@ from aws_cdk import (
     core as core,
 )
 
-from oedi.AWS.utils.glue import create_crawler_name, create_table_prefix
+from oedi.AWS.utils.glue import create_crawler_name, generate_table_prefix
 
 
 class DataLakeConstruct(core.Construct):
@@ -67,7 +67,7 @@ class DataLakeConstruct(core.Construct):
     def create_crawler(self, location):
         """Create crawler in data lake by given dataset location."""
         crawler_name = create_crawler_name(s3url=location)
-        table_prefix = create_table_prefix(s3url=location)
+        table_prefix = generate_table_prefix(s3url=location)
 
         if not self.crawler_role:
             self.crawler_role()
