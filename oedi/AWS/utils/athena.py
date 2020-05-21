@@ -30,22 +30,30 @@ class OEDIAthena(object):
         return self._conn
 
     def __exit__(self):
-        self.conn.close()
+        if self._conn:
+            self._conn.close()
 
-    def run_query(self, query_string, output_file=None):
+    def __del__(self):
+        if self._conn:
+            self._conn.close()
+
+    def run_query(self, query_string, pandas_cursor=True):
         """Run SQL query using pyathena."""
-        cursor = self.conn.cursor(PandasCursor)
-    
+        # Setup cursor
+        if pandas_cursor:
+            cursor = self.conn.cursor(PandasCursor)
+        else:
+            cursor = self.conn.cursor()
+
+        # Start query
         try:
-            result = cursor.execute(query_string).as_pandas()
+            result = cursor.execute(query_string)
+            if pandas_cursor:
+                result = result.as_pandas()
+            else:
+                result = result.fetchall()
+            return result
         except Exception as e:
-            print(str(e))
-            return
+            raise
         finally:
             cursor.close()
-        
-        if output_file:
-            result.to_csv(output_file, index=False)
-            return True
-
-        return result
