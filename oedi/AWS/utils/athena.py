@@ -1,5 +1,8 @@
+import geopandas
+
 from pyathena.connection import Connection
 from pyathena.pandas_cursor import PandasCursor
+from shapely import wkt
 
 
 class OEDIAthena(object):
@@ -37,23 +40,35 @@ class OEDIAthena(object):
         if self._conn:
             self._conn.close()
 
-    def run_query(self, query_string, pandas_cursor=True):
+    def run_query(self, query_string, geometry=None, pandas_cursor=True):
         """Run SQL query using pyathena."""
-        # Setup cursor
         if pandas_cursor:
-            cursor = self.conn.cursor(PandasCursor)
+            result = self._pandas_cursor_execute(query_string)
+            if geometry:
+                result = self._load_wkt(df=result, geometry=geometry)
         else:
-            cursor = self.conn.cursor()
+            result = self._cursor_execute(query_string)
 
-        # Start query
+        return result
+
+    def _cursor_execute(self, query_string):
+        cursor = self.conn.cursor()
         try:
             result = cursor.execute(query_string)
-            if pandas_cursor:
-                result = result.as_pandas()
-            else:
-                result = result.fetchall()
-            return result
-        except Exception as e:
-            raise
+            return result.fetchall()
         finally:
             cursor.close()
+
+    def _pandas_cursor_execute(self, query_string):
+        cursor = self.conn.cursor(PandasCursor)
+        try:
+            result = cursor.execute(query_string)
+            return result.as_pandas()
+        finally:
+            cursor.close()
+
+    def _load_wkt(self, df, geometry):
+        """Convert pandas dataframe with WKT column to geopandas geodataframe"""
+        df[geometry] = df[geometry].apply(wkt.loads)
+        gdf = geopandas.GeoDataFrame(df, geometry=geometry)
+        return gdf
