@@ -1,6 +1,8 @@
 boto3
 click
 pandas
+geopandas
+plotly
 prettytable
 pyyaml
 pyathena
