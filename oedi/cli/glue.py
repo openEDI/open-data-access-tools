@@ -87,7 +87,7 @@ def run_crawler(crawler_name, background_run=False):
         return
     
     if background_run:
-        print("Started!")
+        print("Started! Please run `oedi list-crawlers` to check the status.")
         return
     
     running_started, stopping_started = False, False
