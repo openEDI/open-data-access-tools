@@ -9,4 +9,6 @@ PROVIDER-AWS:
   - s3://nrel-pv-rooftops/buildings/
   - s3://nrel-pv-rooftops/developable_planes/
   - s3://nrel-pv-rooftops/rasd/
+  - s3://oedi-sera-gis/census_state_2010/
+  - s3://oedi-sera-gis/census_regions_2010/
   Staging Location: s3://user-owned-bucket/subfolder/
