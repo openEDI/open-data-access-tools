@@ -1,0 +1,78 @@
+{% macro html(this, kwargs) %}
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Legend</title>
+</head>
+<body>
+<div class='map-legend'>
+<div class='legend-title'>PV System Count</div>
+<div class='legend-scale'>
+  <ul class='legend-labels'>
+    <li><span style='background:#ffffcc;'></span>0 - 100</li>
+    <li><span style='background:#ffeda0;'></span>100 - 500</li>
+    <li><span style='background:#fed976;'></span>500 - 1000</li>
+    <li><span style='background:#feb24c;'></span>1000 - 5000</li>
+    <li><span style='background:#fd8d3c;'></span>5000 - 10000</li>
+    <li><span style='background:#fc4e2a;'></span>10000 - 50000</li>
+    <li><span style='background:#e31a1c;'></span>50000 - 100000</li>
+    <li><span style='background:#bd0026;'></span>100000 - 500000</li>
+    <li><span style='background:#800026;'></span>500000 - 1000000</li>
+  </ul>
+</div>
+<div class='legend-source'>Source: <a href="https://tilemill-project.github.io/tilemill/docs/guides/advanced-legends/" target="_blank">tilemill-project</a></div>
+</div>
+ 
+</body>
+</html>
+
+<style type='text/css'>
+  .map-legend {
+    position: absolute;
+    z-index:9999;
+    padding: 10px;
+    right: 20px;
+    bottom: 20px;
+    }
+  .map-legend .legend-title {
+    text-align: left;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 90%;
+    }
+  .map-legend .legend-scale ul {
+    margin: 0;
+    margin-bottom: 5px;
+    padding: 0;
+    float: left;
+    list-style: none;
+    }
+  .map-legend .legend-scale ul li {
+    font-size: 80%;
+    list-style: none;
+    margin-left: 0;
+    line-height: 18px;
+    margin-bottom: 2px;
+    }
+  .map-legend ul.legend-labels li span {
+    display: block;
+    float: left;
+    height: 16px;
+    width: 30px;
+    margin-right: 5px;
+    margin-left: 0;
+    border: 1px solid #999;
+    }
+  .map-legend .legend-source {
+    font-size: 70%;
+    color: #999;
+    clear: both;
+    }
+  .map-legend a {
+    color: #777;
+    }
+</style>
+{% endmacro %}
