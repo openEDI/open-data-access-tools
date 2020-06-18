@@ -114,14 +114,15 @@ def run_crawler(crawler_name, background_run=False):
 def run_crawlers():
     """Run all crawlers in data lake."""
     crawlers = glue.list_crawlers()
-    
+    #print(crawlers)
     for crawler_name in crawlers:
-        state = glue.get_crawler_state(crawler_name)
+        #print(crawler_name)
+        state = glue.get_crawler_state(crawler_name['Name'])
         if state == "READY":
-            print(f"Starting crawler {crawler_name}...")
-            glue.start_crawler(crawler_name)
+            print(f"Starting crawler {crawler_name['Name']}...")
+            glue.start_crawler(crawler_name['Name'])
         else:
-            print(f"Crawler '{crawler_name}' has already started. State={state.lower()}...")
+            print(f"Crawler '{crawler_name['Name']}' has already started. State={state.lower()}...")
             continue
     
     print("All crawlers started!")
