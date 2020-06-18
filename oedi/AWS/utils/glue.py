@@ -5,6 +5,7 @@ import os
 from urllib.parse import urlparse
 from operator import itemgetter
 
+import pandas as pd
 import yaml
 import boto3
 from botocore.exceptions import ClientError
@@ -32,17 +33,47 @@ class OEDIGlue(AWSClientBase):
     def list_tables(self, database_name):
         """List avaible tables in given database"""
         paginator = self.client.get_paginator("get_tables")
-        response_iterator = paginator.paginate(DatabaseName=database_name)
         
         tables = []
-        for response in response_iterator:
+        for response in paginator.paginate(DatabaseName=database_name):
             for tb in response["TableList"]:
                 tables.append({
-                    "Name": f"{database_name}.{tb['Name']}",
+                    "Name": f"{tb['Name']}",
                     "CreateTime": tb["CreateTime"]
                 })
 
         return sorted(tables, key=itemgetter("Name"))
+
+    def get_table(self, database_name, table_name):
+        """Get given table detail information"""
+        response = self.client.get_table(DatabaseName=database_name, Name=table_name)
+        return response["Table"]
+
+    def get_table_columns(self, database_name, table_name, with_pandas=True):
+        """Get table columns"""
+        table = self.get_table(database_name, table_name)
+        columns = table["StorageDescriptor"]["Columns"]
+        if with_pandas:
+            columns = pd.DataFrame(columns)
+        return columns
+
+    def get_partition_keys(self, database_name, table_name, with_pandas=True):
+        """Get table partition keys"""
+        table = self.get_table(database_name, table_name)
+        partition_keys = table["PartitionKeys"]
+        if with_pandas:
+            partition_keys = pd.DataFrame(partition_keys)
+        return partition_keys
+
+    def get_partition_values(self, database_name, table_name):
+        """Get given table partition values"""
+        partition_values = []
+        paginator = self.client.get_paginator("get_partitions")
+        for response in paginator.paginate(DatabaseName=database_name, TableName=table_name):
+            partitions = response["Partitions"]
+            for partition in partitions:
+                partition_values.extend(partition["Values"])
+        return partition_values
 
     def list_crawlers(self):
         """List available crawlers"""
@@ -64,7 +95,7 @@ class OEDIGlue(AWSClientBase):
                 "LastUpdated": crawler["LastUpdated"],
                 "CreateTime": crawler["CreationTime"]
             })
-        
+
         return sorted(available_crawlers, key=itemgetter("Name"))
 
     def get_crawler_state(self, crawler_name):
