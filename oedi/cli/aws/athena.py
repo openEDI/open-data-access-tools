@@ -1,7 +1,7 @@
 import click
 
-from oedi.config import data_lake_config
-from oedi.AWS.utils.athena import OEDIAthena
+from oedi.config import AWSDataLakeConfig
+from oedi.AWS.athena import OEDIAthena
 
 
 @click.command()
@@ -42,9 +42,10 @@ from oedi.AWS.utils.athena import OEDIAthena
 )
 def run_query(query_string, staging_location=None, region_name=None, output_file=None, head=False):
     """Run SQL query and show/export result."""
-    region_name = data_lake_config.aws_region
+    config = AWSDataLakeConfig()
+    region_name = region_name or config.region_name
     if not staging_location:
-        staging_location = data_lake_config.staging_location
+        staging_location = config.staging_location
     
     # The user may not configure Staging Location in config
     if not staging_location:

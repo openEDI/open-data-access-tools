@@ -3,8 +3,8 @@ import time
 import click
 from prettytable import PrettyTable
 
-from oedi.config import data_lake_config
-from oedi.AWS.utils.glue import OEDIGlue
+from oedi.config import AWSDataLakeConfig
+from oedi.AWS.glue import OEDIGlue
 
 glue = OEDIGlue()
 
@@ -27,7 +27,7 @@ def list_databases():
 @click.option(
     "-d", "--database-name",
     type=click.STRING,
-    default=data_lake_config.database_name,
+    default=AWSDataLakeConfig().database_name,
     help="List the tables in Glue database."
 )
 def list_tables(database_name):
