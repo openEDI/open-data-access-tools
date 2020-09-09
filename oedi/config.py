@@ -1,66 +1,77 @@
+import io
 import os
-import pathlib
-
 import yaml
 
-OEDI_ROOT_DIR = pathlib.Path(__file__).parents[0]
-OEDI_DEFAULT_DATA_LAKE_NAME = "oedi-data-lake"
-OEDI_DEFAULT_DATABASE_NAME = "oedi_database"
+DEFAULTT_OEDI_CONFIG_FILLE = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)),
+    "config.yaml"
+)
+AWS_DEFAULT_DATALAKE_NAME = "oedi_datalake"
+AWS_DEFAULT_DATABASE_NAME = "oedi_database"
 
 
-class OEDIConfig(object):
+class OEDIConfigBase(object):
+    """Config Classs for manipulating OEDI configurations"""
     
-    def __init__(self, config_file):
-        self._config_file = config_file
-        self._data = self.load(self._config_file)
+    def __init__(self, config_file=None):
+        self._config_file = config_file or DEFAULTT_OEDI_CONFIG_FILLE
+    
+    @property
+    def provider(self):
+        """The provider of OEDI data lake."""
+        raise NotImplementedError
     
     @property
     def config_file(self):
-        """The source file of data lake configuration"""
+        """The source file of OEDI configuration"""
         return self._config_file
 
     @property
     def data(self):
-        return self._data
-
+        data = self.load(self._config_file)
+        return data[self.provider]
+    
     def load(self, config_file):
-        """Load OEDI data lake configuration"""
+        """Load OEDI configuration from file."""
         with open(config_file, "r") as f:
             data = yaml.load(f, Loader=yaml.FullLoader)
         return data
-
+    
     def dump(self, data, config_file):
-        """Dump OEDI data lake configuration"""
+        """Dump OEDI configuration to file."""
         with open(config_file, "w") as f:
             yaml.dump(data, f)
-
-
-class DataLakeConfig(OEDIConfig):
-    PROVIDER = "PROVIDER-AWS"
-    
-    def __init__(self, config_file):
-        super().__init__(config_file=config_file)
-        self._data = self.data[self.PROVIDER]
     
     def to_string(self):
         """Dump OEDI data lake configuration to string"""
+        buffer = io.StringIO()
+        yaml.dump(self.data, buffer)
+        buffer.seek(0)
+        
         template = ""
-        with open(self.config_file, "r") as f:
-            for line in f.readlines():
-                template += line
+        for line in buffer.readlines():
+            template += line
         return template
 
+
+class AWSDataLakeConfig(OEDIConfigBase):
+    """AWS data lake configuration class"""
+    
     @property
-    def aws_region(self):
-        return self.data.get("AWS Region", None)
+    def provider(self):
+        return "AWS"
+    
+    @property
+    def region_name(self):
+        return self.data.get("Region Name", None)
 
     @property
-    def data_lake_name(self):
-        return self.data.get("Data Lake Name", OEDI_DEFAULT_DATA_LAKE_NAME)
+    def datalake_name(self):
+        return self.data.get("Datalake Name", AWS_DEFAULT_DATALAKE_NAME)
     
     @property
     def database_name(self):
-        return self.data.get("Database Name", OEDI_DEFAULT_DATABASE_NAME)
+        return self.data.get("Database Name", AWS_DEFAULT_DATABASE_NAME)
 
     @property
     def dataset_locations(self):
@@ -69,8 +80,3 @@ class DataLakeConfig(OEDIConfig):
     @property
     def staging_location(self):
         return self.data.get("Staging Location", None)
-
-
-data_lake_config = DataLakeConfig(
-    config_file=os.path.join(OEDI_ROOT_DIR, "config.yaml")
-)
