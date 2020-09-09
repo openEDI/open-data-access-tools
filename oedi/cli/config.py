@@ -1,12 +1,33 @@
 import click
 
-from oedi.config import data_lake_config
+from oedi.config import AWSDataLakeConfig
 
-__all__ = ["show_config"]
+CLOUD_PROVIDERS = ["AWS"]
+
+
+@click.group()
+def config():
+    """OEDI configurations of each cloud provider."""
+    pass
 
 
 @click.command()
-def show_config():
-    """Show data lake configuration."""
-    template = data_lake_config.to_string()
+@click.option(
+    "-p", "--provider",
+    type=click.Choice(CLOUD_PROVIDERS, case_sensitive=False),
+    required=True,
+    help="Show the configuration of OEDI data lake provider."
+)
+def show(provider):
+    provider = str(provider).upper()
+    print(f"OEDI {provider.upper()} Config:")
+    print("------------")
+    
+    if provider == "AWS":
+        config = AWSDataLakeConfig()
+    else:
+        config = None
+    template = config.to_string()
     print(template)
+
+config.add_command(show)
