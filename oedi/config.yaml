@@ -1,7 +1,7 @@
 AWS:
   Region Name: us-west-2
-  Datalake Name: oedi-data-lake-test
-  Database Name: oedi_database_test
+  Datalake Name: oedi-datalake
+  Database Name: oedi_database
   Dataset Locations:
   - s3://lbnl-tracking-the-sun/2018/
   - s3://lbnl-tracking-the-sun/2019/
