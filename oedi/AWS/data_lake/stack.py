@@ -2,27 +2,27 @@ import boto3
 from aws_cdk import core
 
 from oedi import __version__
-from oedi.config import data_lake_config
-from oedi.AWS.data_lake.construct import DataLakeConstruct
+from oedi.config import AWSDataLakeConfig
+from oedi.AWS.data_lake.construct import AWSDataLakeConstruct
 
 
-class DataLakeStack(core.Stack):
-    def __init__(self, scope: core.Construct, id: str, **kwargs) -> None:
-        super().__init__(scope, id, **kwargs)
+class AWSDataLakeStack(core.Stack):
+    """AWS data lake stack class"""
+    
+    def __init__(self, scope: core.Construct) -> None:
+        """Lauch AWS data lake related infrastructures."""
+
+        config = AWSDataLakeConfig()
+        kwargs = {"env": {"region": config.region_name}}
+        super().__init__(scope, id=config.datalake_name, **kwargs)
         
-        oedi_data_lake = DataLakeConstruct(
+        data_lake = AWSDataLakeConstruct(
             scope=self, 
             id="oedi-data-lake-construct", 
-            database_name=data_lake_config.database_name, 
+            database_name=config.database_name, 
             version=__version__
         )
-
-        # Create OEDI database
-        oedi_data_lake.create_database()
-    
-        # Create OEDI crawler role
-        oedi_data_lake.create_crawler_role()
-
-        # Create OEDI crawlers 
-        for dataset_location in data_lake_config.dataset_locations:
-            oedi_data_lake.create_crawler(location=dataset_location)
+        data_lake.create_database()
+        data_lake.create_crawler_role()
+        for dataset_location in config.dataset_locations:
+            data_lake.create_crawler(location=dataset_location)
