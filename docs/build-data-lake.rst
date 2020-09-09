@@ -5,29 +5,30 @@ Config OEDI
 -----------
 Please go to the root directory of ``open-data-access-tools`` and 
 configure the data lake based on your needs. We provide a template
-``config.yaml`` with following configurations.
+``config.yaml`` with following ``AWS`` configurations.
 
 .. code-block:: bash
 
-    (oedi) $ oedi show-config
-    PROVIDER-AWS:
-      AWS Region: us-west-2
-      Data Lake Name: oedi-data-lake
-      Database Name: oedi_database
-      Dataset Locations:
-      - s3://lbnl-tracking-the-sun/2018/
-      - s3://lbnl-tracking-the-sun/2019/
-      - s3://nrel-pv-rooftops/aspects/
-      - s3://nrel-pv-rooftops/buildings/
-      - s3://nrel-pv-rooftops/developable_planes/
-      - s3://nrel-pv-rooftops/rasd/
-      Staging Location: s3://your-output-bucket/folder/
+    (oedi) $ oedi config show --provider AWS
+    OEDI AWS Config:
+    ------------
+    AWS Region: us-west-2
+    Data Lake Name: oedi-data-lake
+    Database Name: oedi_database
+    Dataset Locations:
+    - s3://lbnl-tracking-the-sun/2018/
+    - s3://lbnl-tracking-the-sun/2019/
+    - s3://nrel-pv-rooftops/aspects/
+    - s3://nrel-pv-rooftops/buildings/
+    - s3://nrel-pv-rooftops/developable_planes/
+    - s3://nrel-pv-rooftops/rasd/
+    Staging Location: s3://user-staging-bucket/
 
 OEDI may have multiple providers in the future. For now, we only focus on ``PROVIDER-AWS``.
 Those configurations will be applied to AWS and related services in your data lake.
 
-    * ``AWS Regsion``: the AWS resources are tied to the Region that you specified.
-    * ``Data Lake Name``: the stack name of AWS CloudFormation.
+    * ``Regsion Name``: the AWS resources are tied to the Region that you specified.
+    * ``Datalake Name``: the stack name of AWS CloudFormation.
     * ``Database Name``: the database name created in AWS Glue.
     * ``Dataset Locations``: the AWS S3 locations with columnar dataset.
     * ``Staging Location`` (optional): the AWS S3 location used by Athena for query outputs.

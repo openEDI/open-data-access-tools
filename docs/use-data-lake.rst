@@ -13,7 +13,7 @@ use the commands below to check and run the crawler.
 
 .. code-block:: bash
 
-    (oedi) $ oedi list-crawlers
+    (oedi) $ oedi aws list-crawlers
     - lbnl-tracking-the-sun-2018
     - lbnl-tracking-the-sun-2019
     - nrel-pv-rooftops-aspects
@@ -25,13 +25,13 @@ use the commands below to check and run the crawler.
 
 .. code-block:: bash
 
-    (oedi) $ oedi run-crawler -n lbnl-tracking-the-sun-2018
+    (oedi) $ oedi aws run-crawler -n lbnl-tracking-the-sun-2018
 
 If you want it runs in background, use option ``--background-run`` or ``-b``:
 
 .. code-block:: bash
 
-    (oedi) $ oedi run-crawler -n lbnl-tracking-the-sun-2018 -b
+    (oedi) $ oedi aws run-crawler -n lbnl-tracking-the-sun-2018 -b
 
 3. Run Crawlers
 
@@ -40,7 +40,7 @@ at one time, please use ``run-crawlers``, it would start all available crawlers 
 
 .. code-block:: bash
 
-    (oedi) $ oedi run-crawlers
+    (oedi) $ oedi aws run-crawlers
 
 
 4. List Tables
@@ -50,7 +50,7 @@ below to list the tables in it.
 
 .. code-block:: bash
 
-    (oedi) $ oedi list-tables
+    (oedi) $ oedi aws list-tables
     - oedi_database_test.lbnl_tracking_the_sun_2018
     - oedi_database_test.lbnl_tracking_the_sun_2019
     - oedi_database_test.nrel_pv_rooftops_aspects
@@ -67,7 +67,7 @@ For example,
 
 .. code-block:: bash
 
-    (oedi) $ oedi run-query -q "select * from oedi_database_test.lbnl_tracking_the_sun_2018 limit 10"
+    (oedi) $ oedi aws run-query -q "select * from oedi_database_test.lbnl_tracking_the_sun_2018 limit 10"
                                        data_provider system_id_from_data_provider system_id_tracking_the_sun installation_date  system_size  ...  microinverter_1  microinverter_2  microinverter_3  dc_optimizer  state
     0  Department of Commerce & Economic Opportunity                        -9999                  IL_DCEO_1        2010-08-06         3.00  ...            -9999            -9999            -9999         -9999     IL
     1  Department of Commerce & Economic Opportunity                        -9999                  IL_DCEO_2        2010-08-05         4.10  ...            -9999            -9999            -9999         -9999     IL
@@ -87,7 +87,7 @@ via ``--output-location`` or ``-o`` in this command, like this:
 
 .. code-block:: bash
 
-    (oedi) $ oedi run-query -q "select * from oedi_database_test.lbnl_tracking_the_sun_2018 limit 10" -o "s3://another-outpu-location/"
+    (oedi) $ oedi aws run-query -q "select * from oedi_database_test.lbnl_tracking_the_sun_2018 limit 10" -o "s3://another-outpu-location/"
 
 
 Commands Help
@@ -99,6 +99,16 @@ For more ``oedi`` commands information, please use ``--help``.
 
     (oedi) $ oedi --help
     Usage: oedi [OPTIONS] COMMAND [ARGS]...
+
+    Options:
+    --help  Show this message and exit.
+
+    Commands:
+    aws     OEDI command with AWS cloud.
+    config  OEDI configurations of each cloud provider.
+
+    (oedi) $ oedi aws --help
+    Usage: oedi aws [OPTIONS] COMMAND [ARGS]...
 
     Options:
     --help  Show this message and exit.
@@ -116,8 +126,8 @@ For how to use the command above, try like this,
 
 .. code-block:: bash
 
-    (oedi) $ oedi run-query --help
-    Usage: oedi run-query [OPTIONS]
+    (oedi) $ oedi aws run-query --help
+    Usage: oedi aws run-query [OPTIONS]
 
     Run SQL query and show result.
 
