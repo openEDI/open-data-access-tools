@@ -9,6 +9,4 @@ AWS:
   - s3://nrel-pv-rooftops/buildings/
   - s3://nrel-pv-rooftops/developable_planes/
   - s3://nrel-pv-rooftops/rasd/
-  - s3://oedi-dev-pv-rooftop-pr/developable-planes/
-  - s3://oedi-dev-pv-rooftop-pr/imputed-building-potential/
   Staging Location: s3://user-staging-bucket/
