@@ -2,7 +2,7 @@ import time
 import click
 
 from oedi.cli.config import config
-from oedi.cli.aws import aws
+from oedi.cli.AWS import aws
 
 
 @click.group()
