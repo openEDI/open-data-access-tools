@@ -27,11 +27,15 @@ def list_databases():
 @click.option(
     "-d", "--database-name",
     type=click.STRING,
-    default=AWSDataLakeConfig().database_name,
+    required=False,
+    default=None,
     help="List the tables in Glue database."
 )
 def list_tables(database_name):
     """List available tables in database."""
+    if not database_name:
+        config = AWSDataLakeConfig()
+        database_name = config.database_name
     tables = glue.list_tables(
         database_name=database_name
     )
