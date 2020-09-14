@@ -6,22 +6,23 @@ from operator import itemgetter
 import pandas as pd
 from botocore.exceptions import ClientError
 
-from oedi.config import AWSDataLakeConfig
+from oedi.config import AWSDataLakeConfig, OEDI_CONFIG_FILE
 from oedi.AWS.base import AWSClientBase
 from oedi.AWS.utils import generate_crawler_name, format_datetime
 
 
 class OEDIGlue(AWSClientBase):
 
-    def __init__(self, **kwargs):
+    def __init__(self, config_file=None, **kwargs):
         super().__init__(service_name="glue", **kwargs)
+        self.config_file = config_file or OEDI_CONFIG_FILE
 
     def get_databases(self):
         response = self.client.get_databases()
         databases = [
             {
                 "Name": db["Name"], 
-                "CreateTime": format_datetime(db["CreateTime"])
+                "CreateTime": format_datetime(db.get("CreateTime", None))
             }
             for db in response["DatabaseList"]
         ]
@@ -36,7 +37,7 @@ class OEDIGlue(AWSClientBase):
             for tb in response["TableList"]:
                 tables.append({
                     "Name": f"{tb['Name']}",
-                    "CreateTime": tb["CreateTime"]
+                    "CreateTime": format_datetime(tb.get("CreateTime", None))
                 })
 
         return sorted(tables, key=itemgetter("Name"))
@@ -74,7 +75,7 @@ class OEDIGlue(AWSClientBase):
 
     def list_crawlers(self):
         """List available crawlers"""
-        data_lake_config = AWSDataLakeConfig()
+        data_lake_config = AWSDataLakeConfig(self.config_file)
         oedi_crawler_names = set([
             generate_crawler_name(s3url=dataset_location)
             for dataset_location in data_lake_config.dataset_locations
@@ -83,7 +84,7 @@ class OEDIGlue(AWSClientBase):
         # Access to each crawler details
         available_crawlers = []
         for crawler_name in oedi_crawler_names:
-            crawler = self.client.get_crawler(Name=crawler_name)["Crawler"]
+            crawler = self.get_crawler(crawler_name)["Crawler"]
             available_crawlers.append({
                 "Name": crawler["Name"],
                 "State": crawler["State"],
@@ -95,12 +96,16 @@ class OEDIGlue(AWSClientBase):
 
         return sorted(available_crawlers, key=itemgetter("Name"))
 
+    def get_crawler(self, crawler_name):
+        """Get the crawler from Glue"""
+        return self.client.get_crawler(Name=crawler_name)
+
     def get_crawler_state(self, crawler_name):
         """
         Check the crawler state by given crawler name
         State: READY | RUNNING | STOPPING
         """
-        crawler = self.client.get_crawler(Name=crawler_name)
+        crawler = self.get_crawler(crawler_name)
         if "LastCrawl" not in crawler["Crawler"]:  # For new crawler
             state = "READY"
         else:
