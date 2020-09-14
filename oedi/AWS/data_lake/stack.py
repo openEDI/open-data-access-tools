@@ -2,7 +2,7 @@ import boto3
 from aws_cdk import core
 
 from oedi import __version__
-from oedi.config import OEDI_CONFIG_FILE
+from oedi.config import OEDI_CONFIG_FILE, AWSDataLakeConfig
 from oedi.AWS.data_lake.construct import AWSDataLakeConstruct
 
 
