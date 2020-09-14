@@ -1,20 +1,38 @@
 import io
 import os
+import shutil
 import yaml
 
-DEFAULTT_OEDI_CONFIG_FILLE = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)),
-    "config.yaml"
-)
+from oedi.exceptions import ConfigFileNotFound
+
+OEDI_CONFIG_DIR = os.path.join(os.path.expanduser("~"), ".oedi")
+OEDI_CONFIG_FILE = os.path.join(OEDI_CONFIG_DIR, "config.yaml")
 AWS_DEFAULT_DATALAKE_NAME = "oedi_datalake"
 AWS_DEFAULT_DATABASE_NAME = "oedi_database"
+
+
+def init_config():
+    """Initialize OEDI using default config."""
+    if os.path.exists(OEDI_CONFIG_FILE):
+        return
+    
+    oedi_defalt_config_file = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)),
+        "config.yaml"
+    )
+    os.makedirs(OEDI_CONFIG_DIR, exist_ok=True)
+    shutil.copyfile(oedi_defalt_config_file, OEDI_CONFIG_FILE)
 
 
 class OEDIConfigBase(object):
     """Config Classs for manipulating OEDI configurations"""
     
     def __init__(self, config_file=None):
-        self._config_file = config_file or DEFAULTT_OEDI_CONFIG_FILLE
+        if not config_file or not os.path.exists(config_file):
+            config_file = OEDI_CONFIG_FILE
+            if not os.path.exists(config_file):
+                raise ConfigFileNotFound("Please run 'oedi config init' first.")
+        self._config_file = config_file
     
     @property
     def provider(self):
@@ -28,18 +46,18 @@ class OEDIConfigBase(object):
 
     @property
     def data(self):
-        data = self.load(self._config_file)
+        data = self.load()
         return data[self.provider]
     
-    def load(self, config_file):
+    def load(self):
         """Load OEDI configuration from file."""
-        with open(config_file, "r") as f:
+        with open(self.config_file, "r") as f:
             data = yaml.load(f, Loader=yaml.FullLoader)
         return data
     
-    def dump(self, data, config_file):
+    def dump(self, data):
         """Dump OEDI configuration to file."""
-        with open(config_file, "w") as f:
+        with open(self.config_file, "w") as f:
             yaml.dump(data, f)
     
     def to_string(self):
