@@ -9,9 +9,9 @@ from oedi.AWS.data_lake.construct import AWSDataLakeConstruct
 class AWSDataLakeStack(core.Stack):
     """AWS data lake stack class"""
     
-    def __init__(self, scope: core.Construct, **kwargs) -> None:
+    def __init__(self, scope: core.Construct, id: str, **kwargs) -> None:
         """Lauch AWS data lake related infrastructures."""
-        super().__init__(scope, id=config.datalake_name, **kwargs)
+        super().__init__(scope, id, **kwargs)
         
         config = AWSDataLakeConfig(OEDI_CONFIG_FILE)
         data_lake = AWSDataLakeConstruct(

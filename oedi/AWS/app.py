@@ -19,5 +19,5 @@ print(LOGO)
 app = core.App()
 
 config = AWSDataLakeConfig(OEDI_CONFIG_FILLE)
-AWSDataLakeStack(app, env={"region": config.region_name})
+AWSDataLakeStack(app, config.datalake_name, env={"region": config.region_name})
 app.synth()
