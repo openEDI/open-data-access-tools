@@ -3,6 +3,9 @@ from urllib.parse import urlparse
 
 def format_datetime(dt):
     """Format the datetime string"""
+    if not dt:
+        return ""
+    
     fmt = "%Y-%m-%d %H:%M:%S"
     return dt.strftime(fmt)
 
