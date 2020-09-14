@@ -2,23 +2,21 @@ import boto3
 from aws_cdk import core
 
 from oedi import __version__
-from oedi.config import AWSDataLakeConfig
+from oedi.config import OEDI_CONFIG_FILE
 from oedi.AWS.data_lake.construct import AWSDataLakeConstruct
 
 
 class AWSDataLakeStack(core.Stack):
     """AWS data lake stack class"""
     
-    def __init__(self, scope: core.Construct) -> None:
+    def __init__(self, scope: core.Construct, **kwargs) -> None:
         """Lauch AWS data lake related infrastructures."""
-
-        config = AWSDataLakeConfig()
-        kwargs = {"env": {"region": config.region_name}}
         super().__init__(scope, id=config.datalake_name, **kwargs)
         
+        config = AWSDataLakeConfig(OEDI_CONFIG_FILE)
         data_lake = AWSDataLakeConstruct(
-            scope=self, 
-            id="oedi-data-lake-construct", 
+            scope=self,
+            id="oedi-data-lake-construct",
             database_name=config.database_name, 
             version=__version__
         )
