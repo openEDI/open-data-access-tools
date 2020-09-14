@@ -3,17 +3,26 @@ Build Data Lake
 
 Config OEDI
 -----------
-Please go to the root directory of ``open-data-access-tools`` and 
-configure the data lake based on your needs. We provide a template
-``config.yaml`` with following ``AWS`` configurations.
+First, you need to run ``oedi config init`` command,
+
+.. code-block:: bash
+
+    (oedi) $ oedi config init
+
+It'll create a config file ``confi.yaml`` in ``~/.oedi/`` directory,
+which contains the default OEDI config settings.
+
+Please edit the ``~/.oedi/confi.yaml`` config file and 
+configure the data lake based on your preference. For example, we provide the 
+template with following ``AWS`` configurations.
 
 .. code-block:: bash
 
     (oedi) $ oedi config show --provider AWS
-    OEDI AWS Config:
-    ------------
+    AWS
+    ---
     AWS Region: us-west-2
-    Data Lake Name: oedi-data-lake
+    Data Lake Name: oedi-datalake
     Database Name: oedi_database
     Dataset Locations:
     - s3://lbnl-tracking-the-sun/2018/
@@ -24,7 +33,7 @@ configure the data lake based on your needs. We provide a template
     - s3://nrel-pv-rooftops/rasd/
     Staging Location: s3://user-staging-bucket/
 
-OEDI may have multiple providers in the future. For now, we only focus on ``PROVIDER-AWS``.
+OEDI may have multiple providers in the future. For now, we only focus on ``AWS``.
 Those configurations will be applied to AWS and related services in your data lake.
 
     * ``Regsion Name``: the AWS resources are tied to the Region that you specified.
@@ -33,7 +42,7 @@ Those configurations will be applied to AWS and related services in your data la
     * ``Dataset Locations``: the AWS S3 locations with columnar dataset.
     * ``Staging Location`` (optional): the AWS S3 location used by Athena for query outputs.
 
-Please update the values in ``config.yaml`` based your requirements.
+Please update the values in ``~/.oedi/config.yaml`` based your requirements.
 
 Deploy Data Lake
 ----------------

@@ -14,12 +14,15 @@ use the commands below to check and run the crawler.
 .. code-block:: bash
 
     (oedi) $ oedi aws list-crawlers
-    - lbnl-tracking-the-sun-2018
-    - lbnl-tracking-the-sun-2019
-    - nrel-pv-rooftops-aspects
-    - nrel-pv-rooftops-buildings
-    - nrel-pv-rooftops-developable-planes
-    - nrel-pv-rooftops-rasd
+    | No. |                 Name                | State |                 S3Targets                 |        LastUpdated        |         CreateTime        |
+    +-----+-------------------------------------+-------+-------------------------------------------+---------------------------+---------------------------+
+    |  0  |      lbnl-tracking-the-sun-2018     | READY |      s3://lbnl-tracking-the-sun/2018/     | 2020-04-23 15:33:28-06:00 | 2020-04-23 15:33:28-06:00 |
+    |  1  |      lbnl-tracking-the-sun-2019     | READY |      s3://lbnl-tracking-the-sun/2019/     | 2020-04-23 15:33:28-06:00 | 2020-04-23 15:33:28-06:00 |
+    |  2  |       nrel-pv-rooftops-aspects      | READY |       s3://nrel-pv-rooftops/aspects/      | 2020-04-23 15:33:28-06:00 | 2020-04-23 15:33:28-06:00 |
+    |  3  |      nrel-pv-rooftops-buildings     | READY |      s3://nrel-pv-rooftops/buildings/     | 2020-04-23 15:33:29-06:00 | 2020-04-23 15:33:29-06:00 |
+    |  4  | nrel-pv-rooftops-developable-planes | READY | s3://nrel-pv-rooftops/developable_planes/ | 2020-04-23 15:33:28-06:00 | 2020-04-23 15:33:28-06:00 |
+    |  5  |        nrel-pv-rooftops-rasd        | READY |        s3://nrel-pv-rooftops/rasd/        | 2020-04-23 15:33:28-06:00 | 2020-04-23 15:33:28-06:00 |
+    +-----+-------------------------------------+-------+-------------------------------------------+---------------------------+---------------------------+
 
 2. Run Crawler
 
@@ -51,12 +54,16 @@ below to list the tables in it.
 .. code-block:: bash
 
     (oedi) $ oedi aws list-tables
-    - oedi_database_test.lbnl_tracking_the_sun_2018
-    - oedi_database_test.lbnl_tracking_the_sun_2019
-    - oedi_database_test.nrel_pv_rooftops_aspects
-    - oedi_database_test.nrel_pv_rooftops_buildings
-    - oedi_database_test.nrel_pv_rooftops_developable_planes
-    - oedi_database_test.nrel_pv_rooftops_rasd
+    +-----+----------------------------------------------------+---------------------+
+    | No. |                        Name                        |      CreateTime     |
+    +-----+----------------------------------------------------+---------------------+
+    |  0  |             lbnl_tracking_the_sun_2018             | 2020-04-23 15:35:58 |
+    |  1  |             lbnl_tracking_the_sun_2019             | 2020-04-23 15:36:09 |
+    |  2  |              nrel_pv_rooftops_aspects              | 2020-04-23 15:36:19 |
+    |  3  |             nrel_pv_rooftops_buildings             | 2020-04-23 15:36:37 |
+    |  4  |        nrel_pv_rooftops_developable_planes         | 2020-04-23 15:36:48 |
+    |  5  |               nrel_pv_rooftops_rasd                | 2020-04-23 15:37:04 |
+    +-----+----------------------------------------------------+---------------------+
 
 
 Run Queries
@@ -119,7 +126,6 @@ For more ``oedi`` commands information, please use ``--help``.
     run-crawler    Run crawler to populate table.
     run-crawlers   Run all crawlers in data lake.
     run-query      Run SQL query and show result.
-    show-config    Show data lake configuration.
 
 For how to use the command above, try like this,
 

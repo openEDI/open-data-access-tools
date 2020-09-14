@@ -30,6 +30,7 @@ extend to other cloud providers as well in the future.
    build-data-lake
    use-data-lake
    contribute
+   license
 
 Indices and tables
 ------------------
