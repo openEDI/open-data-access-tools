@@ -1,22 +1,19 @@
-from aws_cdk import (
-    aws_iam as iam,
-    aws_s3 as s3,
-    aws_glue as glue,
-    aws_athena as athena,
-    core as core,
-)
 
-from oedi.AWS.utils.glue import generate_crawler_name, generate_table_prefix
+from aws_cdk import core
+from aws_cdk import aws_iam as iam
+from aws_cdk import aws_s3 as s3
+from aws_cdk import aws_glue as glue
+from aws_cdk import aws_athena as athena
+
+from oedi.AWS.utils import generate_crawler_name, generate_table_prefix
 
 
-class DataLakeConstruct(core.Construct):
+class AWSDataLakeConstruct(core.Construct):
     def __init__(
         self,
         scope: core.Construct,
         id: str,
         database_name: str,
-        # read_write_iam_users: list,
-        # read_only_iam_users: list,
         version: str,
         **kwargs,
     ) -> None:
@@ -38,7 +35,7 @@ class DataLakeConstruct(core.Construct):
         """Create the database of data lake in Glue"""
         id_suffix = self.database_name.replace("_", "-")
         glue.Database(
-            scope=self, 
+            scope=self,
             id=f"oedi-data-lake-database--{id_suffix}", 
             database_name=self.database_name
         )
@@ -65,7 +62,7 @@ class DataLakeConstruct(core.Construct):
         )
 
     def create_crawler(self, location):
-        """Create crawler in data lake by given dataset location."""y
+        """Create crawler in data lake by given dataset location."""
         crawler_name = generate_crawler_name(s3url=location)
         table_prefix = generate_table_prefix(s3url=location)
 

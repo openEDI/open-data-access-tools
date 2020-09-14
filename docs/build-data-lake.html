@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Build Data Lake &#8212; OEDI 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Use Data Lake" href="use-data-lake.html" />
+    <link rel="prev" title="Installation" href="installation.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="build-data-lake">
+<h1>Build Data Lake<a class="headerlink" href="#build-data-lake" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="config-oedi">
+<h2>Config OEDI<a class="headerlink" href="#config-oedi" title="Permalink to this headline">¶</a></h2>
+<p>First, you need to run <code class="docutils literal notranslate"><span class="pre">oedi</span> <span class="pre">config</span> <span class="pre">init</span></code> command,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>oedi<span class="o">)</span> $ oedi config init
+</pre></div>
+</div>
+<p>It’ll create a config file <code class="docutils literal notranslate"><span class="pre">confi.yaml</span></code> in <code class="docutils literal notranslate"><span class="pre">~/.oedi/</span></code> directory,
+which contains the default OEDI config settings.</p>
+<p>Please edit the <code class="docutils literal notranslate"><span class="pre">~/.oedi/confi.yaml</span></code> config file and
+configure the data lake based on your preference. For example, we provide the
+template with following <code class="docutils literal notranslate"><span class="pre">AWS</span></code> configurations.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>oedi<span class="o">)</span> $ oedi config show --provider AWS
+AWS
+---
+AWS Region: us-west-2
+Data Lake Name: oedi-datalake
+Database Name: oedi_database
+Dataset Locations:
+- s3://lbnl-tracking-the-sun/2018/
+- s3://lbnl-tracking-the-sun/2019/
+- s3://nrel-pv-rooftops/aspects/
+- s3://nrel-pv-rooftops/buildings/
+- s3://nrel-pv-rooftops/developable_planes/
+- s3://nrel-pv-rooftops/rasd/
+Staging Location: s3://user-staging-bucket/
+</pre></div>
+</div>
+<p>OEDI may have multiple providers in the future. For now, we only focus on <code class="docutils literal notranslate"><span class="pre">AWS</span></code>.
+Those configurations will be applied to AWS and related services in your data lake.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Regsion</span> <span class="pre">Name</span></code>: the AWS resources are tied to the Region that you specified.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Datalake</span> <span class="pre">Name</span></code>: the stack name of AWS CloudFormation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Database</span> <span class="pre">Name</span></code>: the database name created in AWS Glue.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Dataset</span> <span class="pre">Locations</span></code>: the AWS S3 locations with columnar dataset.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Staging</span> <span class="pre">Location</span></code> (optional): the AWS S3 location used by Athena for query outputs.</p></li>
+</ul>
+</div></blockquote>
+<p>Please update the values in <code class="docutils literal notranslate"><span class="pre">~/.oedi/config.yaml</span></code> based your requirements.</p>
+</div>
+<div class="section" id="deploy-data-lake">
+<h2>Deploy Data Lake<a class="headerlink" href="#deploy-data-lake" title="Permalink to this headline">¶</a></h2>
+<p>After the configurations got determined, then we can use <code class="docutils literal notranslate"><span class="pre">cdk</span></code> commands to manage the
+AWS infrustructures required by the data lake.</p>
+<p>Please change your directory to <code class="docutils literal notranslate"><span class="pre">open-data-access-tools/oedi/AWS</span></code> which contains the CDK
+app.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> open-data-access-tools/oedi/AWS
+</pre></div>
+</div>
+<p>To deploy the data lake stack configured above, we need to run the command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cdk deploy
+</pre></div>
+</div>
+<p>What happens behind the scene? Based on the configurations provided above, a stack of AWS
+resources are created, updated or deleted. Assume it’s the first time that we deploy the
+data lake, then the following resources are created in the data lake.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>An AWS Glue database was created.</p></li>
+<li><p>An AWS Glue crawler role was assumed, used for creating crawlers.</p></li>
+<li><p>A number of AWS Glue crawlers were created.</p></li>
+</ul>
+</div></blockquote>
+<p>Now, you have the data lake infrustructures lauched. Later on, after any change to <code class="docutils literal notranslate"><span class="pre">config.yaml</span></code>,
+it’s exptected to re-deploy via <code class="docutils literal notranslate"><span class="pre">cdk</span></code> to apply the updated configurations.</p>
+<p>There are also other common <code class="docutils literal notranslate"><span class="pre">cdk</span></code> commands, like these:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cdk</span> <span class="pre">ls</span></code>, list all stacks in the app.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cdk</span> <span class="pre">synth</span></code>, emits the synthesized CloudFormation template.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cdk</span> <span class="pre">diff</span></code>, compare deployed stack with current state.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ckd</span> <span class="pre">destroy</span></code>, it deletes all AWS resources deployed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cdk</span> <span class="pre">docs</span></code>, open CDK documentation.</p></li>
+</ul>
+</div></blockquote>
+<p>For more information about <code class="docutils literal notranslate"><span class="pre">cdk</span></code> commands, please refer to the official documentation -
+<a class="reference external" href="https://docs.aws.amazon.com/cdk/latest/guide/home.html">https://docs.aws.amazon.com/cdk/latest/guide/home.html</a>.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">OEDI</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Build Data Lake</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#config-oedi">Config OEDI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deploy-data-lake">Deploy Data Lake</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="use-data-lake.html">Use Data Lake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="installation.html" title="previous chapter">Installation</a></li>
+      <li>Next: <a href="use-data-lake.html" title="next chapter">Use Data Lake</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020 Alliance for Sustainable Energy, LLC.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/build-data-lake.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

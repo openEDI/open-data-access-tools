@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Installation &#8212; OEDI 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Build Data Lake" href="build-data-lake.html" />
+    <link rel="prev" title="Welcome to OEDI’s documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<p>This section covers how to setup an environment used for building your data lake by means of <a class="reference external" href="https://docs.aws.amazon.com/cdk/latest/guide/home.html">aws cdk </a>, and how to install <code class="docutils literal notranslate"><span class="pre">oedi</span></code> package and
+use <code class="docutils literal notranslate"><span class="pre">oedi</span></code> commands to run crawlers and test SQL queries.</p>
+<p>The easiest way to setup the environment is using <code class="docutils literal notranslate"><span class="pre">docker</span></code>, but your can also set it up in your local
+environment step by step. Before setting up the environment, please get a copy of the source code from
+our public Github repository - <a class="reference external" href="https://github.com/openEDI/open-data-access-tools">open-data-access-tools</a>.</p>
+<p>Your can clone using <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git clone git@github.com:openEDI/open-data-access-tools.git
+</pre></div>
+</div>
+<p>Please refer to our <a class="reference external" href="https://github.com/openEDI/open-data-access-tools/releases">releases</a> page,
+and check the datasets included in each release.</p>
+<div class="section" id="docker-environment">
+<h2>Docker Environment<a class="headerlink" href="#docker-environment" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Go to the root directory of the source code <code class="docutils literal notranslate"><span class="pre">open-data-access-tools</span></code>,</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> open-data-access-tools
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Build docker image using <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">build</span></code> command,</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ docker build -t oedi .
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Run docker container service like this,</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ docker run --rm -it -v /home/user/.aws:/root/.aws oedi bash
+$ root@53d985b7f2ba:/open-data-access-tools/#
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Option <code class="docutils literal notranslate"><span class="pre">-v</span> <span class="pre">/home/user/.aws:/root/.aws</span></code> maps the AWS credentials at your local into
+the docker environment, so that <code class="docutils literal notranslate"><span class="pre">cdk</span></code> command can run under proper account and permissions.
+Please replace <code class="docutils literal notranslate"><span class="pre">/home/user/.aws</span></code> by using the directory that contains your AWS credentials.</p>
+</div>
+<p>Now, you are in <code class="docutils literal notranslate"><span class="pre">oedi</span></code> docker environment, and can build and use OEDI data lake.</p>
+</div>
+<div class="section" id="local-environment">
+<h2>Local Environment<a class="headerlink" href="#local-environment" title="Permalink to this headline">¶</a></h2>
+<p>If you want to setup the environment directly into your computer, please follow the steps below.</p>
+<p>1. Install <a class="reference external" href="https://nodejs.org/en/download/">Node.js (&gt;=10.3.0)</a> and <a class="reference external" href="https://www.npmjs.com/">npm</a>
+to your computer. The <code class="docutils literal notranslate"><span class="pre">cdk</span></code> command-line tool and the AWS Construct Library are developed in TypeScript and
+run on <cite>Node.js</cite>, and the bindings for Python use this backend and toolset as well.</p>
+<ol class="arabic simple" start="2">
+<li><p>Create an virutal Python environment for the project.</p></li>
+</ol>
+<p>It’s recommended to create a virtual environment for a Python project. There are many tools and
+tutorials online about this, like <a class="reference external" href="https://virtualenv.pypa.io/en/latest/">virtualenv</a>,
+<code class="docutils literal notranslate"><span class="pre">virtualenv</span></code> with <a class="reference external" href="https://virtualenvwrapper.readthedocs.io/en/latest/">virtualenvwrapper</a>,
+<a class="reference external" href="https://github.com/pypa/pipenv">pipenv</a>, <a class="reference external" href="https://docs.conda.io/en/latest/">conda</a>, etc.
+You can choose based on your own perference. Here, we use <code class="docutils literal notranslate"><span class="pre">virtualenv</span></code> with <code class="docutils literal notranslate"><span class="pre">virtualenvwrapper</span></code> as
+an example.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># Make virtual environment
+$ mkvirtualenv -p python3 oedi
+
+# Activate virtual environment
+$ workon oedi
+
+# Deactivate virtual environment
+(oedi) $ deactivate
+</pre></div>
+</div>
+<p>3. Make sure your <code class="docutils literal notranslate"><span class="pre">oedi</span></code> virtual environment is activated, then go the root directory of
+<code class="docutils literal notranslate"><span class="pre">open-data-access-tools</span></code> and install this package editablely.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ workon oedi
+<span class="o">(</span>oedi<span class="o">)</span> $ <span class="nb">cd</span> open-data-access-tools
+<span class="o">(</span>oedi<span class="o">)</span> $ pip install -e .
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Change work directory to the one that contains AWS CDK app.</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>oedi<span class="o">)</span> $ <span class="nb">cd</span> oedi/AWS
+<span class="o">(</span>oedi<span class="o">)</span> $ <span class="nb">pwd</span>
+~/open-data-access-tools/oedi/AWS
+</pre></div>
+</div>
+<p>Now, you are in the <code class="docutils literal notranslate"><span class="pre">oedi</span></code> local environment, and build and use OEDI data lake.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">OEDI</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#docker-environment">Docker Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#local-environment">Local Environment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="build-data-lake.html">Build Data Lake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="use-data-lake.html">Use Data Lake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to OEDI’s documentation!</a></li>
+      <li>Next: <a href="build-data-lake.html" title="next chapter">Build Data Lake</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020 Alliance for Sustainable Energy, LLC.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/installation.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

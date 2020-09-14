@@ -1,7 +1,7 @@
-PROVIDER-AWS:
-  AWS Region: us-west-2
-  Data Lake Name: oedi-data-lake-test
-  Database Name: oedi_database_test
+AWS:
+  Region Name: us-west-2
+  Datalake Name: oedi-datalake
+  Database Name: oedi_database
   Dataset Locations:
   - s3://lbnl-tracking-the-sun/2018/
   - s3://lbnl-tracking-the-sun/2019/
@@ -9,4 +9,4 @@ PROVIDER-AWS:
   - s3://nrel-pv-rooftops/buildings/
   - s3://nrel-pv-rooftops/developable_planes/
   - s3://nrel-pv-rooftops/rasd/
-  Staging Location: s3://user-owned-bucket/subfolder/
+  Staging Location: s3://user-staging-bucket/
