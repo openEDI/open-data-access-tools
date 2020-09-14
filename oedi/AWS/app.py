@@ -2,7 +2,7 @@
 
 from aws_cdk import core
 
-from oedi.config import AWSDataLakeConfig, OEDI_CONFIG_FILLE
+from oedi.config import AWSDataLakeConfig, OEDI_CONFIG_FILE
 from oedi.AWS.data_lake.stack import AWSDataLakeStack
 
 LOGO = """
@@ -18,6 +18,6 @@ print(LOGO)
 
 app = core.App()
 
-config = AWSDataLakeConfig(OEDI_CONFIG_FILLE)
+config = AWSDataLakeConfig(OEDI_CONFIG_FILE)
 AWSDataLakeStack(app, config.datalake_name, env={"region": config.region_name})
 app.synth()
