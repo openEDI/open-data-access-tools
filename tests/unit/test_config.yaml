@@ -1,0 +1,12 @@
+AWS:
+  Database Name: my_oedi_database
+  Datalake Name: my-oedi-datalake
+  Dataset Locations:
+  - s3://bucket-name/Folder1/dataset_name/
+  - s3://bucket-name/Folder2/another_dataset/
+  Region Name: us-west-1
+  Staging Location: s3://my-staging-bucket/
+Azure:
+  A: something
+Google Cloud:
+  G: another thing
