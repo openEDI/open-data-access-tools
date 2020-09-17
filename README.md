@@ -5,7 +5,7 @@ The Open Energy Data Initiative provides a number of tools to enable the use of 
 Please visit the data catalog for the data here:  [https://openei.org/wiki/Open_Energy_Data_Initiative_(OEDI)](https://openei.org/wiki/Open_Energy_Data_Initiative_(OEDI))
 
 ## Documentation
-Provide documentation link here.
+https://openedi.github.io/open-data-access-tools/
 
 ## Data License
 Creative Commons Attribution 3.0 United States License
