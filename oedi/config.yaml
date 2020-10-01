@@ -1,0 +1,12 @@
+AWS:
+  Region Name: us-west-2
+  Datalake Name: oedi-datalake
+  Database Name: oedi_database
+  Dataset Locations:
+  - s3://lbnl-tracking-the-sun/2018/
+  - s3://lbnl-tracking-the-sun/2019/
+  - s3://nrel-pv-rooftops/aspects/
+  - s3://nrel-pv-rooftops/buildings/
+  - s3://nrel-pv-rooftops/developable_planes/
+  - s3://nrel-pv-rooftops/rasd/
+  Staging Location: s3://user-staging-bucket/
