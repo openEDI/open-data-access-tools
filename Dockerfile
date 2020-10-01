@@ -18,6 +18,7 @@ RUN apt-get update -y --fix-missing && \
     vim
 
 # Install AWS CDK
+RUN npm install npm@latest -g
 RUN npm install -g aws-cdk
 RUN cdk --version
 
