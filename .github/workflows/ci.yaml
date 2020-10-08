@@ -38,4 +38,5 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Unit test with pytest
       run: |
+        export AWS_DEFAULT_REGION=us-west-2
         pytest tests/unit
