@@ -17,6 +17,6 @@ LOGO = """
 print(LOGO)
 
 app = core.App()
-config = AWSDataLakeConfig(OEDI_CONFIG_FILLE)
+config = AWSDataLakeConfig(OEDI_CONFIG_FILE)
 AWSDataLakeStack(app, config)
 app.synth()
