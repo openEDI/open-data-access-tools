@@ -21,7 +21,7 @@ class OEDIGlue(AWSClientBase):
         response = self.client.get_databases()
         databases = [
             {
-                "Name": db["Name"], 
+                "Name": db["Name"],
                 "CreateTime": format_datetime(db.get("CreateTime", None))
             }
             for db in response["DatabaseList"]
@@ -31,7 +31,7 @@ class OEDIGlue(AWSClientBase):
     def list_tables(self, database_name):
         """List avaible tables in given database"""
         paginator = self.client.get_paginator("get_tables")
-        
+
         tables = []
         for response in paginator.paginate(DatabaseName=database_name):
             for tb in response["TableList"]:
@@ -110,7 +110,7 @@ class OEDIGlue(AWSClientBase):
             state = "READY"
         else:
             state = crawler["Crawler"]["State"]
-        
+
         return state
 
     def start_crawler(self, crawler_name):
