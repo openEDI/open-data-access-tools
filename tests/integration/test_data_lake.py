@@ -18,18 +18,18 @@ def test_lbnl_tracking_the_sun_2018():
     config = AWSDataLakeConfig()
     database_name = config.database_name
     table_name = "lbnl_tracking_the_sun_2018"
-    
+
     # Partitions
     glue = OEDIGlue()
     partition_keys = glue.get_partition_keys(database_name, table_name, with_pandas=False)
     assert len(partition_keys) == 1
     assert partition_keys[0]["Name"] == "state"
-    
+
     partition_values = glue.get_partition_values(database_name, table_name)
     if "__HIVE_DEFAULT_PARTITION__" in partition_values:
         partition_values.remove("__HIVE_DEFAULT_PARTITION__")
     assert len(partition_values) == 25
-    
+
     # Query
     athena = OEDIAthena(
         staging_location=config.staging_location,
@@ -38,7 +38,7 @@ def test_lbnl_tracking_the_sun_2018():
     sql = f"SELECT COUNT(*) FROM {database_name}.{table_name} WHERE state='CO';"
     result = athena.run_query(query_string=sql, pandas_cursor=False)
     assert result[0][0] == 40714
-    
+
     sql = f"SELECT * FROM {database_name}.{table_name} WHERE state='CO' AND system_id_from_data_provider='SRO00164';"
     df = athena.run_query(query_string=sql, pandas_cursor=True)
     assert df.shape == (1, 63)
@@ -50,18 +50,18 @@ def test_lbnl_tracking_the_sun_2019():
     config = AWSDataLakeConfig()
     database_name = config.database_name
     table_name = "lbnl_tracking_the_sun_2019"
-    
+
     # Partitions
     glue = OEDIGlue()
     partition_keys = glue.get_partition_keys(database_name, table_name, with_pandas=False)
     assert len(partition_keys) == 1
     assert partition_keys[0]["Name"] == "state"
-    
+
     partition_values = glue.get_partition_values(database_name, table_name)
     if "__HIVE_DEFAULT_PARTITION__" in partition_values:
         partition_values.remove("__HIVE_DEFAULT_PARTITION__")
     assert len(partition_values) == 28
-    
+
     # Query
     athena = OEDIAthena(
         staging_location=config.staging_location,
@@ -70,7 +70,7 @@ def test_lbnl_tracking_the_sun_2019():
     sql = f"SELECT COUNT(*) FROM {database_name}.{table_name} WHERE state='CO';"
     result = athena.run_query(query_string=sql, pandas_cursor=False)
     assert result[0][0] == 93930
-    
+
     sql = f"SELECT * FROM {database_name}.{table_name} WHERE state='CO' AND system_id_from_first_data_provider='SRO00164';"
     df = athena.run_query(query_string=sql, pandas_cursor=True)
     assert df.shape == (2, 60)
@@ -82,18 +82,18 @@ def test_nrel_pv_rooftops_aspects():
     config = AWSDataLakeConfig()
     database_name = config.database_name
     table_name = "nrel_pv_rooftops_aspects"
-    
+
     # Partitions
     glue = OEDIGlue()
     partition_keys = glue.get_partition_keys(database_name, table_name, with_pandas=False)
     assert len(partition_keys) == 1
     assert partition_keys[0]["Name"] == "partition_0"
-    
+
     partition_values = glue.get_partition_values(database_name, table_name)
     if "__HIVE_DEFAULT_PARTITION__" in partition_values:
         partition_values.remove("__HIVE_DEFAULT_PARTITION__")
     assert len(partition_values) == 165
-    
+
     # Query
     athena = OEDIAthena(
         staging_location=config.staging_location,
@@ -102,7 +102,7 @@ def test_nrel_pv_rooftops_aspects():
     sql = f"SELECT COUNT(*) FROM {database_name}.{table_name} WHERE partition_0='augusta_me_08';"
     result = athena.run_query(query_string=sql, pandas_cursor=False)
     assert result[0][0] == 197547
-    
+
     sql = f"SELECT * FROM {database_name}.{table_name} WHERE partition_0='augusta_me_08' AND gid=53283;"
     df = athena.run_query(query_string=sql, pandas_cursor=True)
     assert df.shape == (1, 11)
@@ -114,18 +114,18 @@ def test_nrel_pv_rooftops_buildings():
     config = AWSDataLakeConfig()
     database_name = config.database_name
     table_name = "nrel_pv_rooftops_buildings"
-    
+
     # Partitions
     glue = OEDIGlue()
     partition_keys = glue.get_partition_keys(database_name, table_name, with_pandas=False)
     assert len(partition_keys) == 1
     assert partition_keys[0]["Name"] == "partition_0"
-    
+
     partition_values = glue.get_partition_values(database_name, table_name)
     if "__HIVE_DEFAULT_PARTITION__" in partition_values:
         partition_values.remove("__HIVE_DEFAULT_PARTITION__")
     assert len(partition_values) == 168
-    
+
     # Query
     athena = OEDIAthena(
         staging_location=config.staging_location,
@@ -134,7 +134,7 @@ def test_nrel_pv_rooftops_buildings():
     sql = f"SELECT COUNT(*) FROM {database_name}.{table_name} WHERE partition_0='augusta_me_08';"
     result = athena.run_query(query_string=sql, pandas_cursor=False)
     assert result[0][0] == 17431
-    
+
     sql = f"SELECT * FROM {database_name}.{table_name} WHERE partition_0='augusta_me_08' AND gid=16039;"
     df = athena.run_query(query_string=sql, pandas_cursor=True)
     assert df.shape == (1, 10)
@@ -146,18 +146,18 @@ def test_nrel_pv_rooftops_developable_planes():
     config = AWSDataLakeConfig()
     database_name = config.database_name
     table_name = "nrel_pv_rooftops_developable_planes"
-    
+
     # Partitions
     glue = OEDIGlue()
     partition_keys = glue.get_partition_keys(database_name, table_name, with_pandas=False)
     assert len(partition_keys) == 1
     assert partition_keys[0]["Name"] == "partition_0"
-    
+
     partition_values = glue.get_partition_values(database_name, table_name)
     if "__HIVE_DEFAULT_PARTITION__" in partition_values:
         partition_values.remove("__HIVE_DEFAULT_PARTITION__")
     assert len(partition_values) == 166
-    
+
     # Query
     athena = OEDIAthena(
         staging_location=config.staging_location,
@@ -166,7 +166,7 @@ def test_nrel_pv_rooftops_developable_planes():
     sql = f"SELECT COUNT(*) FROM {database_name}.{table_name} WHERE partition_0='topeka_ks_08';"
     result = athena.run_query(query_string=sql, pandas_cursor=False)
     assert result[0][0] == 537304
-    
+
     sql = f"SELECT * FROM {database_name}.{table_name} WHERE partition_0='augusta_me_08' AND gid=15924;"
     df = athena.run_query(query_string=sql, pandas_cursor=True)
     assert df.shape == (1, 18)
@@ -178,18 +178,18 @@ def test_nrel_pv_rooftops_rasd():
     config = AWSDataLakeConfig()
     database_name = config.database_name
     table_name = "nrel_pv_rooftops_rasd"
-    
+
     # Partitions
     glue = OEDIGlue()
     partition_keys = glue.get_partition_keys(database_name, table_name, with_pandas=False)
     assert len(partition_keys) == 1
     assert partition_keys[0]["Name"] == "partition_0"
-    
+
     partition_values = glue.get_partition_values(database_name, table_name)
     if "__HIVE_DEFAULT_PARTITION__" in partition_values:
         partition_values.remove("__HIVE_DEFAULT_PARTITION__")
     assert len(partition_values) == 166
-    
+
     # Query
     athena = OEDIAthena(
         staging_location=config.staging_location,
@@ -198,7 +198,7 @@ def test_nrel_pv_rooftops_rasd():
     sql = f"SELECT COUNT(*) FROM {database_name}.{table_name} WHERE partition_0='topeka_ks_08';"
     result = athena.run_query(query_string=sql, pandas_cursor=False)
     assert result[0][0] == 1
-    
+
     sql = f"SELECT * FROM {database_name}.{table_name} WHERE partition_0='augusta_me_08'"
     df = athena.run_query(query_string=sql, pandas_cursor=True)
     assert df.shape == (1, 10)

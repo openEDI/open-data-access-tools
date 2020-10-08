@@ -2,7 +2,7 @@ import boto3
 
 
 class AWSClientBase(object):
-    
+
     def __init__(self, service_name, **kwargs):
         self._service_name = service_name
         self._kwargs = kwargs

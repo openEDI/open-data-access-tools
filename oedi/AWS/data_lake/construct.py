@@ -1,9 +1,7 @@
 
 from aws_cdk import core
 from aws_cdk import aws_iam as iam
-from aws_cdk import aws_s3 as s3
 from aws_cdk import aws_glue as glue
-from aws_cdk import aws_athena as athena
 
 from oedi.AWS.utils import generate_crawler_name, generate_table_prefix
 
@@ -36,7 +34,7 @@ class AWSDataLakeConstruct(core.Construct):
         id_suffix = self.database_name.replace("_", "-")
         glue.Database(
             scope=self,
-            id=f"oedi-data-lake-database--{id_suffix}", 
+            id=f"oedi-data-lake-database--{id_suffix}",
             database_name=self.database_name
         )
 
@@ -51,7 +49,7 @@ class AWSDataLakeConstruct(core.Construct):
                 "AmazonS3ReadOnlyAccess"
             ),
         ]
-        
+
         id_suffix = self.database_name.replace("_", "-")
         self._crawler_role = iam.Role(
             scope=self,
@@ -69,7 +67,7 @@ class AWSDataLakeConstruct(core.Construct):
         if not self.crawler_role:
             self.crawler_role()
 
-        crawler = glue.CfnCrawler(
+        glue.CfnCrawler(
             scope=self,
             id=f"oedi-data-lake-crawler--{crawler_name}",
             name=crawler_name,
