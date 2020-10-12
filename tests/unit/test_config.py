@@ -84,15 +84,15 @@ def test_config_dump(config):
     data = config.load()
     region_name = data["AWS"]["Region Name"]
     assert region_name == "us-west-1"
-    
+
     # Update
     new_region_name = "us-east-1"
     data["AWS"]["Region Name"] = new_region_name
     config.dump(data)
-    
+
     data = config.load()
     assert data["AWS"]["Region Name"] == new_region_name
-    
+
     # Revert back
     data["AWS"]["Region Name"] = region_name
     config.dump(data)

@@ -21,7 +21,7 @@ class OEDIAthena(AWSClientBase):
     @property
     def staging_location(self):
         return self._staging_location
-    
+
     @property
     def region_name(self):
         return self._region_name
@@ -31,13 +31,13 @@ class OEDIAthena(AWSClientBase):
         if not self._conn:
             self._conn = self.connect()
         return self._conn
-    
+
     def connect(self):
         return Connection(
             region_name=self.region_name,
             s3_staging_dir=self.staging_location
         )
-    
+
     def __exit__(self):
         if self._conn:
             self._conn.close()
