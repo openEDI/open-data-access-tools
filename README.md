@@ -9,4 +9,4 @@ Please visit the data catalog for the data here:  [https://data.openei.org/](htt
 
 
 ## License
-Creative Commons Attribution 3.0 United States License
+BSD 3-Clause "New" or "Revised" License
