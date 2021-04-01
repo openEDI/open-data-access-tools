@@ -1,7 +1,7 @@
 import click
 
 from oedi.cli.config import config
-from oedi.cli.AWS import aws
+from oedi.cli.aws import aws
 
 
 @click.group()
