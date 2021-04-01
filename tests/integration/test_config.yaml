@@ -1,0 +1,13 @@
+AWS:
+  Region Name: us-west-2
+  Datalake Name: oedi-data-lake
+  Database Name: oedi_data_lake
+  Dataset Locations:
+  - s3://oedi-data-lake/tracking-the-sun/2018/
+  - s3://oedi-data-lake/tracking-the-sun/2019/
+  - s3://oedi-data-lake/pv-rooftop/aspects/
+  - s3://oedi-data-lake/pv-rooftop/buildings/
+  - s3://oedi-data-lake/pv-rooftop/developable-planes/
+  - s3://oedi-data-lake/pv-rooftop/rasd/
+  - s3://oedi-data-lake/pv-rooftop-pr/developable-planes/
+  Staging Location: s3://nrel-tests/

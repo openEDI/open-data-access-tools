@@ -6,7 +6,9 @@ from prettytable import PrettyTable
 from oedi.config import AWSDataLakeConfig
 from oedi.AWS.glue import OEDIGlue
 
-glue = OEDIGlue()
+
+config = AWSDataLakeConfig()
+glue = OEDIGlue(region_name=config.region_name)
 
 
 @click.command()
