@@ -82,7 +82,7 @@ def test_oedi_glue__get_databasses():
 
     db = response[0]
     assert db["Name"] == database_name
-    assert db["CreateTime"] == ""
+    assert db["CreateTime"] is not None
 
 
 def create_table_input(
