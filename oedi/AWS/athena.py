@@ -1,7 +1,7 @@
 import geopandas
 
 from pyathena.connection import Connection
-from pyathena.pandas_cursor import PandasCursor
+from pyathena.pandas.cursor import PandasCursor
 from shapely import wkt
 
 from oedi.AWS.base import AWSClientBase
