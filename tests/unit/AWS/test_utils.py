@@ -31,5 +31,5 @@ def test_generate_table_prefix():
     s3url = "s3://bucket-name/Folder1/dataset_name/"
     prefix = utils.generate_table_prefix(s3url)
 
-    expected = "bucket_name_folder1_"
+    expected = "folder1_"
     assert prefix == expected
