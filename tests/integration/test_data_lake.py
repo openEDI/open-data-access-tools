@@ -6,21 +6,24 @@ $ oedi init
 $ cd oedi/AWS
 $ cdk deploy
 """
+import os
 import pytest
 
 from oedi.config import AWSDataLakeConfig
 from oedi.AWS.athena import OEDIAthena
 from oedi.AWS.glue import OEDIGlue
 
+TEST_CONFIG_FILE = os.path.join(os.path.dirname(__file__), "test_config.yaml")
+
 
 def test_lbnl_tracking_the_sun_2018():
     # config
-    config = AWSDataLakeConfig()
+    config = AWSDataLakeConfig(config_file=TEST_CONFIG_FILE)
     database_name = config.database_name
-    table_name = "lbnl_tracking_the_sun_2018"
+    table_name = "tracking_the_sun_2018"
 
     # Partitions
-    glue = OEDIGlue()
+    glue = OEDIGlue(region_name=config.region_name)
     partition_keys = glue.get_partition_keys(database_name, table_name, with_pandas=False)
     assert len(partition_keys) == 1
     assert partition_keys[0]["Name"] == "state"
@@ -47,12 +50,12 @@ def test_lbnl_tracking_the_sun_2018():
 
 def test_lbnl_tracking_the_sun_2019():
     # config
-    config = AWSDataLakeConfig()
+    config = AWSDataLakeConfig(config_file=TEST_CONFIG_FILE)
     database_name = config.database_name
-    table_name = "lbnl_tracking_the_sun_2019"
+    table_name = "tracking_the_sun_2019"
 
     # Partitions
-    glue = OEDIGlue()
+    glue = OEDIGlue(region_name=config.region_name)
     partition_keys = glue.get_partition_keys(database_name, table_name, with_pandas=False)
     assert len(partition_keys) == 1
     assert partition_keys[0]["Name"] == "state"
@@ -79,12 +82,12 @@ def test_lbnl_tracking_the_sun_2019():
 
 def test_nrel_pv_rooftops_aspects():
     # config
-    config = AWSDataLakeConfig()
+    config = AWSDataLakeConfig(config_file=TEST_CONFIG_FILE)
     database_name = config.database_name
-    table_name = "nrel_pv_rooftops_aspects"
+    table_name = "pv_rooftops_aspects"
 
     # Partitions
-    glue = OEDIGlue()
+    glue = OEDIGlue(region_name=config.region_name)
     partition_keys = glue.get_partition_keys(database_name, table_name, with_pandas=False)
     assert len(partition_keys) == 1
     assert partition_keys[0]["Name"] == "partition_0"
@@ -111,12 +114,12 @@ def test_nrel_pv_rooftops_aspects():
 
 def test_nrel_pv_rooftops_buildings():
     # config
-    config = AWSDataLakeConfig()
+    config = AWSDataLakeConfig(config_file=TEST_CONFIG_FILE)
     database_name = config.database_name
-    table_name = "nrel_pv_rooftops_buildings"
+    table_name = "pv_rooftops_buildings"
 
     # Partitions
-    glue = OEDIGlue()
+    glue = OEDIGlue(region_name=config.region_name)
     partition_keys = glue.get_partition_keys(database_name, table_name, with_pandas=False)
     assert len(partition_keys) == 1
     assert partition_keys[0]["Name"] == "partition_0"
@@ -143,12 +146,12 @@ def test_nrel_pv_rooftops_buildings():
 
 def test_nrel_pv_rooftops_developable_planes():
     # config
-    config = AWSDataLakeConfig()
+    config = AWSDataLakeConfig(config_file=TEST_CONFIG_FILE)
     database_name = config.database_name
-    table_name = "nrel_pv_rooftops_developable_planes"
+    table_name = "pv_rooftops_developable_planes"
 
     # Partitions
-    glue = OEDIGlue()
+    glue = OEDIGlue(region_name=config.region_name)
     partition_keys = glue.get_partition_keys(database_name, table_name, with_pandas=False)
     assert len(partition_keys) == 1
     assert partition_keys[0]["Name"] == "partition_0"
@@ -175,12 +178,12 @@ def test_nrel_pv_rooftops_developable_planes():
 
 def test_nrel_pv_rooftops_rasd():
     # config
-    config = AWSDataLakeConfig()
+    config = AWSDataLakeConfig(config_file=TEST_CONFIG_FILE)
     database_name = config.database_name
-    table_name = "nrel_pv_rooftops_rasd"
+    table_name = "pv_rooftops_rasd"
 
     # Partitions
-    glue = OEDIGlue()
+    glue = OEDIGlue(region_name=config.region_name)
     partition_keys = glue.get_partition_keys(database_name, table_name, with_pandas=False)
     assert len(partition_keys) == 1
     assert partition_keys[0]["Name"] == "partition_0"

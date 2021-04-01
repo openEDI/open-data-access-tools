@@ -51,7 +51,7 @@ def run_query(query_string, staging_location=None, region_name=None, output_file
     if not staging_location:
         raise ValueError("Invalid '--output-location' option value.")
 
-    oedi_athena = OEDIAthena(staging_location, region_name)
+    oedi_athena = OEDIAthena(staging_location, region_name=region_name)
     result = oedi_athena.run_query(query_string)
     if head:
         result = result.head()

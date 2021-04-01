@@ -13,8 +13,8 @@ from oedi.AWS.utils import generate_crawler_name, format_datetime
 
 class OEDIGlue(AWSClientBase):
 
-    def __init__(self, config_file=None, **kwargs):
-        super().__init__(service_name="glue", **kwargs)
+    def __init__(self, config_file=None, region_name="us-west-2", **kwargs):
+        super().__init__("glue", region_name, **kwargs)
         self.config_file = config_file or OEDI_CONFIG_FILE
 
     def get_databases(self):
