@@ -22,3 +22,14 @@ class AWSDataLakeStack(core.Stack):
         data_lake.create_crawler_role()
         for dataset_location in config.dataset_locations:
             data_lake.create_crawler(location=dataset_location)
+            
+        data_lake_buildstock = AWSDataLakeConstruct(
+            scope=self,
+            id="oedi-data-lake-construct-buildstock",
+            database_name=config.buildstock_database_name,
+            version=__version__
+        )
+        data_lake_buildstock.create_database()
+        data_lake_buildstock.create_crawler_role()
+        for dataset_location in config.buildstock_dataset_locations:
+            data_lake_buildstock.create_crawler(location=dataset_location)

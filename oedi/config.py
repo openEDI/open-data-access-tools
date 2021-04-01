@@ -94,5 +94,13 @@ class AWSDataLakeConfig(OEDIConfigBase):
         return self.data.get("Dataset Locations", [])
 
     @property
+    def buildstock_database_name(self):
+        return self.data.get("Buildstock Database Name", [])
+
+    @property
+    def buildstock_dataset_locations(self):
+        return self.data.get("Buildstock Dataset Locations", [])
+
+    @property
     def staging_location(self):
         return self.data.get("Staging Location", None)
