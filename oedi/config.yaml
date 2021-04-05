@@ -1,19 +1,24 @@
 AWS:
   Region Name: us-west-2
   Datalake Name: oedi-data-lake
-  Database Name: oedi_data_lake
-  Dataset Locations:
-  - s3://oedi-data-lake/tracking-the-sun/2018/
-  - s3://oedi-data-lake/tracking-the-sun/2019/
-  - s3://oedi-data-lake/pv-rooftop/aspects/
-  - s3://oedi-data-lake/pv-rooftop/buildings/
-  - s3://oedi-data-lake/pv-rooftop/developable-planes/
-  - s3://oedi-data-lake/pv-rooftop/rasd/
-  - s3://oedi-data-lake/pv-rooftop-pr/developable-planes/
-  Buildstock Database Name: oedi_buildstock_data_lake
-  Buildstock Dataset Locations:
-  - s3://nrel-pds-building-stock/
-  - s3://nrel-pds-building-stock/comstock/athena/2020/comstock_v1/state
-  - s3://nrel-pds-building-stock/comstock/athena/2020/comstock_v1/metadata
+  Databases:
+    - Identifier: pv_rooftops
+      Name: oedi_pv_rooftops
+      Locations:
+        - s3://oedi-data-lake/pv-rooftop/aspects/
+        - s3://oedi-data-lake/pv-rooftop/buildings/
+        - s3://oedi-data-lake/pv-rooftop/developable-planes/
+        - s3://oedi-data-lake/pv-rooftop/rasd/
+        - s3://oedi-data-lake/pv-rooftop-pr/developable-planes/
+    - Identifier: buildstock
+      Name: oedi_buildstock
+      Locations:
+        - s3://nrel-pds-building-stock/comstock/athena/2020/comstock_v1/state
+        - s3://nrel-pds-building-stock/comstock/athena/2020/comstock_v1/metadata
+    - Identifier: tracking_the_sun
+      Name: oedi_tracking_the_sun
+      Locations:
+        - s3://oedi-data-lake/tracking-the-sun/2018/
+        - s3://oedi-data-lake/tracking-the-sun/2019/
 
   Staging Location: s3://the-staging-bucket-of-user/
