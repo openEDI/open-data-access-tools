@@ -11,12 +11,12 @@ def test_oedi_athena__properties(mock_connection):
     staging_location = "s3://my-testing-bucket/"
     region_name = "us-west-2"
     athena = OEDIAthena(staging_location, region_name)
-    
+
     # Assertion
     assert athena.staging_location == staging_location
     assert athena.region_name == region_name
     assert athena.conn is not None
-    
+
     assert mock_connection.called
 
 
@@ -28,10 +28,10 @@ def test_oedi_athena__run_query(mock_execute, mock_load_wkt, mock_connection):
     staging_location = "s3://my-testing-bucket/"
     region_name = "us-west-2"
     athena = OEDIAthena(staging_location, region_name)
-    
+
     sql = "SELECT * FROM table LIMIT 10;"
     geometry = "geom_4326"
     athena.run_query(sql, geometry)
-    
+
     assert mock_execute.called
     assert mock_load_wkt.called

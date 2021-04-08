@@ -1,7 +1,7 @@
 import geopandas
 
 from pyathena.connection import Connection
-from pyathena.pandas_cursor import PandasCursor
+from pyathena.pandas.cursor import PandasCursor
 from shapely import wkt
 
 from oedi.AWS.base import AWSClientBase
@@ -11,33 +11,28 @@ class OEDIAthena(AWSClientBase):
     """
     OEDI Athena client
     """
-    def __init__(self, staging_location=None, region_name=None, **kwargs):
+    def __init__(self, staging_location=None, region_name="us-west-2", **kwargs):
         """Create OEDI Athena class instance"""
-        super().__init__("athena", **kwargs)
+        super().__init__("athena", region_name, **kwargs)
         self._staging_location = staging_location
-        self._region_name = region_name
         self._conn = None
 
     @property
     def staging_location(self):
         return self._staging_location
-    
-    @property
-    def region_name(self):
-        return self._region_name
 
     @property
     def conn(self):
         if not self._conn:
             self._conn = self.connect()
         return self._conn
-    
+
     def connect(self):
         return Connection(
             region_name=self.region_name,
             s3_staging_dir=self.staging_location
         )
-    
+
     def __exit__(self):
         if self._conn:
             self._conn.close()

@@ -6,14 +6,16 @@ from prettytable import PrettyTable
 from oedi.config import AWSDataLakeConfig
 from oedi.AWS.glue import OEDIGlue
 
-glue = OEDIGlue()
+
+config = AWSDataLakeConfig()
+glue = OEDIGlue(region_name=config.region_name)
 
 
 @click.command()
 def list_databases():
     """List available databases"""
     databases = glue.get_databases()
-    
+
     pretty_table = PrettyTable()
     pretty_table.field_names = ["No.", "Name", "CreateTime"]
     for i, db in enumerate(databases):
@@ -57,7 +59,7 @@ def list_crawlers():
     pretty_table.field_names = ["No.", "Name", "State", "S3Targets", "LastUpdated", "CreateTime"]
     for i, crawler in enumerate(crawlers):
         pretty_table.add_row([
-            i, crawler["Name"], crawler["State"], crawler["S3Targets"], 
+            i, crawler["Name"], crawler["State"], crawler["S3Targets"],
             crawler["LastUpdated"], crawler["CreateTime"]
         ])
 
@@ -89,26 +91,26 @@ def run_crawler(crawler_name, background_run=False):
     else:
         print(f"Crawler has already started. State={state.lower()}...")
         return
-    
+
     if background_run:
         print("Started!")
         return
-    
+
     running_started, stopping_started = False, False
     while True:
         time.sleep(1)
         state = glue.get_crawler_state(crawler_name)
-        
+
         if state == "RUNNING" and not running_started:
-            print(f"Running crawler...")
+            print("Running crawler...")
             running_started = True
             continue
-        
+
         if state == "STOPPING" and not stopping_started:
-            print(f"Stopping crawler...")
+            print("Stopping crawler...")
             stopping_started = True
             continue
-        
+
         if state == "READY":
             print("Finished!")
             break
@@ -118,9 +120,7 @@ def run_crawler(crawler_name, background_run=False):
 def run_crawlers():
     """Run all crawlers in data lake."""
     crawlers = glue.list_crawlers()
-    #print(crawlers)
     for crawler_name in crawlers:
-        #print(crawler_name)
         state = glue.get_crawler_state(crawler_name['Name'])
         if state == "READY":
             print(f"Starting crawler {crawler_name['Name']}...")
@@ -128,5 +128,5 @@ def run_crawlers():
         else:
             print(f"Crawler '{crawler_name['Name']}' has already started. State={state.lower()}...")
             continue
-    
+
     print("All crawlers started!")

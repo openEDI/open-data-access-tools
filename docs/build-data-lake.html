@@ -46,19 +46,19 @@ which contains the default OEDI config settings.</p>
 configure the data lake based on your preference. For example, we provide the
 template with following <code class="docutils literal notranslate"><span class="pre">AWS</span></code> configurations.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>oedi<span class="o">)</span> $ oedi config show --provider AWS
-AWS
----
-AWS Region: us-west-2
-Data Lake Name: oedi-datalake
-Database Name: oedi_database
-Dataset Locations:
-- s3://lbnl-tracking-the-sun/2018/
-- s3://lbnl-tracking-the-sun/2019/
-- s3://nrel-pv-rooftops/aspects/
-- s3://nrel-pv-rooftops/buildings/
-- s3://nrel-pv-rooftops/developable_planes/
-- s3://nrel-pv-rooftops/rasd/
-Staging Location: s3://user-staging-bucket/
+  AWS:
+  Region Name: us-west-2
+  Datalake Name: oedi-data-lake
+  Database Name: oedi_data_lake
+  Dataset Locations:
+  - s3://oedi-data-lake/tracking-the-sun/2018/
+  - s3://oedi-data-lake/tracking-the-sun/2019/
+  - s3://oedi-data-lake/pv-rooftop/aspects/
+  - s3://oedi-data-lake/pv-rooftop/buildings/
+  - s3://oedi-data-lake/pv-rooftop/developable-planes/
+  - s3://oedi-data-lake/pv-rooftop/rasd/
+  - s3://oedi-data-lake/pv-rooftop-pr/developable-planes/
+  Staging Location: s3://the-staging-bucket-of-user/
 </pre></div>
 </div>
 <p>OEDI may have multiple providers in the future. For now, we only focus on <code class="docutils literal notranslate"><span class="pre">AWS</span></code>.
@@ -77,10 +77,10 @@ Those configurations will be applied to AWS and related services in your data la
 <div class="section" id="deploy-data-lake">
 <h2>Deploy Data Lake<a class="headerlink" href="#deploy-data-lake" title="Permalink to this headline">¶</a></h2>
 <p>After the configurations got determined, then we can use <code class="docutils literal notranslate"><span class="pre">cdk</span></code> commands to manage the
-AWS infrustructures required by the data lake.</p>
+AWS infrastructure required by the data lake.</p>
 <p>Please change your directory to <code class="docutils literal notranslate"><span class="pre">open-data-access-tools/oedi/AWS</span></code> which contains the CDK
 app.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> open-data-access-tools/oedi/AWS
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /open-data-access-tools/oedi/AWS
 </pre></div>
 </div>
 <p>To deploy the data lake stack configured above, we need to run the command:</p>

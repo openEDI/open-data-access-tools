@@ -13,15 +13,15 @@ from oedi.AWS.utils import generate_crawler_name, format_datetime
 
 class OEDIGlue(AWSClientBase):
 
-    def __init__(self, config_file=None, **kwargs):
-        super().__init__(service_name="glue", **kwargs)
+    def __init__(self, config_file=None, region_name="us-west-2", **kwargs):
+        super().__init__("glue", region_name, **kwargs)
         self.config_file = config_file or OEDI_CONFIG_FILE
 
     def get_databases(self):
         response = self.client.get_databases()
         databases = [
             {
-                "Name": db["Name"], 
+                "Name": db["Name"],
                 "CreateTime": format_datetime(db.get("CreateTime", None))
             }
             for db in response["DatabaseList"]
@@ -31,7 +31,7 @@ class OEDIGlue(AWSClientBase):
     def list_tables(self, database_name):
         """List avaible tables in given database"""
         paginator = self.client.get_paginator("get_tables")
-        
+
         tables = []
         for response in paginator.paginate(DatabaseName=database_name):
             for tb in response["TableList"]:
@@ -110,7 +110,7 @@ class OEDIGlue(AWSClientBase):
             state = "READY"
         else:
             state = crawler["Crawler"]["State"]
-        
+
         return state
 
     def start_crawler(self, crawler_name):

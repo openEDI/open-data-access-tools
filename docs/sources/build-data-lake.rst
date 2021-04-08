@@ -18,20 +18,20 @@ template with following ``AWS`` configurations.
 
 .. code-block:: bash
 
-    (oedi) $ oedi config show --provider AWS
-    AWS
-    ---
-    AWS Region: us-west-2
-    Data Lake Name: oedi-datalake
-    Database Name: oedi_database
-    Dataset Locations:
-    - s3://lbnl-tracking-the-sun/2018/
-    - s3://lbnl-tracking-the-sun/2019/
-    - s3://nrel-pv-rooftops/aspects/
-    - s3://nrel-pv-rooftops/buildings/
-    - s3://nrel-pv-rooftops/developable_planes/
-    - s3://nrel-pv-rooftops/rasd/
-    Staging Location: s3://user-staging-bucket/
+  (oedi) $ oedi config show --provider AWS
+  AWS:
+  Region Name: us-west-2
+  Datalake Name: oedi-data-lake
+  Database Name: oedi_data_lake
+  Dataset Locations:
+  - s3://oedi-data-lake/tracking-the-sun/2018/
+  - s3://oedi-data-lake/tracking-the-sun/2019/
+  - s3://oedi-data-lake/pv-rooftop/aspects/
+  - s3://oedi-data-lake/pv-rooftop/buildings/
+  - s3://oedi-data-lake/pv-rooftop/developable-planes/
+  - s3://oedi-data-lake/pv-rooftop/rasd/
+  - s3://oedi-data-lake/pv-rooftop-pr/developable-planes/
+  Staging Location: s3://the-staging-bucket-of-user/
 
 OEDI may have multiple providers in the future. For now, we only focus on ``AWS``.
 Those configurations will be applied to AWS and related services in your data lake.
@@ -54,7 +54,7 @@ app.
 
 .. code-block:: bash
 
-    $ cd open-data-access-tools/oedi/AWS
+    $ cd /open-data-access-tools/oedi/AWS
 
 To deploy the data lake stack configured above, we need to run the command:
 
@@ -70,8 +70,8 @@ data lake, then the following resources are created in the data lake.
     * An AWS Glue crawler role was assumed, used for creating crawlers.
     * A number of AWS Glue crawlers were created.
 
-Now, you have the data lake infrustructures lauched. Later on, after any change to ``config.yaml``,
-it's exptected to re-deploy via ``cdk`` to apply the updated configurations.
+Now, you have the data lake infrastructures launched. Later on, after any change to ``config.yaml``,
+it's expected to re-deploy via ``cdk`` to apply the updated configurations.
 
 There are also other common ``cdk`` commands, like these:
 

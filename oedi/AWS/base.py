@@ -2,15 +2,20 @@ import boto3
 
 
 class AWSClientBase(object):
-    
-    def __init__(self, service_name, **kwargs):
+
+    def __init__(self, service_name, region_name, **kwargs):
         self._service_name = service_name
+        self._region_name = region_name
         self._kwargs = kwargs
         self._client = None
 
     @property
     def service_name(self):
         return self._service_name
+    
+    @property
+    def region_name(self):
+        return self._region_name
 
     @property
     def client(self):
@@ -20,4 +25,4 @@ class AWSClientBase(object):
 
     def connect(self):
         """Establish client connection object"""
-        return boto3.client(self.service_name, **self._kwargs)
+        return boto3.client(self.service_name, region_name=self._region_name, **self._kwargs)

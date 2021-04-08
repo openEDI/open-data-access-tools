@@ -1,6 +1,3 @@
-import os
-import shutil
-
 import click
 
 from oedi.config import init_config, AWSDataLakeConfig
@@ -31,8 +28,8 @@ def show(provider):
     """Show OEDI configuration of given cloud provider."""
     provider = str(provider).upper()
     print(provider.upper())
-    print("-"*len(provider))
-    
+    print("-" * len(provider))
+
     if provider == "AWS":
         config = AWSDataLakeConfig()
 

@@ -1,12 +1,10 @@
 import copy
 import boto3
 import mock
-import pytest
 from moto import mock_glue
 
 from oedi.AWS.glue import OEDIGlue
 from tests.unit.test_config import OEDI_TEST_CONFIG_FILE
-
 
 
 TABLE_INPUT = {
@@ -73,33 +71,31 @@ CRAWLERS = [
 def test_oedi_glue__get_databasses():
     # Setup
     client = boto3.client("glue", region_name="us-west-1")
-    
+
     database_name = "test-database"
     client.create_database(DatabaseInput={"Name": database_name})
-    
+
     # Test
     glue = OEDIGlue()
     response = glue.get_databases()
     assert len(response) == 1
-    
+
     db = response[0]
     assert db["Name"] == database_name
-    assert db["CreateTime"] == ""
+    assert db["CreateTime"] is not None
 
 
 def create_table_input(
-        database_name, 
-        table_name, 
-        partition_keys=None, 
-        columns=None
-    ):
+        database_name,
+        table_name,
+        partition_keys=None,
+        columns=None):
     """A helper function for creating table input."""
-    
     table_input = copy.deepcopy(TABLE_INPUT)
     table_input["Name"] = table_name
     table_input["PartitionKeys"] = partition_keys or []
     table_input["StorageDescriptor"]["Columns"] = columns or []
-    
+
     location = f"s3://test-bucket/{database_name}/{table_name}"
     table_input["StorageDescriptor"]["Location"] = location
     return table_input
@@ -109,10 +105,10 @@ def create_table_input(
 def test_oedi_glue__get_table():
     # Setup
     client = boto3.client("glue", region_name="us-west-1")
-    
+
     database_name = "test-database"
     client.create_database(DatabaseInput={"Name": database_name})
-    
+
     table_name = "test-table"
     partition_keys = [{"Name": "state"}, {"Name": "city"}]
     table_input = create_table_input(database_name, table_name, partition_keys)
@@ -130,10 +126,10 @@ def test_oedi_glue__get_table():
 def test_oedi_glue__list_tables():
     # Setup
     client = boto3.client("glue", region_name="us-west-1")
-    
+
     database_name = "test-database"
     client.create_database(DatabaseInput={"Name": database_name})
-    
+
     table_name = "test-table-1"
     table_input = create_table_input(database_name, table_name)
     client.create_table(DatabaseName=database_name, TableInput=table_input)
@@ -153,13 +149,13 @@ def test_oedi_glue__list_tables():
 def test_oedi_glue__get_table_columns():
     # Setup
     client = boto3.client("glue", region_name="us-west-1")
-    
+
     database_name = "test-database"
     client.create_database(DatabaseInput={"Name": database_name})
-    
+
     table_name = "test-table"
     mycolumns = [
-        {"Name": "state", "Type": "string"}, 
+        {"Name": "state", "Type": "string"},
         {"Name": "size", "Type": "integer"}
     ]
     table_input = create_table_input(database_name, table_name, columns=mycolumns)
@@ -175,13 +171,13 @@ def test_oedi_glue__get_table_columns():
 def test_oedi_glue__get_partition_keys():
     # Setup
     client = boto3.client("glue", region_name="us-west-1")
-    
+
     database_name = "test-database"
     client.create_database(DatabaseInput={"Name": database_name})
-    
+
     table_name = "test-table"
     my_partition_keys = [
-        {"Name": "state"}, 
+        {"Name": "state"},
         {"Name": "city"},
         {"Name": "zipcode"}
     ]
@@ -198,13 +194,13 @@ def test_oedi_glue__get_partition_keys():
 def test_oedi_glue__get_partition_values():
     # Setup
     client = boto3.client("glue", region_name="us-west-1")
-    
+
     database_name = "test-database"
     client.create_database(DatabaseInput={"Name": database_name})
-    
+
     table_name = "test-table"
     my_partition_keys = [
-        {"Name": "state"}, 
+        {"Name": "state"},
         {"Name": "city"},
         {"Name": "zipcode"}
     ]

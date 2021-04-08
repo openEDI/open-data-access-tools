@@ -46,17 +46,16 @@ def run_query(query_string, staging_location=None, region_name=None, output_file
     region_name = region_name or config.region_name
     if not staging_location:
         staging_location = config.staging_location
-    
+
     # The user may not configure Staging Location in config
     if not staging_location:
         raise ValueError("Invalid '--output-location' option value.")
-    
-    oedi_athena = OEDIAthena(staging_location, region_name)
 
+    oedi_athena = OEDIAthena(staging_location, region_name=region_name)
     result = oedi_athena.run_query(query_string)
     if head:
         result = result.head()
-    
+
     if output_file:
         result.to_csv(output_file, index=False)
         print(f"Exprted query result to csv file - {output_file}.")

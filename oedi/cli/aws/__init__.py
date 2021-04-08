@@ -1,6 +1,6 @@
 import click
 
-from oedi.cli.AWS import athena, glue
+from oedi.cli.aws import athena, glue
 
 
 @click.group()
