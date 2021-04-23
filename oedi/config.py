@@ -107,18 +107,18 @@ class AWSDataLakeConfig(OEDIConfigBase):
     def get_db_name(self, identifier): 
         this_db = None
         for db in self.data.get("Databases"): 
-            if db['Identifier'] == identifier: 
-                this_db = db['Name']
+            if db["Identifier"] == identifier: 
+                this_db = db["Name"].replace("-", "_")
         return this_db
     
-    @property 
+    @property
     def tracking_the_sun_db_name(self):  
-        return self.get_db_name('tracking_the_sun')
+        return self.get_db_name("tracking_the_sun")
     
     @property 
     def pv_rooftops_db_name(self):  
-        return self.get_db_name('pv_rooftops')
+        return self.get_db_name("pv_rooftops")
 
     @property 
     def buildstock_db_name(self):  
-        return self.get_db_name('buildstock')
+        return self.get_db_name("buildstock")

@@ -37,32 +37,74 @@ TABLE_INPUT = {
 
 CRAWLERS = [
     {
-        "Name": "bucket-name-folder1-dataset-name",
+        "Name": "bucket-name-data-one-part-a",
         "State": "READY",
         "Role": "my-glue-role",
         "Targets": {
             "S3Targets": [
                 {
-                    "Path": "s3://my-test-bucket/dataset1"
+                    "Path": "s3://bucket-name/data-one/part-a/"
                 }
             ]
         },
-        "LastUpdated": "2020-02-05 12:00:00",
+        "LastUpdated": "2020-02-05 12:00:01",
         "CreationTime": "2019-11-12 13:01:03"
     },
     {
-        "Name": "bucket-name-folder2-another-dataset",
+        "Name": "bucket-name-data-one-part-b",
         "State": "READY",
         "Role": "my-glue-role",
         "Targets": {
             "S3Targets": [
                 {
-                    "Path": "s3://my-test-bucket/dataset2"
+                    "Path": "s3://bucket-name/data-one/part-b/"
                 }
             ]
         },
-        "LastUpdated": "2020-03-01 10:00:00",
-        "CreationTime": "2019-10-02 09:01:03"
+        "LastUpdated": "2020-03-01 10:00:02",
+        "CreationTime": "2019-10-02 09:01:04"
+    },
+    {
+        "Name": "bucket-name-data-two-2015",
+        "State": "READY",
+        "Role": "my-glue-role",
+        "Targets": {
+            "S3Targets": [
+                {
+                    "Path": "s3://bucket-name/data-one/part-a/"
+                }
+            ]
+        },
+        "LastUpdated": "2020-02-05 12:00:03",
+        "CreationTime": "2019-11-12 13:01:05"
+    },
+    {
+        "Name": "bucket-name-data-two-2016",
+        "State": "READY",
+        "Role": "my-glue-role",
+        "Targets": {
+            "S3Targets": [
+                {
+                    "Path": "s3://bucket-name/data-two/2016/"
+                }
+            ]
+        },
+        "LastUpdated": "2020-03-01 10:00:04",
+        "CreationTime": "2019-10-02 09:01:06"
+    },
+    {
+        "Name": "bucket-name-data-three-2017",
+        "State": "READY",
+        "Role": "my-glue-role",
+        "Targets": {
+            "S3Targets": [
+                {
+                    "Path": "s3://bucket-name/data-three/2017/"
+                }
+            ]
+        },
+        "LastUpdated": "2020-03-01 10:00:05",
+        "CreationTime": "2019-10-02 09:01:07"
     }
 ]
 
@@ -226,7 +268,7 @@ def get_crawler(crawler_name):
 @mock.patch("oedi.AWS.glue.OEDIGlue.get_crawler", side_effect=get_crawler)
 def test_oedi_glue__get_crawler(mock_get_crawler):
     glue = OEDIGlue()
-    crawler_name = "bucket-name-folder2-another-dataset"
+    crawler_name = "bucket-name-data-one-part-a"
     crawler = glue.get_crawler(crawler_name)["Crawler"]
     assert crawler["Name"] == crawler_name
 
@@ -236,7 +278,7 @@ def test_oedi_glue__get_crawler(mock_get_crawler):
 def test_oedi_glue__list_crawlers(mock_get_crawler):
     glue = OEDIGlue(config_file=OEDI_TEST_CONFIG_FILE)
     crawlers = glue.list_crawlers()
-    assert len(crawlers) == 2
+    assert len(crawlers) == 5
 
 
 @mock_glue
@@ -244,7 +286,7 @@ def test_oedi_glue__list_crawlers(mock_get_crawler):
 def test_oedi_glue__get_crawler_state(mock_get_crawler):
     glue = OEDIGlue(config_file=OEDI_TEST_CONFIG_FILE)
     crawlers = glue.list_crawlers()
-    assert len(crawlers) == 2
+    assert len(crawlers) == 5
 
 
 @mock_glue
