@@ -13,10 +13,11 @@ class AWSDataLakeStack(core.Stack):
         super().__init__(scope, config.datalake_name, env={"region": config.region_name})
 
         for database in config.databases:
+            db_name = database["Name"].replace("-", "_")
             data_lake = AWSDataLakeConstruct(
                 scope=self,
                 id=f"oedi-data-lake-construct-{database['Name']}",
-                database_name=database['Name'],
+                database_name=db_name,
                 version=__version__
             )
             data_lake.create_database()
@@ -24,5 +25,3 @@ class AWSDataLakeStack(core.Stack):
             #TODO: data_lake.create_workgroup()
             for dataset_location in database['Locations']:
                 data_lake.create_crawler(location=dataset_location)
-
-

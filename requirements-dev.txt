@@ -2,3 +2,4 @@ black
 pytest
 sphinx
 moto
+mock
