@@ -76,3 +76,4 @@ class AWSDataLakeConstruct(core.Construct):
             database_name=self.database_name,
             table_prefix=table_prefix,
         )
+        

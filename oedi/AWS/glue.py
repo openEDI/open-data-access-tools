@@ -75,11 +75,14 @@ class OEDIGlue(AWSClientBase):
 
     def list_crawlers(self):
         """List available crawlers"""
+        
         data_lake_config = AWSDataLakeConfig(self.config_file)
+
         oedi_crawler_names = set([
             generate_crawler_name(s3url=dataset_location)
             for dataset_location in data_lake_config.dataset_locations
         ])
+        
 
         # Access to each crawler details
         available_crawlers = []
