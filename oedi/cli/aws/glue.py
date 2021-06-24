@@ -7,13 +7,16 @@ from oedi.config import AWSDataLakeConfig
 from oedi.AWS.glue import OEDIGlue
 
 
-config = AWSDataLakeConfig()
-glue = OEDIGlue(region_name=config.region_name)
+def get_glue_client():
+    config = AWSDataLakeConfig()
+    glue = OEDIGlue(region_name=config.region_name)
+    return glue
 
 
 @click.command()
 def list_databases():
     """List available databases"""
+    glue = get_glue_client()
     databases = glue.get_databases()
 
     pretty_table = PrettyTable()
@@ -38,6 +41,7 @@ def list_tables(database_name):
     if not database_name:
         config = AWSDataLakeConfig()
         database_name = config.database_name
+    glue = get_glue_client()
     tables = glue.list_tables(
         database_name=database_name
     )
@@ -53,6 +57,7 @@ def list_tables(database_name):
 @click.command()
 def list_crawlers():
     """List available crawlers."""
+    glue = get_glue_client()
     crawlers = glue.list_crawlers()
 
     pretty_table = PrettyTable()
@@ -84,6 +89,7 @@ def list_crawlers():
 )
 def run_crawler(crawler_name, background_run=False):
     """Run crawler to populate table."""
+    glue = get_glue_client()
     state = glue.get_crawler_state(crawler_name)
     if state == "READY":
         print("Starting crawler...")
@@ -119,6 +125,7 @@ def run_crawler(crawler_name, background_run=False):
 @click.command()
 def run_crawlers():
     """Run all crawlers in data lake."""
+    glue = get_glue_client()
     crawlers = glue.list_crawlers()
     for crawler_name in crawlers:
         state = glue.get_crawler_state(crawler_name['Name'])
