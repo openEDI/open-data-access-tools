@@ -1,12 +1,20 @@
 AWS:
-  Database Name: my_oedi_database
-  Datalake Name: my-oedi-datalake
-  Dataset Locations:
-  - s3://bucket-name/Folder1/dataset_name/
-  - s3://bucket-name/Folder2/another_dataset/
-  Region Name: us-west-1
-  Staging Location: s3://my-staging-bucket/
+  Databases:
+  - Identifier: data-one
+    Locations:
+    - s3://bucket-name/data-one/part-a/
+    - s3://bucket-name/data-one/part-b/
+    Name: oedi-data-one
+  - Identifier: data-two
+    Locations:
+    - s3://bucket-name/data-two/2015/
+    - s3://bucket-name/data-two/2016/
+    - s3://bucket-name/data-three/2017/
+    Name: oedi-data-two
+  Datalake Name: aws-oedi-datalake
+  Region Name: us-west-2
+  Staging Location: s3://aws-staging-bucket/
 Azure:
-  A: something
-Google Cloud:
-  G: another thing
+  Datalake Name: azure-oedi-datalake
+Google:
+  Datalake Name: google-oedi-datalake

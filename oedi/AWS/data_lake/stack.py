@@ -12,13 +12,16 @@ class AWSDataLakeStack(core.Stack):
         """Lauch AWS data lake related infrastructures."""
         super().__init__(scope, config.datalake_name, env={"region": config.region_name})
 
-        data_lake = AWSDataLakeConstruct(
-            scope=self,
-            id="oedi-data-lake-construct",
-            database_name=config.database_name,
-            version=__version__
-        )
-        data_lake.create_database()
-        data_lake.create_crawler_role()
-        for dataset_location in config.dataset_locations:
-            data_lake.create_crawler(location=dataset_location)
+        for database in config.databases:
+            db_name = database["Name"].replace("-", "_")
+            data_lake = AWSDataLakeConstruct(
+                scope=self,
+                id=f"oedi-data-lake-construct-{database['Name']}",
+                database_name=db_name,
+                version=__version__
+            )
+            data_lake.create_database()
+            data_lake.create_crawler_role()
+            #TODO: data_lake.create_workgroup()
+            for dataset_location in database['Locations']:
+                data_lake.create_crawler(location=dataset_location)

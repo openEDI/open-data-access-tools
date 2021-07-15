@@ -22,38 +22,55 @@ def test_config_file(config):
 
 
 def test_config_region_name(config):
-    assert config.region_name == "us-west-1"
+    assert config.region_name == "us-west-2"
 
 
 def test_config_datalake_name(config):
-    assert config.datalake_name == "my-oedi-datalake"
+    assert config.datalake_name == "aws-oedi-datalake"
 
 
-def test_config_database_name(config):
-    assert config.database_name == "my_oedi_database"
-
-
-def test_config_dataset_locations(config):
-    assert config.dataset_locations == [
-        "s3://bucket-name/Folder1/dataset_name/",
-        "s3://bucket-name/Folder2/another_dataset/"
-    ]
+def test_config_databases(config):
+    assert len(config.databases) == 2
+    for database in config.databases:
+        assert "Identifier" in database
+        assert "Name" in database
+        assert "Locations" in database
+        
+        if database["Name"] == "data-one":
+            assert len(database["Locations"]) == 2
+        
+        if database["Name"] == "data-two":
+            assert len(database["Locations"]) == 3
 
 
 def test_config_staging_location(config):
-    assert config.staging_location == "s3://my-staging-bucket/"
+    assert config.staging_location == "s3://aws-staging-bucket/"
 
 
 def test_config_data(config):
     expected = {
-        "Region Name": "us-west-1",
-        "Datalake Name": "my-oedi-datalake",
-        "Database Name": "my_oedi_database",
-        "Dataset Locations": [
-            "s3://bucket-name/Folder1/dataset_name/",
-            "s3://bucket-name/Folder2/another_dataset/"
-        ],
-        "Staging Location": "s3://my-staging-bucket/"
+        "Region Name": "us-west-2",
+        "Datalake Name": "aws-oedi-datalake",
+        "Staging Location": "s3://aws-staging-bucket/",
+        "Databases": [
+            {
+                "Identifier": "data-one",
+                "Name": "oedi-data-one",
+                "Locations": [
+                    "s3://bucket-name/data-one/part-a/",
+                    "s3://bucket-name/data-one/part-b/"
+                ]
+            },
+            {
+                "Identifier": "data-two",
+                "Name": "oedi-data-two",
+                "Locations": [
+                    "s3://bucket-name/data-two/2015/",
+                    "s3://bucket-name/data-two/2016/",
+                    "s3://bucket-name/data-three/2017/"
+                ]
+            }
+        ]
     }
     assert config.data == expected
 
@@ -61,20 +78,34 @@ def test_config_data(config):
 def test_config_load(config):
     expected = {
         "AWS": {
-            "Region Name": "us-west-1",
-            "Datalake Name": "my-oedi-datalake",
-            "Database Name": "my_oedi_database",
-            "Dataset Locations": [
-                "s3://bucket-name/Folder1/dataset_name/",
-                "s3://bucket-name/Folder2/another_dataset/"
-            ],
-            "Staging Location": "s3://my-staging-bucket/"
+            "Region Name": "us-west-2",
+            "Datalake Name": "aws-oedi-datalake",
+            "Staging Location": "s3://aws-staging-bucket/",
+            "Databases": [
+                {
+                    "Identifier": "data-one",
+                    "Name": "oedi-data-one",
+                    "Locations": [
+                        "s3://bucket-name/data-one/part-a/",
+                        "s3://bucket-name/data-one/part-b/"
+                    ]
+                },
+                {
+                    "Identifier": "data-two",
+                    "Name": "oedi-data-two",
+                    "Locations": [
+                        "s3://bucket-name/data-two/2015/",
+                        "s3://bucket-name/data-two/2016/",
+                        "s3://bucket-name/data-three/2017/"
+                    ]
+                }
+            ]
         },
         "Azure": {
-            "A": "something"
+            "Datalake Name": "azure-oedi-datalake"
         },
-        "Google Cloud": {
-            "G": "another thing"
+        "Google": {
+            "Datalake Name": "google-oedi-datalake"
         }
     }
     assert config.load() == expected
@@ -83,7 +114,7 @@ def test_config_load(config):
 def test_config_dump(config):
     data = config.load()
     region_name = data["AWS"]["Region Name"]
-    assert region_name == "us-west-1"
+    assert region_name == "us-west-2"
 
     # Update
     new_region_name = "us-east-1"
@@ -100,4 +131,4 @@ def test_config_dump(config):
 
 def test_config_to_string(config):
     template = config.to_string()
-    assert template.endswith("s3://my-staging-bucket/\n")
+    assert template.endswith("s3://aws-staging-bucket/\n")
