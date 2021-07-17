@@ -27,4 +27,4 @@ AWS:
         - s3://oedi-data-lake/atb/electricity/2020/
         - s3://oedi-data-lake/atb/electricity/2021/
 
-Staging Location: s3://the-staging-bucket-of-user/
+  Staging Location: s3://user-owned-staging-bucket/
