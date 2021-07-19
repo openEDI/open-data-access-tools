@@ -20,8 +20,8 @@ AWS:
       Locations:
         - s3://oedi-data-lake/tracking-the-sun/2018/
         - s3://oedi-data-lake/tracking-the-sun/2019/
-    - Identifier: atb_electricity
-      Name: oedi_atb_electricity
+    - Identifier: atb
+      Name: oedi_atb
       Locations:
         - s3://oedi-data-lake/atb/electricity/2019/
         - s3://oedi-data-lake/atb/electricity/2020/
