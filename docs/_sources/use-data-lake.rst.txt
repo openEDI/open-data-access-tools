@@ -74,7 +74,7 @@ For example,
 
 .. code-block:: bash
 
-    (oedi) $ oedi aws run-query -q "select * from oedi_database_test.lbnl_tracking_the_sun_2018 limit 10"
+    (oedi) $ oedi aws run-query -q "select * from oedi-data-lake.racking_the_sun_2018 limit 10"
                                        data_provider system_id_from_data_provider system_id_tracking_the_sun installation_date  system_size  ...  microinverter_1  microinverter_2  microinverter_3  dc_optimizer  state
     0  Department of Commerce & Economic Opportunity                        -9999                  IL_DCEO_1        2010-08-06         3.00  ...            -9999            -9999            -9999         -9999     IL
     1  Department of Commerce & Economic Opportunity                        -9999                  IL_DCEO_2        2010-08-05         4.10  ...            -9999            -9999            -9999         -9999     IL
@@ -94,7 +94,7 @@ via ``--output-location`` or ``-o`` in this command, like this:
 
 .. code-block:: bash
 
-    (oedi) $ oedi aws run-query -q "select * from oedi_database_test.lbnl_tracking_the_sun_2018 limit 10" -o "s3://another-outpu-location/"
+    (oedi) $ oedi aws run-query -q "select * from oedi_data_lake.tracking_the_sun_2018 limit 10" -o "s3://another-output-location/"
 
 
 Commands Help

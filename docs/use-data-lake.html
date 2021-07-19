@@ -97,7 +97,7 @@ below to list the tables in it.</p>
 <p>After the desired tables are populated in database, then you can run SQL queries via
 AWS Athena. In this package, we also provide <code class="docutils literal notranslate"><span class="pre">run-query</span></code> command for tests.
 For example,</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>oedi<span class="o">)</span> $ oedi aws run-query -q <span class="s2">&quot;select * from oedi_database_test.lbnl_tracking_the_sun_2018 limit 10&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>oedi<span class="o">)</span> $ oedi aws run-query -q <span class="s2">&quot;select * from oedi-data-lake.racking_the_sun_2018 limit 10&quot;</span>
                                    data_provider system_id_from_data_provider system_id_tracking_the_sun installation_date  system_size  ...  microinverter_1  microinverter_2  microinverter_3  dc_optimizer  state
 <span class="m">0</span>  Department of Commerce <span class="p">&amp;</span> Economic Opportunity                        -9999                  IL_DCEO_1        <span class="m">2010</span>-08-06         <span class="m">3</span>.00  ...            -9999            -9999            -9999         -9999     IL
 <span class="m">1</span>  Department of Commerce <span class="p">&amp;</span> Economic Opportunity                        -9999                  IL_DCEO_2        <span class="m">2010</span>-08-05         <span class="m">4</span>.10  ...            -9999            -9999            -9999         -9999     IL
@@ -115,7 +115,7 @@ For example,</p>
 </div>
 <p>The query results would be stored in <code class="docutils literal notranslate"><span class="pre">Staging</span> <span class="pre">Location</span></code> configured in <code class="docutils literal notranslate"><span class="pre">config.yaml</span></code>. You can also specify this location
 via <code class="docutils literal notranslate"><span class="pre">--output-location</span></code> or <code class="docutils literal notranslate"><span class="pre">-o</span></code> in this command, like this:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>oedi<span class="o">)</span> $ oedi aws run-query -q <span class="s2">&quot;select * from oedi_database_test.lbnl_tracking_the_sun_2018 limit 10&quot;</span> -o <span class="s2">&quot;s3://another-outpu-location/&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>oedi<span class="o">)</span> $ oedi aws run-query -q <span class="s2">&quot;select * from oedi_data_lake.tracking_the_sun_2018 limit 10&quot;</span> -o <span class="s2">&quot;s3://another-output-location/&quot;</span>
 </pre></div>
 </div>
 </div>
