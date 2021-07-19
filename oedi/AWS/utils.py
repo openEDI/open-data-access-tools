@@ -90,7 +90,7 @@ def generate_table_prefix(s3url):
     elif len(path.split("/")) == 1:
         prefix = f"{bucket}_{os.path.dirname(path)}_"
     else:
-        prefix = os.path.dirname(path) + "_"
+        prefix = os.path.dirname(path).replace("/", "-") + "_"
 
     table_prefix = prefix.replace("-", "_").lower()
 
