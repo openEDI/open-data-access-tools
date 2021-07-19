@@ -20,11 +20,12 @@ AWS:
       Locations:
         - s3://oedi-data-lake/tracking-the-sun/2018/
         - s3://oedi-data-lake/tracking-the-sun/2019/
+        - s3://oedi-data-lake/tracking-the-sun/2020/
     - Identifier: atb
       Name: oedi_atb
       Locations:
-        - s3://oedi-data-lake/atb/electricity/2019/
-        - s3://oedi-data-lake/atb/electricity/2020/
-        - s3://oedi-data-lake/atb/electricity/2021/
+        - s3://oedi-data-lake/ATB/electricity/parquet/2019/
+        - s3://oedi-data-lake/ATB/electricity/parquet/2020/
+        - s3://oedi-data-lake/ATB/electricity/parquet/2021/
 
   Staging Location: s3://user-owned-staging-bucket/
