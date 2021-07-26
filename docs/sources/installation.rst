@@ -20,19 +20,32 @@ and check the datasets included in each release.
 
 Docker Environment
 ------------------
-1. Go to the root directory of the source code ``open-data-access-tools``,
+
+There are two ways to get the docker image of this tool, either pull from dockerhub, 
+or build from the source.
+
+Download Docker Image from DockerHub
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Pull the image from DockerHub `repo <https://hub.docker.com/r/openenergydatainitiative/oedi>`_ of OEDI,
+
+.. code-block:: bash
+
+    docker pull openenergydatainitiative/oedi
+
+
+Build Docker Image from Source Code
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Go to the root directory of the source code ``open-data-access-tools``, 
+and build docker image using ``docker build`` command,
 
 .. code-block:: bash
 
     $ cd open-data-access-tools
-
-2. Build docker image using ``docker build`` command,
-
-.. code-block:: bash
-
     $ docker build -t oedi .
 
-3. Run docker container service like this,
+After having the image, then run docker container service like this,
 
 .. code-block:: bash
 

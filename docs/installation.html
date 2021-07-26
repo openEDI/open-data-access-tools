@@ -47,21 +47,24 @@ our public Github repository - <a class="reference external" href="https://githu
 and check the datasets included in each release.</p>
 <div class="section" id="docker-environment">
 <h2>Docker Environment<a class="headerlink" href="#docker-environment" title="Permalink to this headline">¶</a></h2>
-<ol class="arabic simple">
-<li><p>Go to the root directory of the source code <code class="docutils literal notranslate"><span class="pre">open-data-access-tools</span></code>,</p></li>
-</ol>
+<p>There are two ways to get the docker image of this tool, either pull from dockerhub,
+or build from the source.</p>
+<div class="section" id="download-docker-image-from-dockerhub">
+<h3>Download Docker Image from DockerHub<a class="headerlink" href="#download-docker-image-from-dockerhub" title="Permalink to this headline">¶</a></h3>
+<p>Pull the image from DockerHub <a class="reference external" href="https://hub.docker.com/r/openenergydatainitiative/oedi">repo</a> of OEDI,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker pull openenergydatainitiative/oedi
+</pre></div>
+</div>
+</div>
+<div class="section" id="build-docker-image-from-source-code">
+<h3>Build Docker Image from Source Code<a class="headerlink" href="#build-docker-image-from-source-code" title="Permalink to this headline">¶</a></h3>
+<p>Go to the root directory of the source code <code class="docutils literal notranslate"><span class="pre">open-data-access-tools</span></code>,
+and build docker image using <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">build</span></code> command,</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> open-data-access-tools
+$ docker build -t oedi .
 </pre></div>
 </div>
-<ol class="arabic simple" start="2">
-<li><p>Build docker image using <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">build</span></code> command,</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ docker build -t oedi .
-</pre></div>
-</div>
-<ol class="arabic simple" start="3">
-<li><p>Run docker container service like this,</p></li>
-</ol>
+<p>After having the image, then run docker container service like this,</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ docker run --rm -it -v /home/user/.aws:/root/.aws oedi bash
 $ root@53d985b7f2ba:/open-data-access-tools/#
 </pre></div>
@@ -73,6 +76,7 @@ the docker environment, so that <code class="docutils literal notranslate"><span
 Please replace <code class="docutils literal notranslate"><span class="pre">/home/user/.aws</span></code> by using the directory that contains your AWS credentials.</p>
 </div>
 <p>Now, you are in <code class="docutils literal notranslate"><span class="pre">oedi</span></code> docker environment, and can build and use OEDI data lake.</p>
+</div>
 </div>
 <div class="section" id="local-environment">
 <h2>Local Environment<a class="headerlink" href="#local-environment" title="Permalink to this headline">¶</a></h2>
