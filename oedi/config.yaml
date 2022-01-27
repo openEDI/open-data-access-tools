@@ -27,5 +27,17 @@ AWS:
         - s3://oedi-data-lake/ATB/electricity/parquet/2019/
         - s3://oedi-data-lake/ATB/electricity/parquet/2020/
         - s3://oedi-data-lake/ATB/electricity/parquet/2021/
+    - Identifier: pvdaq
+      Name: oedi_pvdaq
+      Locations:
+        - s3://oedi-data-lake/pvdaq/site/
+        - s3://oedi-data-lake/pvdaq/system/
+        - s3://oedi-data-lake/pvdaq/inverters/
+        - s3://oedi-data-lake/pvdaq/meters/
+        - s3://oedi-data-lake/pvdaq/metrics/
+        - s3://oedi-data-lake/pvdaq/modules/
+        - s3://oedi-data-lake/pvdaq/mount/
+        - s3://oedi-data-lake/pvdaq/other-instruments/
+        - s3://oedi-data-lake/pvdaq/pvdata/
 
-  Staging Location: s3://user-owned-staging-bucket/
+  Staging Location: s3://replace-by-using-your-bucket/
