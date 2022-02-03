@@ -89,6 +89,10 @@ class AWSDataLakeConfig(OEDIConfigBase):
         return self.data.get("Datalake Name", AWS_DEFAULT_DATALAKE_NAME)
 
     @property
+    def database_name(self):
+        return self.data.get("Database Name", AWS_DEFAULT_DATABASE_NAME)
+
+    @property
     def databases(self):
         return self.data.get("Databases")
 

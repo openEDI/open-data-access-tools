@@ -29,7 +29,7 @@ class OEDIGlue(AWSClientBase):
         return databases
 
     def list_tables(self, database_name):
-        """List avaible tables in given database"""
+        """List available tables in given database"""
         paginator = self.client.get_paginator("get_tables")
 
         tables = []
