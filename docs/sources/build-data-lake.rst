@@ -3,11 +3,11 @@ Build Data Lake
 
 Config OEDI
 -----------
-First, you need to run ``oedi config init`` command,
+First, you need to run ``oedi config setup`` command,
 
 .. code-block:: bash
 
-    (oedi) $ oedi config init
+    (oedi) $ oedi config setup
 
 It'll create a config file ``confi.yaml`` in ``~/.oedi/`` directory,
 which contains the default OEDI config settings.
