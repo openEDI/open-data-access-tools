@@ -30,14 +30,14 @@ AWS:
     - Identifier: pvdaq
       Name: oedi_pvdaq
       Locations:
-        - s3://oedi-data-lake/pvdaq/site/
-        - s3://oedi-data-lake/pvdaq/system/
-        - s3://oedi-data-lake/pvdaq/inverters/
-        - s3://oedi-data-lake/pvdaq/meters/
-        - s3://oedi-data-lake/pvdaq/metrics/
-        - s3://oedi-data-lake/pvdaq/modules/
-        - s3://oedi-data-lake/pvdaq/mount/
-        - s3://oedi-data-lake/pvdaq/other-instruments/
-        - s3://oedi-data-lake/pvdaq/pvdata/
+        - s3://oedi-data-lake/pvdaq/parquet/site/
+        - s3://oedi-data-lake/pvdaq/parquet/system/
+        - s3://oedi-data-lake/pvdaq/parquet/inverters/
+        - s3://oedi-data-lake/pvdaq/parquet/meters/
+        - s3://oedi-data-lake/pvdaq/parquet/metrics/
+        - s3://oedi-data-lake/pvdaq/parquet/modules/
+        - s3://oedi-data-lake/pvdaq/parquet/mount/
+        - s3://oedi-data-lake/pvdaq/parquet/other-instruments/
+        - s3://oedi-data-lake/pvdaq/parquet/pvdata/
 
   Staging Location: s3://replace-by-using-your-bucket/
