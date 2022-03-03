@@ -1,6 +1,7 @@
 import io
 import os
 import yaml
+from abc import ABC, abstractmethod
 
 from oedi.exceptions import ConfigFileNotFound
 
@@ -10,7 +11,7 @@ AWS_DEFAULT_DATALAKE_NAME = "oedi_datalake"
 AWS_DEFAULT_DATABASE_NAME = "oedi_database"
 
 
-class OEDIConfigBase(object):
+class OEDIConfigBase(ABC):
     """Config Classs for manipulating OEDI configurations"""
     def __init__(self, config_file=None):
         
@@ -18,7 +19,7 @@ class OEDIConfigBase(object):
             config_file = OEDI_CONFIG_FILE
         
             if not os.path.exists(config_file):
-                raise ConfigFileNotFound("Please run 'oedi config setup' first.")
+                raise ConfigFileNotFound("Please run 'oedi config sync' first.")
         self._config_file = config_file
 
     @property
@@ -47,11 +48,9 @@ class OEDIConfigBase(object):
         with open(self.config_file, "w") as f:
             yaml.dump(data, f)
 
+    @abstractmethod
     def update(self, data):
         """Update OEDI configuration"""
-        config_data = self.load()
-        config_data[self.provider] = data
-        self.dump(config_data)
 
     def to_string(self):
         """Dump OEDI data lake configuration to string"""
@@ -94,6 +93,14 @@ class AWSDataLakeConfig(OEDIConfigBase):
     @property
     def staging_location(self):
         return self.data.get("Staging Location", None)
+    
+    def update(self, data):
+        # NOTE: do not change user's staging location
+        data["Staging Location"] = self.staging_location
+
+        config_data = self.load()
+        config_data[self.provider] = data
+        self.dump(config_data)
     
     def get_db_name(self, identifier): 
         this_db = None

@@ -2,7 +2,7 @@
 Deploy OEDI data lake before running the integration tests.
 
 To deploy OEDI data lake, run the commands below:
-$ oedi setup
+$ oedi config sync
 $ cd oedi/AWS
 $ cdk deploy
 """

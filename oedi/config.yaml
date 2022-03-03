@@ -40,4 +40,4 @@ AWS:
         - s3://oedi-data-lake/pvdaq/parquet/other-instruments/
         - s3://oedi-data-lake/pvdaq/parquet/pvdata/
 
-  Staging Location: s3://replace-by-using-your-bucket/
+  Staging Location: s3://user-owned-staging-bucket/

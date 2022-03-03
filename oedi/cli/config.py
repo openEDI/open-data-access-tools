@@ -15,32 +15,27 @@ def config():
 
 
 @click.command()
-@click.option(
-    "-p", "--provider",
-    type=click.Choice(OEDI_CLOUD_PROVIDERS, case_sensitive=False),
-    default=None,
-    help="Setup configuration with given cloud provider."
-)
-def setup(provider):
-    """Setup OEDI configurations of cloud providers."""
-    if provider:
-        provider = str(provider).upper()
+def sync():
+    """Sync OEDI configurations of cloud providers."""
     oedi_defalt_config_file = os.path.join(
         os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
         "config.yaml"
     )
 
     os.makedirs(OEDI_CONFIG_DIR, exist_ok=True)
-    if not provider or not os.path.exists(OEDI_CONFIG_FILE):
-        shutil.copyfile(oedi_defalt_config_file, OEDI_CONFIG_FILE)
-    
-    elif os.path.exists(OEDI_CONFIG_FILE) and provider == "AWS":
-        default_config = AWSDataLakeConfig(oedi_defalt_config_file)
-        local_config = AWSDataLakeConfig(OEDI_CONFIG_FILE)
-        breakpoint()
-        local_config.update(data=default_config.data)
 
-    print(f"OEDI configuration setup @ {OEDI_CONFIG_FILE}")
+    if not os.path.exists(OEDI_CONFIG_FILE):
+        shutil.copyfile(oedi_defalt_config_file, OEDI_CONFIG_FILE)
+        print(f"OEDI configuration synced @ {OEDI_CONFIG_FILE}")
+        print("Please edit the file and provide staging location for AWS data lake.")
+        return
+    
+    # Update AWS data lake config
+    default_config = AWSDataLakeConfig(oedi_defalt_config_file)
+    local_config = AWSDataLakeConfig(OEDI_CONFIG_FILE)
+    local_config.update(data=default_config.data)
+
+    print(f"OEDI configuration synced @ {OEDI_CONFIG_FILE}")
 
 
 @click.command()
@@ -60,5 +55,5 @@ def show(provider):
     print(template)
 
 
-config.add_command(setup)
+config.add_command(sync)
 config.add_command(show)
