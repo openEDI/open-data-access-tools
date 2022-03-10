@@ -55,5 +55,5 @@ jobs:
         file: ./Dockerfile
         push: ${{ github.ref == 'refs/heads/master' }}
         tags: |
-          ${{ secrets.DOCKERHUB_USERNAME }}/{{ secrets.DOCKERHUB_ORGNAME }}/oedi:${{ steps.vtag.outputs.docker_tag }}
-          ${{ secrets.DOCKERHUB_USERNAME }}/{{ secrets.DOCKERHUB_ORGNAME }}/oedi:latest
+          ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_ORGNAME }}/oedi:${{ steps.vtag.outputs.docker_tag }}
+          ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_ORGNAME }}/oedi:latest
