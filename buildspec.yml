@@ -20,7 +20,6 @@ phases:
     commands:
       - cd oedi/AWS/
       - oedi config sync
-      - cdk destroy --force
       - cdk deploy --require-approval=never
       - oedi aws run-crawlers
       - sleep 1200
