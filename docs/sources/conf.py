@@ -18,7 +18,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'OEDI'
-copyright = '2020 Alliance for Sustainable Energy, LLC'
+copyright = '2022 Alliance for Sustainable Energy, LLC'
 author = 'NREL'
 
 # The full version, including alpha/beta/rc tags

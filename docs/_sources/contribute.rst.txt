@@ -1,7 +1,7 @@
 Contribute
 ==========
 
-Any contribution from outside of NREL are welcome. Please follow the following 
+Any contributions from outside of NREL are welcome. Please use the following 
 steps to contribute to this project.
 
 1. Fork this repository to your account.
@@ -12,7 +12,7 @@ steps to contribute to this project.
 6. Create a pull request.
 7. NREL reviews and merges after success.
 
-Besides, please note that this may generate cost under your AWS account if there were ``cdk``
+Also, please note that this may generate cost under your AWS account if there were ``cdk``
 operations during the development process.
 
 Enjoy!

@@ -9,7 +9,7 @@ First, you need to run the configuration command,
 
 .. code-block:: bash
 
-    (oedi) $ oedi config init
+    (oedi) $ oedi config sync
 
 This will use your ``AWS`` credentials file to establish access to the cloud. It will also create a config file, ``config.yaml``, in ``oedi`` directory,
 which contains the default OEDI config settings.
