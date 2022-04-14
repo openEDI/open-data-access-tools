@@ -1,0 +1,27 @@
+version: 0.2
+## Install the project and try pytest - then add here
+phases:
+  install:
+    runtime-versions:
+      python: 3.9
+      nodejs: 12
+  pre_build:
+    commands:
+      - sed -i 's/user-owned-staging-bucket/oedi-dev-athena-output/' oedi/config.yaml
+      - sed -i 's/the-staging-bucket-of-user/oedi-dev-athena-output/' tests/integration/test_config.yaml
+      - printenv
+      - pip install --upgrade pip
+      - pip install -r requirements-dev.txt
+      - pip install -r requirements.txt
+      - pip install -e .
+      - npm install -g aws-cdk
+
+  build:
+    commands:
+      - cd oedi/AWS/
+      - oedi config sync
+      - cdk deploy --require-approval=never
+      - oedi aws run-crawlers
+      - sleep 1200
+      - cd ../../
+      - pytest tests/integration/  
