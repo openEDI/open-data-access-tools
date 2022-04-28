@@ -41,3 +41,8 @@ AWS:
         - s3://oedi-data-lake/pvdaq/parquet/pvdata/
 
   Staging Location: s3://user-owned-staging-bucket/
+  Tags:
+    - Key: Project
+      Value: OEDI
+    - Key: Version
+      Value: 0.1.4
