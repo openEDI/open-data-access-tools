@@ -12,7 +12,7 @@ for information about what data sets are currently available.
 Docker Environment
 ------------------
 
-First, you will need to install and configure Docker. To do this, please refer to `Docker's documentation <https://docs.Docker.com/get-Docker/>`_ for your specific machine. Once you have Docker installed, there are two ways to obtain the Docker image of the ``oedi`` tools: either pull it from Docker Hub,
+First, you will need to install and configure Docker. To do this, please refer to `Docker's documentation <https://docs.Docker.com/get-docker/>`_ for your specific machine. Once you have Docker installed, there are two ways to obtain the Docker image of the ``oedi`` tools: either pull it from Docker Hub,
 or build it from the source code.
 
 Pull Docker Image from Docker Hub
