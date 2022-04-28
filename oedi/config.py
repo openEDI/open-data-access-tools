@@ -104,8 +104,8 @@ class AWSDataLakeConfig(OEDIConfigBase):
         data["Staging Location"] = self.staging_location
 
         # Update tag Version only
-        tags = list(filter(lambda tag: tag["Key"] != "Version", self.tags))
-        filtered = list(filter(lambda tag: tag["Key"] == "Version", data["Tags"]))
+        tags = list(filter(lambda tag: tag["Key"] != "Release", self.tags))
+        filtered = list(filter(lambda tag: tag["Key"] == "Release", data["Tags"]))
         if filtered:
             tags.append(filtered[0])
         data["Tags"] = tags

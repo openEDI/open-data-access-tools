@@ -44,5 +44,5 @@ AWS:
   Tags:
     - Key: Project
       Value: OEDI
-    - Key: Version
+    - Key: Release
       Value: 0.1.4

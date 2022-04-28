@@ -77,4 +77,3 @@ class AWSDataLakeConstruct(core.Construct):
             table_prefix=table_prefix,
             tags=tags
         )
-        
