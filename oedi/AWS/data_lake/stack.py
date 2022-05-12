@@ -12,6 +12,8 @@ class AWSDataLakeStack(core.Stack):
         """Lauch AWS data lake related infrastructures."""
         super().__init__(scope, config.datalake_name, env={"region": config.region_name})
 
+        tags = {tag["Key"]: tag["Value"] for tag in config.tags}
+
         for database in config.databases:
             db_name = database["Name"].replace("-", "_")
             data_lake = AWSDataLakeConstruct(
@@ -24,4 +26,4 @@ class AWSDataLakeStack(core.Stack):
             data_lake.create_crawler_role()
             #TODO: data_lake.create_workgroup()
             for dataset_location in database['Locations']:
-                data_lake.create_crawler(location=dataset_location)
+                data_lake.create_crawler(location=dataset_location, tags=tags)

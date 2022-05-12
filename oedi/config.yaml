@@ -13,14 +13,17 @@ AWS:
     - Identifier: buildstock
       Name: oedi_buildstock
       Locations:
-        - s3://nrel-pds-building-stock/comstock/athena/2020/comstock_v1/state
-        - s3://nrel-pds-building-stock/comstock/athena/2020/comstock_v1/metadata
+        - s3://oedi-data-lake/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2021/comstock_amy2018_release_1/
+        - s3://oedi-data-lake/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2021/comstock_tmy3_release_1/
+        - s3://oedi-data-lake/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2021/resstock_amy2018_release_1/
+        - s3://oedi-data-lake/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2021/resstock_tmy3_release_1/
     - Identifier: tracking_the_sun
       Name: oedi_tracking_the_sun
       Locations:
         - s3://oedi-data-lake/tracking-the-sun/2018/
         - s3://oedi-data-lake/tracking-the-sun/2019/
         - s3://oedi-data-lake/tracking-the-sun/2020/
+        - s3://oedi-data-lake/tracking-the-sun/2021/
     - Identifier: atb
       Name: oedi_atb
       Locations:
@@ -41,3 +44,8 @@ AWS:
         - s3://oedi-data-lake/pvdaq/parquet/pvdata/
 
   Staging Location: s3://user-owned-staging-bucket/
+  Tags:
+    - Key: Project
+      Value: OEDI
+    - Key: Release
+      Value: 0.1.4

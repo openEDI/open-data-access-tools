@@ -1,0 +1,49 @@
+version: 0.2
+## Install the project and try pytest - then add here
+phases:
+  install:
+    runtime-versions:
+      python: 3.9
+      nodejs: 12
+    commands:
+      - ASSUME_ROLE_ARN=$(aws ssm get-parameter --with-decryption --name /tmp/oedibuild/assume_role_arn --region us-west-2  --query Parameter.Value --output text)
+      - TEMP_ROLE=$(aws sts assume-role --role-arn $ASSUME_ROLE_ARN --role-session-name test)
+      - export TEMP_ROLE
+      - export AWS_ACCESS_KEY_ID=$(echo "${TEMP_ROLE}" | jq -r '.Credentials.AccessKeyId')
+      - export AWS_SECRET_ACCESS_KEY=$(echo "${TEMP_ROLE}" | jq -r '.Credentials.SecretAccessKey')
+      - export AWS_SESSION_TOKEN=$(echo "${TEMP_ROLE}" | jq -r '.Credentials.SessionToken')
+  pre_build:
+    commands:
+      - sed -i 's/user-owned-staging-bucket/oedi-dev-athena-output/' oedi/config.yaml
+      - sed -i 's/the-staging-bucket-of-user/oedi-dev-athena-output/' tests/integration/test_config.yaml
+      - pip install --upgrade pip
+      - pip install -r requirements-dev.txt
+      - pip install -r requirements.txt
+      - pip install -e .
+      - npm install -g aws-cdk
+      - pytest tests/unit/
+
+  build:
+    commands:
+      - export DOCKER_PASS=$(aws ssm get-parameter --with-decryption --name /tmp/dockerhub/oedibuild --region us-west-2  --query Parameter.Value --output text)
+      - export DOCKER_USER=$(aws ssm get-parameter --with-decryption --name /tmp/dockerhub/oedibuild/user --region us-west-2  --query Parameter.Value --output text)
+      - echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
+      - export IMAGE_TAG=$(python setup.py -V)
+      - docker build -t nreldevops/oedi-data-lake:$IMAGE_TAG .
+      - echo Build started on `date`
+      - cd oedi/AWS/
+      - oedi config sync
+      - cdk destroy --force
+      - cdk deploy --require-approval=never
+      - oedi aws run-crawlers
+      - sleep 1200
+      - cd ../../
+      - pytest tests/integration/
+      - docker push nreldevops/oedi-data-lake:$IMAGE_TAG
+      - cd oedi/AWS/
+      - cdk destroy --force
+      - curl $ECS_CONTAINER_METADATA_URI
+      - docker run --env AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID --env AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY --env AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN nreldevops/oedi-data-lake:$IMAGE_TAG /bin/bash -c "cd oedi/AWS/; oedi config sync; cdk deploy"
+      - docker run --env AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID --env AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY --env AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN nreldevops/oedi-data-lake:$IMAGE_TAG /bin/bash -c "cd oedi/AWS/; oedi aws run-crawlers"
+      - sleep 1200
+      - pytest tests/integration/

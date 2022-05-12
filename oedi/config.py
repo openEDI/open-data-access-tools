@@ -94,9 +94,21 @@ class AWSDataLakeConfig(OEDIConfigBase):
     def staging_location(self):
         return self.data.get("Staging Location", None)
     
+    @property
+    def tags(self):
+        return self.data.get("Tags", [])
+
     def update(self, data):
-        # NOTE: do not change user's staging location
+        """Update user's local OEDI config file """
+        # Keep staging location
         data["Staging Location"] = self.staging_location
+
+        # Update tag Version only
+        tags = list(filter(lambda tag: tag["Key"] != "Release", self.tags))
+        filtered = list(filter(lambda tag: tag["Key"] == "Release", data["Tags"]))
+        if filtered:
+            tags.append(filtered[0])
+        data["Tags"] = tags
 
         config_data = self.load()
         config_data[self.provider] = data
