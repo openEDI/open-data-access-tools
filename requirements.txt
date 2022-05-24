@@ -8,7 +8,6 @@ pyyaml
 pyathena
 jupyter
 matplotlib
-bokeh
 aws_cdk.core
 aws_cdk.aws_iam
 aws_cdk.aws_s3
