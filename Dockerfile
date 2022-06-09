@@ -19,7 +19,7 @@ RUN apt-get update -y --fix-missing && \
 
 # Install AWS CDK
 RUN npm install npm@latest -g
-RUN npm install -g aws-cdk
+RUN npm install -g aws-cdk@1.x
 RUN cdk --version
 
 # Install Python packages
