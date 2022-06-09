@@ -43,7 +43,6 @@ phases:
       - cd oedi/AWS/
       - cdk destroy --force
       - curl $ECS_CONTAINER_METADATA_URI
-      - docker run --env AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID --env AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY --env AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN nreldevops/oedi-data-lake:$IMAGE_TAG /bin/bash -c "cd oedi/AWS/; oedi config sync; cdk deploy --require-approval=never"
-      - docker run --env AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID --env AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY --env AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN nreldevops/oedi-data-lake:$IMAGE_TAG /bin/bash -c "cd oedi/AWS/; oedi aws run-crawlers"
+      - docker run --env AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID --env AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY --env AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN nreldevops/oedi-data-lake:$IMAGE_TAG /bin/bash -c "cd oedi/AWS/; oedi config sync; cdk deploy --require-approval=never; oedi aws run-crawlers"
       - sleep 1200
       - pytest tests/integration/
