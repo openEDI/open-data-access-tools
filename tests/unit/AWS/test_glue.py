@@ -184,7 +184,7 @@ def test_oedi_glue__list_tables():
     glue = OEDIGlue()
     tables = glue.list_tables(database_name)
     assert len(tables) == 2
-    assert tables[0]["CreateTime"] == ""
+    assert "CreateTime" in tables[0]
 
 
 @mock_glue
