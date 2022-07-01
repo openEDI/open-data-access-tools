@@ -21,15 +21,16 @@ setuptools.setup(
     url="https://github.com/openEDI/open-data-access-tools",
     packages=setuptools.find_packages(),
     install_requires=read_lines("requirements.txt"),
-    python_requires=">=3.6",
+    python_requires=">=3.7",
     classifiers=[
         "Development Status :: 0 - Beta",
         "Intended Audience :: Developers",
         "License :: Apache License, Version 2.0.",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3 :: Only",
-        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
         "Topic :: Data Lake :: Open Energy Data Initiative",
         "Topic :: Utilities"
     ],
