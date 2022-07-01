@@ -11,6 +11,7 @@ ENV PYTHONUNBUFFERED=TRUE
 RUN apt-get update -y --fix-missing && \
     apt-get install -y --no-install-recommends \
     build-essential \
+    vim \
     python3 \
     python3-dev \
     python3-pip
