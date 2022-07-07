@@ -20,7 +20,7 @@ RUN apt-get update -y --fix-missing && \
 RUN echo 'alias python=python3' >> ~/.bashrc
 
 # Install AWS CDK
-RUN npm install -g aws-cdk@1.x
+RUN npm install -g aws-cdk
 RUN cdk --version
 
 # Install Python packages

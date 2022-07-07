@@ -8,8 +8,4 @@ pyyaml
 pyathena
 jupyter
 matplotlib
-aws_cdk.core
-aws_cdk.aws_iam
-aws_cdk.aws_s3
-aws_cdk.aws_glue
-aws_cdk.aws_athena
+aws-cdk-lib
