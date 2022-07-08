@@ -7,10 +7,12 @@ REM Command file for Sphinx documentation
 if "%SPHINXBUILD%" == "" (
 	set SPHINXBUILD=sphinx-build
 )
-set SOURCEDIR=.
+set SOURCEDIR=sources
 set BUILDDIR=_build
 
 if "%1" == "" goto help
+
+if "%1" == "docs" goto docs
 
 %SPHINXBUILD% >NUL 2>NUL
 if errorlevel 9009 (
@@ -31,5 +33,10 @@ goto end
 :help
 %SPHINXBUILD% -M help %SOURCEDIR% %BUILDDIR% %SPHINXOPTS% %O%
 
+
+:: Builds the html files and then copies them to the docs directory
+:docs
+	call make html
+	xcopy _build\html /y
 :end
 popd

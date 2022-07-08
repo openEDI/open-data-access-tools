@@ -3,99 +3,122 @@ Use Data Lake
 
 Populate Tables
 ---------------
-The step above created a database ``oedi_database`` in AWS Glue, but it's empty. Now, we need 
+The prior steps created a database ``oedi_database`` in AWS Glue, but it's empty. Now, we need 
 to run the crawlers to populate the tables in the database. 
 
-Make sure your ``oedi`` virtual environment created before has already been activated. Then,
-use the commands below to check and run the crawler.
+In your ``oedi`` environment, navigate back to the main directory, ``open-data-access-tools``, and use the commands below to check and run the glue crawlers.
 
 1. List Crawlers
 
 .. code-block:: bash
 
     (oedi) $ oedi aws list-crawlers
-    | No. |                 Name                | State |                 S3Targets                 |        LastUpdated        |         CreateTime        |
-    +-----+-------------------------------------+-------+-------------------------------------------+---------------------------+---------------------------+
-    |  0  |      lbnl-tracking-the-sun-2018     | READY |      s3://lbnl-tracking-the-sun/2018/     | 2020-04-23 15:33:28-06:00 | 2020-04-23 15:33:28-06:00 |
-    |  1  |      lbnl-tracking-the-sun-2019     | READY |      s3://lbnl-tracking-the-sun/2019/     | 2020-04-23 15:33:28-06:00 | 2020-04-23 15:33:28-06:00 |
-    |  2  |       nrel-pv-rooftops-aspects      | READY |       s3://nrel-pv-rooftops/aspects/      | 2020-04-23 15:33:28-06:00 | 2020-04-23 15:33:28-06:00 |
-    |  3  |      nrel-pv-rooftops-buildings     | READY |      s3://nrel-pv-rooftops/buildings/     | 2020-04-23 15:33:29-06:00 | 2020-04-23 15:33:29-06:00 |
-    |  4  | nrel-pv-rooftops-developable-planes | READY | s3://nrel-pv-rooftops/developable_planes/ | 2020-04-23 15:33:28-06:00 | 2020-04-23 15:33:28-06:00 |
-    |  5  |        nrel-pv-rooftops-rasd        | READY |        s3://nrel-pv-rooftops/rasd/        | 2020-04-23 15:33:28-06:00 | 2020-04-23 15:33:28-06:00 |
-    +-----+-------------------------------------+-------+-------------------------------------------+---------------------------+---------------------------+
+    All availables crawlers are:
+    +-----+-------------------------------------------------------------------+-------+------------------------------------------------------------------------+---------------------------+---------------------------+
+    | No. |                                Name                               | State |                               S3Targets                                |        LastUpdated        |         CreateTime        |
+    +-----+-------------------------------------------------------------------+-------+------------------------------------------------------------------------+---------------------------+---------------------------+
+    |  0  | nrel-pds-building-stock-comstock-athena-2020-comstock-v1-metadata | READY | s3://nrel-pds-building-stock/comstock/athena/2020/comstock_v1/metadata | 2022-01-09 23:28:24+00:00 | 2022-01-09 23:28:24+00:00 |
+    |  1  |   nrel-pds-building-stock-comstock-athena-2020-comstock-v1-state  | READY |  s3://nrel-pds-building-stock/comstock/athena/2020/comstock_v1/state   | 2022-01-09 23:28:23+00:00 | 2022-01-09 23:28:23+00:00 |
+    |  2  |            oedi-data-lake-atb-electricity-parquet-2019            | READY |           s3://oedi-data-lake/ATB/electricity/parquet/2019/            | 2022-01-09 23:28:23+00:00 | 2022-01-09 23:28:23+00:00 |
+    |  3  |            oedi-data-lake-atb-electricity-parquet-2020            | READY |           s3://oedi-data-lake/ATB/electricity/parquet/2020/            | 2022-01-09 23:28:23+00:00 | 2022-01-09 23:28:23+00:00 |
+    |  4  |            oedi-data-lake-atb-electricity-parquet-2021            | READY |           s3://oedi-data-lake/ATB/electricity/parquet/2021/            | 2022-01-09 23:28:23+00:00 | 2022-01-09 23:28:23+00:00 |
+    |  5  |                 oedi-data-lake-pv-rooftop-aspects                 | READY |                s3://oedi-data-lake/pv-rooftop/aspects/                 | 2022-01-09 23:28:24+00:00 | 2022-01-09 23:28:24+00:00 |
+    |  6  |                oedi-data-lake-pv-rooftop-buildings                | READY |               s3://oedi-data-lake/pv-rooftop/buildings/                | 2022-01-09 23:28:24+00:00 | 2022-01-09 23:28:24+00:00 |
+    |  7  |            oedi-data-lake-pv-rooftop-developable-planes           | READY |           s3://oedi-data-lake/pv-rooftop/developable-planes/           | 2022-01-09 23:28:23+00:00 | 2022-01-09 23:28:23+00:00 |
+    |  8  |          oedi-data-lake-pv-rooftop-pr-developable-planes          | READY |         s3://oedi-data-lake/pv-rooftop-pr/developable-planes/          | 2022-01-09 23:28:23+00:00 | 2022-01-09 23:28:23+00:00 |
+    |  9  |                   oedi-data-lake-pv-rooftop-rasd                  | READY |                  s3://oedi-data-lake/pv-rooftop/rasd/                  | 2022-01-09 23:28:23+00:00 | 2022-01-09 23:28:23+00:00 |
+    |  10 |                oedi-data-lake-tracking-the-sun-2018               | READY |               s3://oedi-data-lake/tracking-the-sun/2018/               | 2022-01-09 23:28:23+00:00 | 2022-01-09 23:28:23+00:00 |
+    |  11 |                oedi-data-lake-tracking-the-sun-2019               | READY |               s3://oedi-data-lake/tracking-the-sun/2019/               | 2022-01-09 23:28:23+00:00 | 2022-01-09 23:28:23+00:00 |
+    |  12 |                oedi-data-lake-tracking-the-sun-2020               | READY |               s3://oedi-data-lake/tracking-the-sun/2020/               | 2022-01-09 23:28:24+00:00 | 2022-01-09 23:28:24+00:00 |
+    +-----+-------------------------------------------------------------------+-------+------------------------------------------------------------------------+---------------------------+---------------------------+
 
 2. Run Crawler
 
+Use the following command to run one of the glue crawlers that will populate the table in your staging bucket. Be aware that this step will result in a charge to your AWS account, depending on the size of the table. Currently, most of the glue crawlers will cost less than $1 to run, with the exception building-stock which might be more like $10.
+
 .. code-block:: bash
 
-    (oedi) $ oedi aws run-crawler -n lbnl-tracking-the-sun-2018
+    (oedi) $ oedi aws run-crawler -n oedi-data-lake-tracking-the-sun-2018
 
 If you want it runs in background, use option ``--background-run`` or ``-b``:
 
 .. code-block:: bash
 
-    (oedi) $ oedi aws run-crawler -n lbnl-tracking-the-sun-2018 -b
+    (oedi) $ oedi aws run-crawler -n oedi-data-lake-tracking-the-sun-2018 -b
 
 3. Run Crawlers
 
-The command ``run-crawler`` can only run one crawler, if you want to run all of crawlers 
-at one time, please use ``run-crawlers``, it would start all available crawlers in data lake.
+The ``run-crawler`` command can only run one crawler. If you want to run all of crawlers 
+at once, you can use ``run-crawlers``, which will start all available crawlers in data lake.
 
 .. code-block:: bash
 
     (oedi) $ oedi aws run-crawlers
 
+4. List Databases
+   
+The crawlers populate tables that are contained within databases in your data lake. Run the following code to see a list of available databases.
 
-4. List Tables
+.. code-block::
 
-The crawlers populated tables in the database after runs, please use the command 
-below to list the tables in it.
+    (oedi) $ oedi aws list-databases
+    All available databaes are:
+    +-----+-----------------------+---------------------+
+    | No. |          Name         |      CreateTime     |
+    +-----+-----------------------+---------------------+
+    |  0  |        default        | 2022-01-13 17:52:42 |
+    |  1  |        oedi_atb       | 2022-01-09 23:28:07 |
+    |  2  |    oedi_buildstock    | 2022-01-09 23:28:07 |
+    |  3  |    oedi_pv_rooftops   | 2022-01-09 23:28:07 |
+    |  4  | oedi_tracking_the_sun | 2022-01-09 23:28:06 |
+    +-----+-----------------------+---------------------+
 
-.. code-block:: bash
+5. List Tables
 
-    (oedi) $ oedi aws list-tables
-    +-----+----------------------------------------------------+---------------------+
-    | No. |                        Name                        |      CreateTime     |
-    +-----+----------------------------------------------------+---------------------+
-    |  0  |             lbnl_tracking_the_sun_2018             | 2020-04-23 15:35:58 |
-    |  1  |             lbnl_tracking_the_sun_2019             | 2020-04-23 15:36:09 |
-    |  2  |              nrel_pv_rooftops_aspects              | 2020-04-23 15:36:19 |
-    |  3  |             nrel_pv_rooftops_buildings             | 2020-04-23 15:36:37 |
-    |  4  |        nrel_pv_rooftops_developable_planes         | 2020-04-23 15:36:48 |
-    |  5  |               nrel_pv_rooftops_rasd                | 2020-04-23 15:37:04 |
-    +-----+----------------------------------------------------+---------------------+
+To view a list of tables within a given database, run the following command, specifying the database with the -d option.
+
+.. code-block::
+
+    (oedi) $ oedi aws list-tables -d oedi_tracking_the_sun
+    All available tables in [oedi_tracking_the_sun] are:
+    +-----+-----------------------+---------------------+
+    | No. |          Name         |      CreateTime     |
+    +-----+-----------------------+---------------------+
+    |  0  | tracking_the_sun_2018 | 2022-01-09 23:48:45 |
+    |  1  | tracking_the_sun_2019 | 2022-01-09 23:49:21 |
+    |  2  | tracking_the_sun_2020 | 2022-01-09 23:49:23 |
+    +-----+-----------------------+---------------------+
 
 
 Run Queries
 -----------
 After the desired tables are populated in database, then you can run SQL queries via 
-AWS Athena. In this package, we also provide ``run-query`` command for tests. 
-For example,
+AWS Athena. In this package, we also provide a ``run-query`` command for tests. 
+For example:
 
 .. code-block:: bash
 
-    (oedi) $ oedi aws run-query -q "select * from oedi-data-lake.racking_the_sun_2018 limit 10"
-                                       data_provider system_id_from_data_provider system_id_tracking_the_sun installation_date  system_size  ...  microinverter_1  microinverter_2  microinverter_3  dc_optimizer  state
-    0  Department of Commerce & Economic Opportunity                        -9999                  IL_DCEO_1        2010-08-06         3.00  ...            -9999            -9999            -9999         -9999     IL
-    1  Department of Commerce & Economic Opportunity                        -9999                  IL_DCEO_2        2010-08-05         4.10  ...            -9999            -9999            -9999         -9999     IL
-    2  Department of Commerce & Economic Opportunity                        -9999                  IL_DCEO_3        2008-07-09         3.10  ...            -9999            -9999            -9999         -9999     IL
-    3  Department of Commerce & Economic Opportunity                        -9999                  IL_DCEO_4        2008-08-04         4.80  ...            -9999            -9999            -9999         -9999     IL
-    4  Department of Commerce & Economic Opportunity                        -9999                  IL_DCEO_7        2003-11-30        18.00  ...            -9999            -9999            -9999         -9999     IL
-    5  Department of Commerce & Economic Opportunity                        -9999                  IL_DCEO_8        2010-08-17         4.00  ...            -9999            -9999            -9999         -9999     IL
-    6  Department of Commerce & Economic Opportunity                        -9999                  IL_DCEO_9        2011-04-22        24.00  ...            -9999            -9999            -9999         -9999     IL
-    7  Department of Commerce & Economic Opportunity                        -9999                 IL_DCEO_10        2010-01-31        54.70  ...            -9999            -9999            -9999         -9999     IL
-    8  Department of Commerce & Economic Opportunity                        -9999                 IL_DCEO_11        2003-11-30        32.40  ...            -9999            -9999            -9999         -9999     IL
-    9  Department of Commerce & Economic Opportunity                        -9999                 IL_DCEO_12        2008-12-12         4.32  ...            -9999            -9999            -9999         -9999     IL
+    (oedi) $ oedi aws run-query -q "select * from oedi_tracking_the_sun.tracking_the_sun_2020 limit 10"
+    data_provider_1 data_provider_2 system_id_1 system_id_2   installation_date  system_size_dc  ...  output_capacity_inverter_3  dc_optimizer inverter_loading_ratio  battery_rated_capacity_kw  battery_rated_capacity_kwh  state
+    0  Arkansas State Energy Office           -9999       -9999       -9999 2010-04-29 06:00:00           2.016  ...                       -9999             0               1.178947                    -9999.0                     -9999.0     AR
+    1  Arkansas State Energy Office           -9999       -9999       -9999 2010-04-26 06:00:00           3.360  ...                       -9999             0               1.178947                    -9999.0                     -9999.0     AR
+    2  Arkansas State Energy Office           -9999       -9999       -9999 2010-04-20 06:00:00          13.440  ...                       -9999             0               1.178947                    -9999.0                     -9999.0     AR
+    3  Arkansas State Energy Office           -9999       -9999       -9999 2010-04-21 06:00:00           5.520  ...                       -9999             0               1.210526                    -9999.0                     -9999.0     AR
+    4  Arkansas State Energy Office           -9999       -9999       -9999 2010-04-22 06:00:00           2.530  ...                       -9999             0               1.210526                    -9999.0                     -9999.0     AR
+    5  Arkansas State Energy Office           -9999       -9999       -9999 2010-04-22 06:00:00           3.450  ...                       -9999             0               1.210526                    -9999.0                     -9999.0     AR
+    6  Arkansas State Energy Office           -9999       -9999       -9999 2010-04-21 06:00:00           3.220  ...                       -9999             0               1.210526                    -9999.0                     -9999.0     AR
+    7  Arkansas State Energy Office           -9999       -9999       -9999 2010-05-18 06:00:00          12.880  ...                       -9999             0               1.210526                    -9999.0                     -9999.0     AR
+    8  Arkansas State Energy Office           -9999       -9999       -9999 2010-06-03 06:00:00           3.360  ...                       -9999             0               1.178947                    -9999.0                     -9999.0     AR
+    9  Arkansas State Energy Office           -9999       -9999       -9999 2010-05-11 06:00:00           2.700  ...                       -9999             0           -9999.000000                    -9999.0                     -9999.0     AR
 
-    [10 rows x 63 columns]
-
-The query results would be stored in ``Staging Location`` configured in ``config.yaml``. You can also specify this location 
+    [10 rows x 78 columns]
+    
+The query results would be stored in the ``Staging Location`` configured in ``config.yaml``. You can also specify this location 
 via ``--output-location`` or ``-o`` in this command, like this:
 
 .. code-block:: bash
 
-    (oedi) $ oedi aws run-query -q "select * from oedi_data_lake.tracking_the_sun_2018 limit 10" -o "s3://another-output-location/"
-
+    (oedi) $ oedi aws run-query -q "select * from oedi_tracking_the_sun.tracking_the_sun_2020 limit 10" -o "s3://another-output-location/"
 
 Commands Help
 -------------
@@ -104,30 +127,23 @@ For more ``oedi`` commands information, please use ``--help``.
 
 .. code-block:: bash
 
-    (oedi) $ oedi --help
-    Usage: oedi [OPTIONS] COMMAND [ARGS]...
-
-    Options:
-    --help  Show this message and exit.
-
-    Commands:
-    aws     OEDI command with AWS cloud.
-    config  OEDI configurations of each cloud provider.
-
     (oedi) $ oedi aws --help
     Usage: oedi aws [OPTIONS] COMMAND [ARGS]...
 
+        OEDI command with AWS cloud.
+
     Options:
-    --help  Show this message and exit.
+        --help  Show this message and exit.
 
     Commands:
-    list-crawlers  List available crawlers.
-    list-tables    List available tables.
-    run-crawler    Run crawler to populate table.
-    run-crawlers   Run all crawlers in data lake.
-    run-query      Run SQL query and show result.
+        list-crawlers   List available crawlers.
+        list-databases  List available databases
+        list-tables     List available tables in database.
+        run-crawler     Run crawler to populate table.
+        run-crawlers    Run all crawlers in data lake.
+        run-query       Run SQL query and show/export result.
 
-For how to use the command above, try like this,
+Each command also has its own help page:
 
 
 .. code-block:: bash
@@ -135,12 +151,12 @@ For how to use the command above, try like this,
     (oedi) $ oedi aws run-query --help
     Usage: oedi aws run-query [OPTIONS]
 
-    Run SQL query and show result.
+        Run SQL query and show/export result.
 
     Options:
-    -q, --query-string TEXT     Valid SQL query string.  [required]
-    -o, --output-location TEXT  A S3 staging directory.
-    -r, --region-name TEXT      AWS region name, i.e. us-west-2
-    --head                      Show pandas DataFrame head only.  [default:
-                                False]
-    --help                      Show this message and exit.
+        -q, --query-string TEXT      Valid SQL query string.  [required]
+        -s, --staging-location TEXT  A S3 staging directory.
+        -r, --region-name TEXT       AWS region name, i.e. us-west-2
+        -o, --output-file PATH       Export result to CSV file.
+        --head                       Show pandas DataFrame head only.  [default:False]
+        --help                       Show this message and exit.
