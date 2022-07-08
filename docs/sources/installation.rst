@@ -1,64 +1,94 @@
 Installation
 ============
-This section covers how to setup an environment used for building your data lake by means of `aws cdk \
-<https://docs.aws.amazon.com/cdk/latest/guide/home.html>`_, and how to install ``oedi`` package and
-use ``oedi`` commands to run crawlers and test SQL queries.
+This section covers how to setup an environment used for building your data lake by means of the `aws cdk \
+<https://docs.aws.amazon.com/cdk/latest/guide/home.html>`_, and how to install the ``oedi`` package and use ``oedi`` commands to run crawlers and test SQL queries.
 
-The easiest way to setup the environment is using ``docker``, but your can also set it up in your local 
-environment step by step. Before setting up the environment, please get a copy of the source code from
-our public Github repository - `open-data-access-tools <https://github.com/openEDI/open-data-access-tools>`_.
+The easiest way to setup the environment is using Docker, but you can also set it up in your local
+environment step by step.
 
-Your can clone using ``git clone``:
+Please refer to the `oedi S3 viewer <https://data.openei.org/s3_viewer?bucket=oedi-data-lake>`_ 
+for information about what data sets are currently available.
+
+Docker Environment
+------------------
+
+First, you will need to install and configure Docker. To do this, please refer to `Docker's documentation <https://docs.Docker.com/get-docker/>`_ for your specific machine. Once you have Docker installed, there are two ways to obtain the Docker image of the ``oedi`` tools: either pull it from Docker Hub,
+or build it from the source code.
+
+Pull Docker Image from Docker Hub
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The simplest way to obtain the Docker image is to pull it directly from our Docker Hub `repo <https://hub.Docker.com/r/openenergydatainitiative/oedi>`_. To do anything with Docker, you will first need to get an instance of the Docker daemon running. If you installed Docker Desktop, then you just need to open the app, and the daemon will start automatically. Next, open a command line and run:
+
+.. code-block:: bash
+
+    $ docker pull openenergydatainitiative/oedi
+
+If you are using Docker Desktop, you should now see the image under the Images tab. Alternatively, you can run ``docker images`` in the terminal to see a list of images.
+
+Build Docker Image from Source Code
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you're having trouble with Docker Hub, you can have Docker build the image from a clone of our repo. Get a copy of the source code from our public Github repository - `open-data-access-tools <https://github.com/openEDI/open-data-access-tools>`_:
 
 .. code-block:: bash
 
     $ git clone git@github.com:openEDI/open-data-access-tools.git
 
-Please refer to our `releases <https://github.com/openEDI/open-data-access-tools/releases>`_ page, 
-and check the datasets included in each release.
-
-
-Docker Environment
-------------------
-
-There are two ways to get the docker image of this tool, either pull from dockerhub, 
-or build from the source.
-
-Download Docker Image from DockerHub
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Pull the image from DockerHub `repo <https://hub.docker.com/r/openenergydatainitiative/oedi>`_ of OEDI,
+In the terminal, navigate to the directory where you saved the source code, ``open-data-access-tools``,
+and build the Docker image using the ``build`` command:
 
 .. code-block:: bash
 
-    docker pull openenergydatainitiative/oedi
+    $ cd <path to open-data-access-tools folder>
+    $ docker build -t openenergydatainitiative/oedi .
 
+If you are using Docker Desktop, you should now see the image under the Images tab. Alternatively, you can run ``docker images`` in the terminal to see a list of images.
 
-Build Docker Image from Source Code
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Run OEDI Docker Container
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Go to the root directory of the source code ``open-data-access-tools``, 
-and build docker image using ``docker build`` command,
+In order to use this tools, you'll need to have an AWS account and provide your  `AWS credentials <https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html>`_.
 
-.. code-block:: bash
+The AWS credentials could be specified with the ``docker run`` command, there are many potential ways, here we provide three, you can use any of them.
 
-    $ cd open-data-access-tools
-    $ docker build -t oedi .
-
-After having the image, then run docker container service like this,
+1. Attach the ``.aws`` with ``--volume / -v`` flag
 
 .. code-block:: bash
 
-    $ docker run --rm -it -v /home/user/.aws:/root/.aws oedi bash
-    $ root@53d985b7f2ba:/open-data-access-tools/#
+    $ docker run --rm -it \
+    -v <path to credentials>:/root/.aws \
+    openenergydatainitiative/oedi bash
 
-.. note::
+2. Pass AWS environment variables with ``--env / -e`` flag
 
-    Option ``-v /home/user/.aws:/root/.aws`` maps the AWS credentials at your local into
-    the docker environment, so that ``cdk`` command can run under proper account and permissions.
-    Please replace ``/home/user/.aws`` by using the directory that contains your AWS credentials.
+.. code-block:: bash
 
-Now, you are in ``oedi`` docker environment, and can build and use OEDI data lake.
+    $ docker run --rm -it \
+    -e AWS_ACCESS_KEY_ID=<YOUR KEY ID> \
+    -e AWS_SECRET_ACCESS_KEY=<YOUR SECRET EKY> \
+    -e AWS_DEFAULT_REGION=<AWS REGION> \
+    openenergydatainitiative/oedi bash
+
+3. Pass AWS environment variables with ``--env-file`` flag
+
+  Create a text file, for example, named ``credentials.txt```, and save AWS credentials information,
+
+.. code-block:: bash
+
+    AWS_ACCESS_KEY_ID=<YOUR KEY ID>
+    AWS_SECRET_ACCESS_KEY=<YOUR SECRET EKY>
+    AWS_DEFAULT_REGION=<AWS REGION>
+
+Then run the docker container like this,
+
+.. code-block:: bash
+
+    $ docker run --rm -it \
+    --env-file credentials.txt \
+    openenergydatainitiative/oedi bash
+
+Now, you are in an ``oedi`` container environment, and then can build and use your OEDI data lake!
 
 
 Local Environment
@@ -66,11 +96,17 @@ Local Environment
 
 If you want to setup the environment directly into your computer, please follow the steps below.
 
-1. Install `Node.js (>=10.3.0) <https://nodejs.org/en/download/>`_ and `npm <https://www.npmjs.com/>`_ 
+1. Get a copy of the source code from our public Github repository - `open-data-access-tools <https://github.com/openEDI/open-data-access-tools>`_:
+
+.. code-block:: bash
+
+    $ git clone git@github.com:openEDI/open-data-access-tools.git
+
+2. Install `Node.js (>=10.3.0) <https://nodejs.org/en/download/>`_ and `npm <https://www.npmjs.com/>`_ 
 to your computer. The ``cdk`` command-line tool and the AWS Construct Library are developed in TypeScript and 
 run on `Node.js`, and the bindings for Python use this backend and toolset as well.
 
-2. Create an virutal Python environment for the project.
+3. Create a virutal Python environment for the project.
 
 It's recommended to create a virtual environment for a Python project. There are many tools and 
 tutorials online about this, like `virtualenv <https://virtualenv.pypa.io/en/latest/>`_, 
@@ -90,9 +126,8 @@ an example.
     # Deactivate virtual environment
     (oedi) $ deactivate
 
-3. Make sure your ``oedi`` virtual environment is activated, then go the root directory of 
+4. Make sure your ``oedi`` virtual environment is activated, then go the root directory of 
 ``open-data-access-tools`` and install this package editablely.
-
 
 .. code-block:: bash
 
@@ -100,7 +135,7 @@ an example.
     (oedi) $ cd open-data-access-tools
     (oedi) $ pip install -e .
 
-4. Change work directory to the one that contains AWS CDK app.
+5. Change work directory to the one that contains AWS CDK app.
 
 .. code-block:: bash
 

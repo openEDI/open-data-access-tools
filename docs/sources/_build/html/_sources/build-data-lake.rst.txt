@@ -11,8 +11,8 @@ First, you need to run the configuration command,
 
     (oedi) $ oedi config sync
 
-This will use your ``AWS`` credentials file to establish access to the cloud. It will also create a config file, 
-``config.yaml``, in ``~/.oedi`` directory, which contains the default OEDI config settings.
+This will use your ``AWS`` credentials file to establish access to the cloud. It will also create a config file, ``config.yaml``, in ``oedi`` directory,
+which contains the default OEDI config settings.
 
 You need to edit this file to select the data you would like to access and provide the path to your s3 staging location. Here is what the default config file will look like:
 
@@ -48,18 +48,7 @@ You need to edit this file to select the data you would like to access and provi
           - s3://oedi-data-lake/ATB/electricity/parquet/2019/
           - s3://oedi-data-lake/ATB/electricity/parquet/2020/
           - s3://oedi-data-lake/ATB/electricity/parquet/2021/
-      - Identifier: pvdaq
-        Name: oedi_pvdaq
-        Locations:
-        - s3://oedi-data-lake/pvdaq/parquet/site/
-        - s3://oedi-data-lake/pvdaq/parquet/system/
-        - s3://oedi-data-lake/pvdaq/parquet/inverters/
-        - s3://oedi-data-lake/pvdaq/parquet/meters/
-        - s3://oedi-data-lake/pvdaq/parquet/metrics/
-        - s3://oedi-data-lake/pvdaq/parquet/modules/
-        - s3://oedi-data-lake/pvdaq/parquet/mount/
-        - s3://oedi-data-lake/pvdaq/parquet/other-instruments/
-        - s3://oedi-data-lake/pvdaq/parquet/pvdata/
+
     Staging Location: s3://user-owned-staging-bucket/
 
 OEDI may have multiple providers in the future. For now, we only focus on ``AWS``.

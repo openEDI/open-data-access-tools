@@ -6,21 +6,21 @@
 Welcome to OEDI's documentation!
 ================================
 
-The Open Energy Data Initiative (OEDI) aims to improve and automate access of high-value energy datasets 
+The Open Energy Data Initiative (OEDI) aims to improve and automate access to high-value energy datasets 
 across the U.S. Department of Energy’s programs, offices, and national laboratories, and help 
 researchers and industry to accelerate analysis and advance innovation. For more information, please 
 refer to `openei.org <https://openei.org/wiki/Open_Energy_Data_Initiative_(OEDI)>`_.
 
 To achive the goals, this package provides many features, as below:
 
-   * Automated OEDI data lake operations.
-   * Various discoverable large datasets.
-   * Extensible design of new dataset integration.
-   * Scalable dataset queries in easy.
-   * Devious examples for quick pickup.
+   * Automated OEDI data lake operations
+   * Various discoverable large datasets
+   * Extensible design of new dataset integration
+   * Scalable dataset queries
+   * Many examples for quick pickup
 
 For now, the OEID data lake is built on `AWS <https://aws.amazon.com/>`_, and is expected to 
-extend to other cloud providers as well in the future.
+extend to other cloud providers in the future.
 
 .. toctree::
    :maxdepth: 2

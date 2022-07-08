@@ -4,14 +4,15 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Installation &#8212; OEDI 0.0.1 documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Build Data Lake" href="build-data-lake.html" />
@@ -32,60 +33,95 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="installation">
+  <section id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
-<p>This section covers how to setup an environment used for building your data lake by means of <a class="reference external" href="https://docs.aws.amazon.com/cdk/latest/guide/home.html">aws cdk </a>, and how to install <code class="docutils literal notranslate"><span class="pre">oedi</span></code> package and
-use <code class="docutils literal notranslate"><span class="pre">oedi</span></code> commands to run crawlers and test SQL queries.</p>
-<p>The easiest way to setup the environment is using <code class="docutils literal notranslate"><span class="pre">docker</span></code>, but your can also set it up in your local
-environment step by step. Before setting up the environment, please get a copy of the source code from
-our public Github repository - <a class="reference external" href="https://github.com/openEDI/open-data-access-tools">open-data-access-tools</a>.</p>
-<p>Your can clone using <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span></code>:</p>
+<p>This section covers how to setup an environment used for building your data lake by means of the <a class="reference external" href="https://docs.aws.amazon.com/cdk/latest/guide/home.html">aws cdk </a>, and how to install the <code class="docutils literal notranslate"><span class="pre">oedi</span></code> package and use <code class="docutils literal notranslate"><span class="pre">oedi</span></code> commands to run crawlers and test SQL queries.</p>
+<p>The easiest way to setup the environment is using Docker, but you can also set it up in your local
+environment step by step.</p>
+<p>Please refer to the <a class="reference external" href="https://data.openei.org/s3_viewer?bucket=oedi-data-lake">oedi S3 viewer</a>
+for information about what data sets are currently available.</p>
+<section id="docker-environment">
+<h2>Docker Environment<a class="headerlink" href="#docker-environment" title="Permalink to this headline">¶</a></h2>
+<p>First, you will need to install and configure Docker. To do this, please refer to <a class="reference external" href="https://docs.Docker.com/get-docker/">Docker’s documentation</a> for your specific machine. Once you have Docker installed, there are two ways to obtain the Docker image of the <code class="docutils literal notranslate"><span class="pre">oedi</span></code> tools: either pull it from Docker Hub,
+or build it from the source code.</p>
+<section id="pull-docker-image-from-docker-hub">
+<h3>Pull Docker Image from Docker Hub<a class="headerlink" href="#pull-docker-image-from-docker-hub" title="Permalink to this headline">¶</a></h3>
+<p>The simplest way to obtain the Docker image is to pull it directly from our Docker Hub <a class="reference external" href="https://hub.Docker.com/r/openenergydatainitiative/oedi">repo</a>. To do anything with Docker, you will first need to get an instance of the Docker daemon running. If you installed Docker Desktop, then you just need to open the app, and the daemon will start automatically. Next, open a command line and run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ docker pull openenergydatainitiative/oedi
+</pre></div>
+</div>
+<p>If you are using Docker Desktop, you should now see the image under the Images tab. Alternatively, you can run <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">images</span></code> in the terminal to see a list of images.</p>
+</section>
+<section id="build-docker-image-from-source-code">
+<h3>Build Docker Image from Source Code<a class="headerlink" href="#build-docker-image-from-source-code" title="Permalink to this headline">¶</a></h3>
+<p>If you’re having trouble with Docker Hub, you can have Docker build the image from a clone of our repo. Get a copy of the source code from our public Github repository - <a class="reference external" href="https://github.com/openEDI/open-data-access-tools">open-data-access-tools</a>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git clone git@github.com:openEDI/open-data-access-tools.git
 </pre></div>
 </div>
-<p>Please refer to our <a class="reference external" href="https://github.com/openEDI/open-data-access-tools/releases">releases</a> page,
-and check the datasets included in each release.</p>
-<div class="section" id="docker-environment">
-<h2>Docker Environment<a class="headerlink" href="#docker-environment" title="Permalink to this headline">¶</a></h2>
-<p>There are two ways to get the docker image of this tool, either pull from dockerhub,
-or build from the source.</p>
-<div class="section" id="download-docker-image-from-dockerhub">
-<h3>Download Docker Image from DockerHub<a class="headerlink" href="#download-docker-image-from-dockerhub" title="Permalink to this headline">¶</a></h3>
-<p>Pull the image from DockerHub <a class="reference external" href="https://hub.docker.com/r/openenergydatainitiative/oedi">repo</a> of OEDI,</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker pull openenergydatainitiative/oedi
+<p>In the terminal, navigate to the directory where you saved the source code, <code class="docutils literal notranslate"><span class="pre">open-data-access-tools</span></code>,
+and build the Docker image using the <code class="docutils literal notranslate"><span class="pre">build</span></code> command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> &lt;path to open-data-access-tools folder&gt;
+$ docker build -t openenergydatainitiative/oedi .
 </pre></div>
 </div>
-</div>
-<div class="section" id="build-docker-image-from-source-code">
-<h3>Build Docker Image from Source Code<a class="headerlink" href="#build-docker-image-from-source-code" title="Permalink to this headline">¶</a></h3>
-<p>Go to the root directory of the source code <code class="docutils literal notranslate"><span class="pre">open-data-access-tools</span></code>,
-and build docker image using <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">build</span></code> command,</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> open-data-access-tools
-$ docker build -t oedi .
+<p>If you are using Docker Desktop, you should now see the image under the Images tab. Alternatively, you can run <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">images</span></code> in the terminal to see a list of images.</p>
+</section>
+<section id="run-oedi-docker-container">
+<h3>Run OEDI Docker Container<a class="headerlink" href="#run-oedi-docker-container" title="Permalink to this headline">¶</a></h3>
+<p>In order to use this tools, you’ll need to have an AWS account and provide your  <a class="reference external" href="https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html">AWS credentials</a>.</p>
+<p>The AWS credentials could be specified with the <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span></code> command, there are many potential ways, here we provide three, you can use any of them.</p>
+<ol class="arabic simple">
+<li><p>Attach the <code class="docutils literal notranslate"><span class="pre">.aws</span></code> with <code class="docutils literal notranslate"><span class="pre">--volume</span> <span class="pre">/</span> <span class="pre">-v</span></code> flag</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ docker run --rm -it <span class="se">\</span>
+-v &lt;path to credentials&gt;:/root/.aws <span class="se">\</span>
+openenergydatainitiative/oedi bash
 </pre></div>
 </div>
-<p>After having the image, then run docker container service like this,</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ docker run --rm -it -v /home/user/.aws:/root/.aws oedi bash
-$ root@53d985b7f2ba:/open-data-access-tools/#
+<ol class="arabic simple" start="2">
+<li><p>Pass AWS environment variables with <code class="docutils literal notranslate"><span class="pre">--env</span> <span class="pre">/</span> <span class="pre">-e</span></code> flag</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ docker run --rm -it <span class="se">\</span>
+-e <span class="nv">AWS_ACCESS_KEY_ID</span><span class="o">=</span>&lt;YOUR KEY ID&gt; <span class="se">\</span>
+-e <span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="o">=</span>&lt;YOUR SECRET EKY&gt; <span class="se">\</span>
+-e <span class="nv">AWS_DEFAULT_REGION</span><span class="o">=</span>&lt;AWS REGION&gt; <span class="se">\</span>
+openenergydatainitiative/oedi bash
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Option <code class="docutils literal notranslate"><span class="pre">-v</span> <span class="pre">/home/user/.aws:/root/.aws</span></code> maps the AWS credentials at your local into
-the docker environment, so that <code class="docutils literal notranslate"><span class="pre">cdk</span></code> command can run under proper account and permissions.
-Please replace <code class="docutils literal notranslate"><span class="pre">/home/user/.aws</span></code> by using the directory that contains your AWS credentials.</p>
+<ol class="arabic simple" start="3">
+<li><p>Pass AWS environment variables with <code class="docutils literal notranslate"><span class="pre">--env-file</span></code> flag</p></li>
+</ol>
+<blockquote>
+<div><p>Create a text file, for example, named <code class="docutils literal notranslate"><span class="pre">credentials.txt`</span></code>, and save AWS credentials information,</p>
+</div></blockquote>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">AWS_ACCESS_KEY_ID</span><span class="o">=</span>&lt;YOUR KEY ID&gt;
+<span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="o">=</span>&lt;YOUR SECRET EKY&gt;
+<span class="nv">AWS_DEFAULT_REGION</span><span class="o">=</span>&lt;AWS REGION&gt;
+</pre></div>
 </div>
-<p>Now, you are in <code class="docutils literal notranslate"><span class="pre">oedi</span></code> docker environment, and can build and use OEDI data lake.</p>
+<p>Then run the docker container like this,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ docker run --rm -it <span class="se">\</span>
+--env-file credentials.txt <span class="se">\</span>
+openenergydatainitiative/oedi bash
+</pre></div>
 </div>
-</div>
-<div class="section" id="local-environment">
+<p>Now, you are in an <code class="docutils literal notranslate"><span class="pre">oedi</span></code> container environment, and then can build and use your OEDI data lake!</p>
+</section>
+</section>
+<section id="local-environment">
 <h2>Local Environment<a class="headerlink" href="#local-environment" title="Permalink to this headline">¶</a></h2>
 <p>If you want to setup the environment directly into your computer, please follow the steps below.</p>
-<p>1. Install <a class="reference external" href="https://nodejs.org/en/download/">Node.js (&gt;=10.3.0)</a> and <a class="reference external" href="https://www.npmjs.com/">npm</a>
+<ol class="arabic simple">
+<li><p>Get a copy of the source code from our public Github repository - <a class="reference external" href="https://github.com/openEDI/open-data-access-tools">open-data-access-tools</a>:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git clone git@github.com:openEDI/open-data-access-tools.git
+</pre></div>
+</div>
+<p>2. Install <a class="reference external" href="https://nodejs.org/en/download/">Node.js (&gt;=10.3.0)</a> and <a class="reference external" href="https://www.npmjs.com/">npm</a>
 to your computer. The <code class="docutils literal notranslate"><span class="pre">cdk</span></code> command-line tool and the AWS Construct Library are developed in TypeScript and
 run on <cite>Node.js</cite>, and the bindings for Python use this backend and toolset as well.</p>
-<ol class="arabic simple" start="2">
-<li><p>Create an virutal Python environment for the project.</p></li>
+<ol class="arabic simple" start="3">
+<li><p>Create a virutal Python environment for the project.</p></li>
 </ol>
 <p>It’s recommended to create a virtual environment for a Python project. There are many tools and
 tutorials online about this, like <a class="reference external" href="https://virtualenv.pypa.io/en/latest/">virtualenv</a>,
@@ -103,14 +139,14 @@ $ workon oedi
 (oedi) $ deactivate
 </pre></div>
 </div>
-<p>3. Make sure your <code class="docutils literal notranslate"><span class="pre">oedi</span></code> virtual environment is activated, then go the root directory of
+<p>4. Make sure your <code class="docutils literal notranslate"><span class="pre">oedi</span></code> virtual environment is activated, then go the root directory of
 <code class="docutils literal notranslate"><span class="pre">open-data-access-tools</span></code> and install this package editablely.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ workon oedi
 <span class="o">(</span>oedi<span class="o">)</span> $ <span class="nb">cd</span> open-data-access-tools
 <span class="o">(</span>oedi<span class="o">)</span> $ pip install -e .
 </pre></div>
 </div>
-<ol class="arabic simple" start="4">
+<ol class="arabic simple" start="5">
 <li><p>Change work directory to the one that contains AWS CDK app.</p></li>
 </ol>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>oedi<span class="o">)</span> $ <span class="nb">cd</span> oedi/AWS
@@ -119,8 +155,8 @@ $ workon oedi
 </pre></div>
 </div>
 <p>Now, you are in the <code class="docutils literal notranslate"><span class="pre">oedi</span></code> local environment, and build and use OEDI data lake.</p>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -139,7 +175,7 @@ $ workon oedi
 
 
 <h3>Navigation</h3>
-<p class="caption"><span class="caption-text">Contents:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#docker-environment">Docker Environment</a></li>
@@ -165,7 +201,7 @@ $ workon oedi
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -184,10 +220,10 @@ $ workon oedi
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2020 Alliance for Sustainable Energy, LLC.
+      &copy;2022 Alliance for Sustainable Energy, LLC.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.4.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

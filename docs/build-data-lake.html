@@ -34,58 +34,69 @@
             
   <div class="section" id="build-data-lake">
 <h1>Build Data Lake<a class="headerlink" href="#build-data-lake" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="config-oedi">
-<h2>Config OEDI<a class="headerlink" href="#config-oedi" title="Permalink to this headline">¶</a></h2>
-<p>First, you need to run <code class="docutils literal notranslate"><span class="pre">oedi</span> <span class="pre">config</span> <span class="pre">sync</span></code> command,</p>
+<p>Now that you have your <code class="docutils literal notranslate"><span class="pre">oedi</span></code> environment set up, you are almost ready to access the data.</p>
+<div class="section" id="configure-oedi">
+<h2>Configure OEDI<a class="headerlink" href="#configure-oedi" title="Permalink to this headline">¶</a></h2>
+<p>First, you need to run the configuration command,</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>oedi<span class="o">)</span> $ oedi config sync
 </pre></div>
 </div>
-<p>It’ll create a config file <code class="docutils literal notranslate"><span class="pre">confi.yaml</span></code> in <code class="docutils literal notranslate"><span class="pre">~/.oedi/</span></code> directory,
-which contains the default OEDI config settings.</p>
-<p>Please edit the <code class="docutils literal notranslate"><span class="pre">~/.oedi/confi.yaml</span></code> config file and
-configure the data lake based on your preference. For example, we provide the
-template with following <code class="docutils literal notranslate"><span class="pre">AWS</span></code> configurations.</p>
+<p>This will use your <code class="docutils literal notranslate"><span class="pre">AWS</span></code> credentials file to establish access to the cloud. It will also create a config file,
+<code class="docutils literal notranslate"><span class="pre">config.yaml</span></code>, in <code class="docutils literal notranslate"><span class="pre">~/.oedi</span></code> directory, which contains the default OEDI config settings.</p>
+<p>You need to edit this file to select the data you would like to access and provide the path to your s3 staging location. Here is what the default config file will look like:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>oedi<span class="o">)</span> $ oedi config show --provider AWS
 AWS:
-Region Name: us-west-2
-Datalake Name: oedi-data-lake
-Databases:
-  - Identifier: pv_rooftops
-    Name: oedi_pv_rooftops
-    Locations:
-      - s3://oedi-data-lake/pv-rooftop/aspects/
-      - s3://oedi-data-lake/pv-rooftop/buildings/
-      - s3://oedi-data-lake/pv-rooftop/developable-planes/
-      - s3://oedi-data-lake/pv-rooftop/rasd/
-      - s3://oedi-data-lake/pv-rooftop-pr/developable-planes/
-  - Identifier: buildstock
-    Name: oedi_buildstock
-    Locations:
-      - s3://nrel-pds-building-stock/comstock/athena/2020/comstock_v1/state
-      - s3://nrel-pds-building-stock/comstock/athena/2020/comstock_v1/metadata
-  - Identifier: tracking_the_sun
-    Name: oedi_tracking_the_sun
-    Locations:
-      - s3://oedi-data-lake/tracking-the-sun/2018/
-      - s3://oedi-data-lake/tracking-the-sun/2019/
-  - Identifier: atb_electricity
-    Name: oedi_atb_electricity
-    Locations:
-      - s3://oedi-data-lake/atb/electricity/2019/
-      - s3://oedi-data-lake/atb/electricity/2020/
-      - s3://oedi-data-lake/atb/electricity/2021/
-
-Staging Location: s3://user-owned-staging-bucket/
+  Region Name: us-west-2
+  Datalake Name: oedi-data-lake
+  Databases:
+    - Identifier: pv_rooftops
+      Name: oedi_pv_rooftops
+      Locations:
+        - s3://oedi-data-lake/pv-rooftop/aspects/
+        - s3://oedi-data-lake/pv-rooftop/buildings/
+        - s3://oedi-data-lake/pv-rooftop/developable-planes/
+        - s3://oedi-data-lake/pv-rooftop/rasd/
+        - s3://oedi-data-lake/pv-rooftop-pr/developable-planes/
+    - Identifier: buildstock
+      Name: oedi_buildstock
+      Locations:
+        - s3://nrel-pds-building-stock/comstock/athena/2020/comstock_v1/state
+        - s3://nrel-pds-building-stock/comstock/athena/2020/comstock_v1/metadata
+    - Identifier: tracking_the_sun
+      Name: oedi_tracking_the_sun
+      Locations:
+        - s3://oedi-data-lake/tracking-the-sun/2018/
+        - s3://oedi-data-lake/tracking-the-sun/2019/
+        - s3://oedi-data-lake/tracking-the-sun/2020/
+    - Identifier: atb
+      Name: oedi_atb
+      Locations:
+        - s3://oedi-data-lake/ATB/electricity/parquet/2019/
+        - s3://oedi-data-lake/ATB/electricity/parquet/2020/
+        - s3://oedi-data-lake/ATB/electricity/parquet/2021/
+    - Identifier: pvdaq
+      Name: oedi_pvdaq
+      Locations:
+      - s3://oedi-data-lake/pvdaq/parquet/site/
+      - s3://oedi-data-lake/pvdaq/parquet/system/
+      - s3://oedi-data-lake/pvdaq/parquet/inverters/
+      - s3://oedi-data-lake/pvdaq/parquet/meters/
+      - s3://oedi-data-lake/pvdaq/parquet/metrics/
+      - s3://oedi-data-lake/pvdaq/parquet/modules/
+      - s3://oedi-data-lake/pvdaq/parquet/mount/
+      - s3://oedi-data-lake/pvdaq/parquet/other-instruments/
+      - s3://oedi-data-lake/pvdaq/parquet/pvdata/
+  Staging Location: s3://user-owned-staging-bucket/
 </pre></div>
 </div>
 <p>OEDI may have multiple providers in the future. For now, we only focus on <code class="docutils literal notranslate"><span class="pre">AWS</span></code>.
 Those configurations will be applied to AWS and related services in your data lake.</p>
 <blockquote>
 <div><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">Regsion</span> <span class="pre">Name</span></code>: the AWS resources are tied to the Region that you specified.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Region</span> <span class="pre">Name</span></code>: the AWS resources are tied to the Region that you specified.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Datalake</span> <span class="pre">Name</span></code>: the stack name of AWS CloudFormation.</p></li>
 <li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">Databases</span></code>: the databases that would be created in AWS Glue.</dt><dd><ul>
+<dt><code class="docutils literal notranslate"><span class="pre">Databases</span></code>: the databases that will be created in AWS Glue.</dt><dd><ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">Identifier</span></code>: the string that can identifer the dataset.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Name</span></code>: the name of database that would be created in AWS Glue.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Locations</span></code>: the AWS S3 locations with columnar dataset.</p></li>
@@ -96,19 +107,20 @@ Those configurations will be applied to AWS and related services in your data la
 <li><p><code class="docutils literal notranslate"><span class="pre">Staging</span> <span class="pre">Location</span></code>: the AWS S3 location used by Athena for query outputs.</p></li>
 </ul>
 </div></blockquote>
-<p>Please update the values in <code class="docutils literal notranslate"><span class="pre">~/.oedi/config.yaml</span></code> based your requirements.</p>
+<p>Use a text editor of your choice to modify the file (e.g. <code class="docutils literal notranslate"><span class="pre">vi</span> <span class="pre">oedi/config.yaml</span></code>). At a minimum, you will need to change the staging location to a bucket that your <code class="docutils literal notranslate"><span class="pre">AWS</span></code> account has access to. If you provide a path to a bucket that does not exist, then AWS will create the bucket for you. However, bucket names must be unique across the whole region, so you cannot use a bucket name that someone else has taken. You can either use a bucket name that you think is unlikely to exist, or use the <code class="docutils literal notranslate"><span class="pre">AWS</span></code> managment console to create the bucket in your account manually, so that you know it will work (don’t forget to choose the correct region!).</p>
+<p>Additionally, you should only choose the databases and tables that you are interested in so that your <code class="docutils literal notranslate"><span class="pre">AWS</span></code> costs are minimized.</p>
 </div>
 <div class="section" id="deploy-data-lake">
 <h2>Deploy Data Lake<a class="headerlink" href="#deploy-data-lake" title="Permalink to this headline">¶</a></h2>
-<p>After the configurations got determined, then we can use <code class="docutils literal notranslate"><span class="pre">cdk</span></code> commands to manage the
-AWS infrustructures required by the data lake.</p>
+<p>Once your configuration file is ready, you can use <code class="docutils literal notranslate"><span class="pre">cdk</span></code> commands to manage the
+AWS infrastructure required by the data lake.</p>
 <p>Please change your directory to <code class="docutils literal notranslate"><span class="pre">open-data-access-tools/oedi/AWS</span></code> which contains the CDK
 app.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /open-data-access-tools/oedi/AWS
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>oedi<span class="o">)</span> $ <span class="nb">cd</span> /open-data-access-tools/oedi/AWS
 </pre></div>
 </div>
 <p>To deploy the data lake stack configured above, we need to run the command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cdk deploy
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>oedi<span class="o">)</span> $ cdk deploy
 </pre></div>
 </div>
 <p>What happens behind the scene? Based on the configurations provided above, a stack of AWS
@@ -121,15 +133,14 @@ data lake, then the following resources are created in the data lake.</p>
 <li><p>A number of AWS Glue crawlers were created.</p></li>
 </ul>
 </div></blockquote>
-<p>Now, you have the data lake infrastructures launched. Later on, after any change to <code class="docutils literal notranslate"><span class="pre">config.yaml</span></code>,
-it’s expected to re-deploy via <code class="docutils literal notranslate"><span class="pre">cdk</span></code> to apply the updated configurations.</p>
+<p>Now, you have the data lake infrastructure launched. Later on, after any change to <code class="docutils literal notranslate"><span class="pre">config.yaml</span></code>, you will need to re-deploy via <code class="docutils literal notranslate"><span class="pre">cdk</span> <span class="pre">deploy</span></code> to apply the updated configurations.</p>
 <p>There are also other common <code class="docutils literal notranslate"><span class="pre">cdk</span></code> commands, like these:</p>
 <blockquote>
 <div><ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">cdk</span> <span class="pre">ls</span></code>, list all stacks in the app.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">cdk</span> <span class="pre">synth</span></code>, emits the synthesized CloudFormation template.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">cdk</span> <span class="pre">diff</span></code>, compare deployed stack with current state.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ckd</span> <span class="pre">destroy</span></code>, it deletes all AWS resources deployed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cdk</span> <span class="pre">destroy</span></code>, it deletes all AWS resources deployed.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">cdk</span> <span class="pre">docs</span></code>, open CDK documentation.</p></li>
 </ul>
 </div></blockquote>
@@ -159,7 +170,7 @@ it’s expected to re-deploy via <code class="docutils literal notranslate"><spa
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Build Data Lake</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#config-oedi">Config OEDI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configure-oedi">Configure OEDI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#deploy-data-lake">Deploy Data Lake</a></li>
 </ul>
 </li>
@@ -200,7 +211,7 @@ it’s expected to re-deploy via <code class="docutils literal notranslate"><spa
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2020 Alliance for Sustainable Energy, LLC.
+      &copy;2022 Alliance for Sustainable Energy, LLC.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.1</a>
