@@ -17,7 +17,7 @@ def test_data_lake():
     datalake_name = "aws-oedi-datalake"
     assert cfn.id == datalake_name
     assert cfn.stack_name == datalake_name
-    assert cfn.name == datalake_name
+    assert cfn.original_name == datalake_name
     assert cfn.display_name == datalake_name
     assert cfn.original_name == datalake_name
 
