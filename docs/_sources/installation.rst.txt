@@ -12,7 +12,7 @@ for information about what data sets are currently available.
 Docker Environment
 ------------------
 
-First, you will need to install and configure Docker. To do this, please refer to `Docker's documentation <https://docs.Docker.com/get-Docker/>`_ for your specific machine. Once you have Docker installed, there are two ways to obtain the Docker image of the ``oedi`` tools: either pull it from Docker Hub,
+First, you will need to install and configure Docker. To do this, please refer to `Docker's documentation <https://docs.Docker.com/get-docker/>`_ for your specific machine. Once you have Docker installed, there are two ways to obtain the Docker image of the ``oedi`` tools: either pull it from Docker Hub,
 or build it from the source code.
 
 Pull Docker Image from Docker Hub
@@ -25,6 +25,13 @@ The simplest way to obtain the Docker image is to pull it directly from our Dock
     $ docker pull openenergydatainitiative/oedi
 
 If you are using Docker Desktop, you should now see the image under the Images tab. Alternatively, you can run ``docker images`` in the terminal to see a list of images.
+
+
+.. note::
+
+    The deployment package of AWS data lake was migrated from ``cdk1`` to ``cdk2``. The last version that supports ``cdk1`` is `v0.1.6 <https://github.com/openEDI/open-data-access-tools/releases/tag/v0.1.6>`_ .
+    From ``v0.2.0``, the AWS data lake deployment starts to use ``cdk2``. As ``cdk2`` does not include the experimental L2/L3 constructs which were used by this package before ``v0.1.6`` (included),
+    it caused compatibility issue related to Glue databases. If you already deployed the data lake, please destroy before trying to re-deploy with new versions.
 
 Build Docker Image from Source Code
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
