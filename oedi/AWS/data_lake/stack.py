@@ -1,14 +1,15 @@
-from aws_cdk import core
+from aws_cdk import Stack
+from constructs import Construct
 
 from oedi import __version__
 from oedi.config import OEDIConfigBase
 from oedi.AWS.data_lake.construct import AWSDataLakeConstruct
 
 
-class AWSDataLakeStack(core.Stack):
+class AWSDataLakeStack(Stack):
     """AWS data lake stack class"""
 
-    def __init__(self, scope: core.Construct, config: OEDIConfigBase) -> None:
+    def __init__(self, scope: Construct, config: OEDIConfigBase) -> None:
         """Lauch AWS data lake related infrastructures."""
         super().__init__(scope, config.datalake_name, env={"region": config.region_name})
 
@@ -19,6 +20,7 @@ class AWSDataLakeStack(core.Stack):
             data_lake = AWSDataLakeConstruct(
                 scope=self,
                 id=f"oedi-data-lake-construct-{database['Name']}",
+                account=self.account,
                 database_name=db_name,
                 version=__version__
             )

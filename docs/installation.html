@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Installation &#8212; OEDI 0.0.1 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
@@ -12,6 +12,7 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -34,26 +35,32 @@
           <div class="body" role="main">
             
   <section id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">¶</a></h1>
 <p>This section covers how to setup an environment used for building your data lake by means of the <a class="reference external" href="https://docs.aws.amazon.com/cdk/latest/guide/home.html">aws cdk </a>, and how to install the <code class="docutils literal notranslate"><span class="pre">oedi</span></code> package and use <code class="docutils literal notranslate"><span class="pre">oedi</span></code> commands to run crawlers and test SQL queries.</p>
 <p>The easiest way to setup the environment is using Docker, but you can also set it up in your local
 environment step by step.</p>
 <p>Please refer to the <a class="reference external" href="https://data.openei.org/s3_viewer?bucket=oedi-data-lake">oedi S3 viewer</a>
 for information about what data sets are currently available.</p>
 <section id="docker-environment">
-<h2>Docker Environment<a class="headerlink" href="#docker-environment" title="Permalink to this headline">¶</a></h2>
+<h2>Docker Environment<a class="headerlink" href="#docker-environment" title="Permalink to this heading">¶</a></h2>
 <p>First, you will need to install and configure Docker. To do this, please refer to <a class="reference external" href="https://docs.Docker.com/get-docker/">Docker’s documentation</a> for your specific machine. Once you have Docker installed, there are two ways to obtain the Docker image of the <code class="docutils literal notranslate"><span class="pre">oedi</span></code> tools: either pull it from Docker Hub,
 or build it from the source code.</p>
 <section id="pull-docker-image-from-docker-hub">
-<h3>Pull Docker Image from Docker Hub<a class="headerlink" href="#pull-docker-image-from-docker-hub" title="Permalink to this headline">¶</a></h3>
+<h3>Pull Docker Image from Docker Hub<a class="headerlink" href="#pull-docker-image-from-docker-hub" title="Permalink to this heading">¶</a></h3>
 <p>The simplest way to obtain the Docker image is to pull it directly from our Docker Hub <a class="reference external" href="https://hub.Docker.com/r/openenergydatainitiative/oedi">repo</a>. To do anything with Docker, you will first need to get an instance of the Docker daemon running. If you installed Docker Desktop, then you just need to open the app, and the daemon will start automatically. Next, open a command line and run:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ docker pull openenergydatainitiative/oedi
 </pre></div>
 </div>
 <p>If you are using Docker Desktop, you should now see the image under the Images tab. Alternatively, you can run <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">images</span></code> in the terminal to see a list of images.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The deployment package of AWS data lake was migrated from <code class="docutils literal notranslate"><span class="pre">cdk1</span></code> to <code class="docutils literal notranslate"><span class="pre">cdk2</span></code>. The last version that supports <code class="docutils literal notranslate"><span class="pre">cdk1</span></code> is <a class="reference external" href="https://github.com/openEDI/open-data-access-tools/releases/tag/v0.1.6">v0.1.6</a> .
+From <code class="docutils literal notranslate"><span class="pre">v0.2.0</span></code>, the AWS data lake deployment starts to use <code class="docutils literal notranslate"><span class="pre">cdk2</span></code>. As <code class="docutils literal notranslate"><span class="pre">cdk2</span></code> does not include the experimental L2/L3 constructs which were used by this package before <code class="docutils literal notranslate"><span class="pre">v0.1.6</span></code> (included),
+it caused compatibility issue related to Glue databases. If you already deployed the data lake, please destroy before trying to re-deploy with new versions.</p>
+</div>
 </section>
 <section id="build-docker-image-from-source-code">
-<h3>Build Docker Image from Source Code<a class="headerlink" href="#build-docker-image-from-source-code" title="Permalink to this headline">¶</a></h3>
+<h3>Build Docker Image from Source Code<a class="headerlink" href="#build-docker-image-from-source-code" title="Permalink to this heading">¶</a></h3>
 <p>If you’re having trouble with Docker Hub, you can have Docker build the image from a clone of our repo. Get a copy of the source code from our public Github repository - <a class="reference external" href="https://github.com/openEDI/open-data-access-tools">open-data-access-tools</a>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git clone git@github.com:openEDI/open-data-access-tools.git
 </pre></div>
@@ -67,7 +74,7 @@ $ docker build -t openenergydatainitiative/oedi .
 <p>If you are using Docker Desktop, you should now see the image under the Images tab. Alternatively, you can run <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">images</span></code> in the terminal to see a list of images.</p>
 </section>
 <section id="run-oedi-docker-container">
-<h3>Run OEDI Docker Container<a class="headerlink" href="#run-oedi-docker-container" title="Permalink to this headline">¶</a></h3>
+<h3>Run OEDI Docker Container<a class="headerlink" href="#run-oedi-docker-container" title="Permalink to this heading">¶</a></h3>
 <p>In order to use this tools, you’ll need to have an AWS account and provide your  <a class="reference external" href="https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html">AWS credentials</a>.</p>
 <p>The AWS credentials could be specified with the <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span></code> command, there are many potential ways, here we provide three, you can use any of them.</p>
 <ol class="arabic simple">
@@ -109,7 +116,7 @@ openenergydatainitiative/oedi bash
 </section>
 </section>
 <section id="local-environment">
-<h2>Local Environment<a class="headerlink" href="#local-environment" title="Permalink to this headline">¶</a></h2>
+<h2>Local Environment<a class="headerlink" href="#local-environment" title="Permalink to this heading">¶</a></h2>
 <p>If you want to setup the environment directly into your computer, please follow the steps below.</p>
 <ol class="arabic simple">
 <li><p>Get a copy of the source code from our public Github repository - <a class="reference external" href="https://github.com/openEDI/open-data-access-tools">open-data-access-tools</a>:</p></li>
@@ -206,7 +213,7 @@ $ workon oedi
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 
@@ -223,7 +230,7 @@ $ workon oedi
       &copy;2022 Alliance for Sustainable Energy, LLC.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.4.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
