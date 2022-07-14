@@ -1,21 +1,23 @@
 
-from aws_cdk import core
 from aws_cdk import aws_iam as iam
 from aws_cdk import aws_glue as glue
+from constructs import Construct
 
 from oedi.AWS.utils import generate_crawler_name, generate_table_prefix
 
 
-class AWSDataLakeConstruct(core.Construct):
+class AWSDataLakeConstruct(Construct):
     def __init__(
         self,
-        scope: core.Construct,
+        scope: Construct,
         id: str,
+        account: object,
         database_name: str,
         version: str,
         **kwargs,
     ) -> None:
         super().__init__(scope, id, **kwargs)
+        self._account = account
         self._database_name = database_name
         self._crawler_role = None
 
@@ -31,11 +33,13 @@ class AWSDataLakeConstruct(core.Construct):
 
     def create_database(self):
         """Create the database of data lake in Glue"""
-        id_suffix = self.database_name.replace("_", "-")
-        glue.Database(
+        glue.CfnDatabase(
             scope=self,
-            id=f"oedi-data-lake-database--{id_suffix}",
-            database_name=self.database_name
+            id=f"oedi-data-lake-database-{self.database_name}",
+            catalog_id=self._account,
+            database_input=glue.CfnDatabase.DatabaseInputProperty(
+                name=self.database_name
+            )
         )
 
     def create_crawler_role(self):

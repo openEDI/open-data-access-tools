@@ -1,4 +1,4 @@
-from aws_cdk import core
+from aws_cdk import App
 
 from oedi.config import AWSDataLakeConfig
 from oedi.AWS.data_lake.stack import AWSDataLakeStack
@@ -6,7 +6,7 @@ from tests.unit.test_config import OEDI_TEST_CONFIG_FILE
 
 
 def test_data_lake():
-    app = core.App()
+    app = App()
     config = AWSDataLakeConfig(OEDI_TEST_CONFIG_FILE)
 
     AWSDataLakeStack(app, config)
@@ -17,7 +17,7 @@ def test_data_lake():
     datalake_name = "aws-oedi-datalake"
     assert cfn.id == datalake_name
     assert cfn.stack_name == datalake_name
-    assert cfn.name == datalake_name
+    assert cfn.original_name == datalake_name
     assert cfn.display_name == datalake_name
     assert cfn.original_name == datalake_name
 
