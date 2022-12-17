@@ -24,6 +24,7 @@ AWS:
         - s3://oedi-data-lake/tracking-the-sun/2019/
         - s3://oedi-data-lake/tracking-the-sun/2020/
         - s3://oedi-data-lake/tracking-the-sun/2021/
+        - s3://oedi-data-lake/tracking-the-sun/2022/
     - Identifier: atb
       Name: oedi_atb
       Locations:
