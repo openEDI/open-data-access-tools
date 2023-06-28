@@ -31,6 +31,8 @@ AWS:
         - s3://oedi-data-lake/ATB/electricity/parquet/2019/
         - s3://oedi-data-lake/ATB/electricity/parquet/2020/
         - s3://oedi-data-lake/ATB/electricity/parquet/2021/
+        - s3://oedi-data-lake/ATB/electricity/parquet/2022/
+        - s3://oedi-data-lake/ATB/electricity/parquet/2023/
     - Identifier: pvdaq
       Name: oedi_pvdaq
       Locations:
