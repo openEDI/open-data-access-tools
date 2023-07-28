@@ -119,6 +119,7 @@ def test_oedi_glue__get_databasses():
 
     # Test
     glue = OEDIGlue()
+    glue._client = client
     response = glue.get_databases()
     assert len(response) == 1
 
@@ -158,6 +159,7 @@ def test_oedi_glue__get_table():
 
     # Test
     glue = OEDIGlue()
+    glue._client = client
     table = glue.get_table(database_name, table_name)
     assert table["DatabaseName"] == "test-database"
     assert table["Name"] == "test-table"
@@ -182,6 +184,7 @@ def test_oedi_glue__list_tables():
 
     # Test
     glue = OEDIGlue()
+    glue._client = client
     tables = glue.list_tables(database_name)
     assert len(tables) == 2
     assert "CreateTime" in tables[0]
@@ -205,6 +208,7 @@ def test_oedi_glue__get_table_columns():
 
     # Test
     glue = OEDIGlue()
+    glue._client = client
     columns = glue.get_table_columns(database_name, table_name)
     assert len(columns) == 2
 
@@ -228,6 +232,7 @@ def test_oedi_glue__get_partition_keys():
 
     # Test
     glue = OEDIGlue()
+    glue._client = client
     partition_keys = glue.get_partition_keys(database_name, table_name)
     assert len(partition_keys) == 3
 
@@ -251,6 +256,7 @@ def test_oedi_glue__get_partition_values():
 
     # Test
     glue = OEDIGlue()
+    glue._client = client
     values = glue.get_partition_values(database_name, table_name)
     assert len(values) == 0
 
