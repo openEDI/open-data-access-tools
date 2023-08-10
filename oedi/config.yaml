@@ -51,4 +51,4 @@ AWS:
     - Key: Project
       Value: OEDI
     - Key: Release
-      Value: 0.2.0
+      Value: 0.2.2
