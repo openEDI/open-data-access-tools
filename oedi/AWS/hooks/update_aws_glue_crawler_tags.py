@@ -39,4 +39,3 @@ if __name__ == "__main__":
     manager = AWSGlueCrawlerTagManager()
     crawler_arns = manager.list_crawler_arns()
     manager.update_crawler_tags(crawler_arns)
-    print("Crawler tags update done!")
