@@ -27,9 +27,9 @@ def get_file_structure(file_path, resolution, year, month, day):
 
 
 # Define date to read (or wildcard with *)
-year   = '2022'
-month  = '12'
-day    = '22'
+year   = '2023'
+month  = '02'
+day    = '2*'
 
 
 
@@ -41,7 +41,7 @@ data_path = 'Y:\Wind-data/Restricted/Projects/NSO/Data_publish/NSO/'
 resolution = '1min'
 
 
-# If plot==1: Make an overview plot together with inflow mast wind data
+# If plot==1: Make an overview plot together with wind data
 plot=1
 
 
@@ -71,7 +71,7 @@ for datafile in loads_files:
 
 if plot == 1:
     
-    # Read winds (inflow mast)
+    # Read winds
     resolution_winds = '1min'   # one out of: '20Hz', '1min'
     path = get_file_structure(file_path = data_path+'met_masts/inflow_mast/', resolution = resolution_winds, year=year, month=month, day=day)
     inflow_files = sorted(glob.glob(path +'inflow_Mast_'+resolution+'_' + year + '-' + month + '-' + day + '_' + '*.parquet'))  
@@ -89,7 +89,7 @@ if plot == 1:
     mpl.rcParams['lines.markersize'] = 1
    
  
-    ## Look at time series
+    ## Plot time series
     fig = plt.figure(figsize=(17,9))   
 
     ax1 = plt.subplot(4, 2, 1)
@@ -118,10 +118,10 @@ if plot == 1:
     ax3.set_ylabel('Tilt ($^\circ$)')
 
     try:
-        ax1.plot(inflow.wspd_3m,".", label = "inflow")
-        ax6.plot(inflow.wdir_3m,".")
-        ax9.plot(inflow.TI_U_3m,".")    
-        ax10.plot(inflow.TKE_3m,".")  
+        ax1.plot(inflow.wspd_3m,".",color='black', label = "inflow")
+        ax6.plot(inflow.wdir_3m,".",color='black')
+        ax9.plot(inflow.TI_U_3m,".",color='black')    
+        ax10.plot(inflow.TKE_3m,".",color='black')  
     except:
         pass
 
@@ -135,7 +135,8 @@ if plot == 1:
     for column in loads[[col for col in loads.columns if ('Disp' in col)  & ('_m' not in col) & ('_s' not in col)& ('_raw' not in col)& ('_level' not in col)]]:
         ax4.plot(loads[column],".", label = loads[column].name.replace('_Disp_', ' ')) 
     ax4.legend(fontsize=7, markerscale= 4, loc='center left', bbox_to_anchor=(1, 0.5))
-    for column in loads[[col for col in loads.columns if ('Tilt' in col)  & ('_m' not in col) & ('_s' not in col) & ('SO' in col)]]:
+    ax3.plot(loads.projected_sun_angle.where((loads.projected_sun_angle<90) & (loads.projected_sun_angle>-90)), ".", color='black', label="nom")
+    for column in loads[[col for col in loads.columns if ('Tilt' in col)  & ('_m' not in col) & ('_s' not in col) & ('SO' in col)& ('_raw' not in col)]]:
         ax3.plot(loads[column],".", label = loads[column].name[:2]) 
     ax3.legend(fontsize=7, markerscale= 4, loc='center left', bbox_to_anchor=(1, 0.5))
     
