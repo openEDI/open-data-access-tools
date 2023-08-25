@@ -28,10 +28,10 @@ def get_file_structure(file_path, year, month, day):
 
 
 # Define date and hour to read (or wildcard with *)
-year   = '2023'
-month  = '04'
-day    = '02'
-hour   = '21'
+year   = '2022'
+month  = '06'
+day    = '10'
+hour   = '0*'
 
 
 
@@ -83,7 +83,7 @@ try:
     plt.suptitle(year + month + day)
     ax1 = plt.subplot(1, 1, 1)
     ax1.set_xlabel('Doppler velocity (m/s)')
-    p = ax1.plot(lidar.Doppler_filtered)
+    p = ax1.plot(lidar.Doppler_filtered,".")
     ax1.grid(True)
     plt.tight_layout()
 except:
