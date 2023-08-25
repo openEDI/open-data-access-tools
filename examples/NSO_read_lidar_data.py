@@ -31,7 +31,7 @@ def get_file_structure(file_path, year, month, day):
 year   = '2023'
 month  = '04'
 day    = '02'
-hour   = '*'
+hour   = '21'
 
 
 
@@ -60,7 +60,7 @@ for datafile in lidar_files:
     
 
     
-#%% Plot  Dependence on Azimuth
+#%% Plot  Dependence on Azimuth and time series
 
 
 try:
