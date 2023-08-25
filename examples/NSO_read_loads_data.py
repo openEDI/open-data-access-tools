@@ -28,8 +28,8 @@ def get_file_structure(file_path, resolution, year, month, day):
 
 # Define date to read (or wildcard with *)
 year   = '2022'
-month  = '*'
-day    = '*'
+month  = '12'
+day    = '22'
 
 
 
@@ -41,7 +41,7 @@ data_path = 'Y:\Wind-data/Restricted/Projects/NSO/Data_publish/NSO/'
 resolution = '1min'
 
 
-# If plot==1: Make an overview plot together with wind data
+# If plot==1: Make an overview plot together with inflow mast wind data
 plot=1
 
 
@@ -71,7 +71,7 @@ for datafile in loads_files:
 
 if plot == 1:
     
-    # Read winds
+    # Read winds (inflow mast)
     resolution_winds = '1min'   # one out of: '20Hz', '1min'
     path = get_file_structure(file_path = data_path+'met_masts/inflow_mast/', resolution = resolution_winds, year=year, month=month, day=day)
     inflow_files = sorted(glob.glob(path +'inflow_Mast_'+resolution+'_' + year + '-' + month + '-' + day + '_' + '*.parquet'))  
