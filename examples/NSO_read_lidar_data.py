@@ -14,7 +14,7 @@ mpl.rcParams['lines.markersize'] = 2
 def get_file_structure(file_path, year, month, day):
     try:
         # Create the directory structure
-        directory = os.path.join(file_path, "resolution=*" + "/year="+year+"/month="+month+"/day="+day+"/")
+        directory = os.path.join(file_path, "year="+year+"/month="+month+"/day="+day+"/")
         
         return directory
 
@@ -28,10 +28,11 @@ def get_file_structure(file_path, year, month, day):
 
 
 # Define date and hour to read (or wildcard with *)
+
 year   = '2022'
 month  = '06'
 day    = '10'
-hour   = '0*'
+hour   = '03'
 
 
 
@@ -82,9 +83,11 @@ try:
     fig = plt.figure()   
     plt.suptitle(year + month + day)
     ax1 = plt.subplot(1, 1, 1)
-    ax1.set_xlabel('Doppler velocity (m/s)')
-    p = ax1.plot(lidar.Doppler_filtered,".")
+    ax1.set_ylabel('Doppler velocity (m/s)')
+    ax1.plot(lidar.Doppler,".", label = "unfiltered")
+    ax1.plot(lidar.Doppler_filtered,".", label = "filtered")
     ax1.grid(True)
+    plt.legend()
     plt.tight_layout()
 except:
     pass
