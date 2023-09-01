@@ -10,10 +10,10 @@ mpl.rcParams['lines.markersize'] = 2
 
 #%% Functions
 
-def get_file_structure(file_path, resolution, year, month, day):
+def get_file_structure(file_path, year, month, day):
     try:
         # Create the directory structure
-        directory = os.path.join(file_path, 'resolution=' + resolution + "/year="+year+"/month="+month+"/day="+day+"/")
+        directory = os.path.join(file_path, "year="+year+"/month="+month+"/day="+day+"/")
         
         return directory
 
@@ -27,9 +27,9 @@ def get_file_structure(file_path, resolution, year, month, day):
 
 
 # Define date to read (or wildcard with *)
-year   = '2022'
-month  = '06'
-day    = '20'
+year   = '*'
+month  = '*'
+day    = '*'
 
 
 # Read data at this resolution (1min or 20Hz)
@@ -52,10 +52,10 @@ data_path = 'Y:\Wind-data/Restricted/Projects/NSO/Data_publish/NSO/'
 
 
 # Get a list of available data files at specified date(s)
-path = get_file_structure(file_path = data_path+'met_masts/inflow_mast/', resolution = resolution, year=year, month=month, day=day)
+path = get_file_structure(file_path = data_path+'inflow_mast_{}/'.format(resolution), year=year, month=month, day=day)
 inflow_files = sorted(glob.glob(path +'Inflow_Mast_'+resolution+'_' + year + '-' + month + '-' + day + '_' + '*.parquet'))  
 
-path = get_file_structure(file_path = data_path+'met_masts/wake_masts/', resolution = resolution, year=year, month=month, day=day)
+path = get_file_structure(file_path = data_path+'wake_masts_{}/'.format(resolution), year=year, month=month, day=day)
 mast_files = sorted(glob.glob(path +'Wake_Masts_'+resolution+'_' + year + '-' + month + '-' + day + '_' + '*.parquet'))   #     
 
 
@@ -86,32 +86,32 @@ ax1 = plt.subplot(5, 2, 1)
 ax1.set_ylabel('Temperature  ($^\circ$C)')
 
 
-ax2 = plt.subplot(5, 2, 2)
+ax2 = plt.subplot(5, 2, 2, sharex = ax1)
 ax2.set_ylabel('RH (%)')
 
-ax3 = plt.subplot(5, 2, 3)
+ax3 = plt.subplot(5, 2, 3, sharex = ax1)
 ax3.set_ylabel('Stability R_f')
 ax3.set_ylim(-0.2,0.2)
 
-ax4 = plt.subplot(5, 2, 4)
+ax4 = plt.subplot(5, 2, 4, sharex = ax1)
 ax4.set_ylabel('Heat flux (W m$^{-2}$)')
 
-ax5 = plt.subplot(5, 2, 5)
+ax5 = plt.subplot(5, 2, 5, sharex = ax1)
 ax5.set_ylabel('Wind speed 7m (m s$^{-1}$)')
 
-ax6 = plt.subplot(5, 2, 6)
+ax6 = plt.subplot(5, 2, 6, sharex = ax1)
 ax6.set_ylabel('Wind direction 7m ($^\circ$)')
 
-ax7 = plt.subplot(5, 2, 9)
+ax7 = plt.subplot(5, 2, 9, sharex = ax1)
 ax7.set_ylabel('length scale $w$ (m)')
 
-ax8 = plt.subplot(5, 2, 10)
+ax8 = plt.subplot(5, 2, 10, sharex = ax1)
 ax8.set_ylabel('length scale $U$ (m)')
 
-ax9 = plt.subplot(5, 2, 7)
+ax9 = plt.subplot(5, 2, 7, sharex = ax1)
 ax9.set_ylabel('TI 7m')
 
-ax10 = plt.subplot(5, 2, 8)
+ax10 = plt.subplot(5, 2, 8, sharex = ax1)
 ax10.set_ylabel('TKE 7m (m$^{2}$ s$^{-2}$)')
                    
 ax1.plot(  inflow.Temp_2m  ,"." , label = "Tem 2m")
@@ -149,6 +149,7 @@ ax1.legend(markerscale=3)
 for ax in [ax1, ax2, ax3, ax4, ax5, ax6, ax7, ax8, ax9, ax10]:
     ax.grid(True)
 
+fig.autofmt_xdate() 
 plt.tight_layout()  
 
 
