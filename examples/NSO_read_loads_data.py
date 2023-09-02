@@ -11,10 +11,10 @@ mpl.rcParams['lines.markersize'] = 2
 
 #%% Functions
 
-def get_file_structure(file_path, resolution, year, month, day):
+def get_file_structure(file_path, year, month, day):
     try:
         # Create the directory structure
-        directory = os.path.join(file_path, 'resolution=' + resolution + "/year="+year+"/month="+month+"/day="+day+"/")
+        directory = os.path.join(file_path,  "year="+year+"/month="+month+"/day="+day+"/")
         
         return directory
 
@@ -27,9 +27,13 @@ def get_file_structure(file_path, resolution, year, month, day):
 
 
 # Define date to read (or wildcard with *)
-year   = '2023'
-month  = '02'
-day    = '2*'
+year   = '*'
+month  = '*'
+day    = '*'
+
+year   = '2022'
+month  = '11'
+day    = '*'
 
 
 
@@ -50,7 +54,7 @@ plot=1
 
 
 # Get a list of available loads data files at specified date(s)
-path = get_file_structure(file_path = data_path+'loads/', resolution = resolution, year=year, month=month, day=day)
+path = get_file_structure(file_path = data_path+'loads_{}/'.format(resolution), year=year, month=month, day=day)
 loads_files = sorted(glob.glob(path +'Loads_'+resolution+'_'  + year + '-' + month + '-' + day + '_*.parquet'))  
 
 if len(loads_files) == 0:
@@ -62,6 +66,13 @@ if len(loads_files) == 0:
 loads = pd.DataFrame()    
 for datafile in loads_files:
     loads = pd.concat( [loads, pd.read_parquet(datafile)]) 
+    
+    
+# ### Plot Histogram for loads
+# hist_columns = [col for col in loads.columns if ('An' in col)  & ('_m' not in col) & ('_s' not in col)]
+# loads[hist_columns].select_dtypes('number').hist(figsize=(14,9), bins=300, density=True)
+# plt.tight_layout()
+# plt.show()
 
     
 
@@ -73,8 +84,10 @@ if plot == 1:
     
     # Read winds
     resolution_winds = '1min'   # one out of: '20Hz', '1min'
-    path = get_file_structure(file_path = data_path+'met_masts/inflow_mast/', resolution = resolution_winds, year=year, month=month, day=day)
-    inflow_files = sorted(glob.glob(path +'inflow_Mast_'+resolution+'_' + year + '-' + month + '-' + day + '_' + '*.parquet'))  
+
+    path = get_file_structure(file_path = data_path+'inflow_mast_{}/'.format(resolution_winds), year=year, month=month, day=day)
+    inflow_files = sorted(glob.glob(path +'Inflow_Mast_'+resolution+'_' + year + '-' + month + '-' + day + '_' + '*.parquet'))  
+
 
     inflow = pd.DataFrame()    
     for datafile in inflow_files:
