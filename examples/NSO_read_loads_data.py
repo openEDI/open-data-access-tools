@@ -138,7 +138,7 @@ if plot == 1:
     for column in loads[[col for col in loads.columns if ('SO_Bending' in col)  & ('_m' not in col) & ('_s' not in col)]]:
         ax7.plot(loads[column],".", label = loads[column].name[:2]) 
     ax7.legend(fontsize=7, markerscale= 4, loc='center left', bbox_to_anchor=(1, 0.5))
-    for column in loads[[col for col in loads.columns if ('Torque' in col)  & ('_m' not in col) & ('_s' not in col)]]:
+    for column in loads[[col for col in loads.columns if ('Torque' in col)  & ('_m' not in col) & ('_s' not in col) & ('_C' not in col)]]:
         ax8.plot(loads[column],".", label = loads[column].name[:2]) 
     ax8.legend(fontsize=7, markerscale= 4, loc='center left', bbox_to_anchor=(1, 0.5))
     for column in loads[[col for col in loads.columns if ('Disp' in col)  & ('_m' not in col) & ('_s' not in col)& ('_raw' not in col)& ('_level' not in col)]]:
