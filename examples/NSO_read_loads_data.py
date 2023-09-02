@@ -131,10 +131,10 @@ if plot == 1:
         ax6.plot(inflow.wdir_3m,".",color='black')
         ax9.plot(inflow.TI_U_3m,".",color='black')    
         ax10.plot(inflow.TKE_3m,".",color='black')  
+        ax1.legend(fontsize=7, markerscale= 4, loc='center left', bbox_to_anchor=(1, 0.5))
     except:
         pass
-
-    ax1.legend(fontsize=7, markerscale= 4, loc='center left', bbox_to_anchor=(1, 0.5))
+        
     for column in loads[[col for col in loads.columns if ('SO_Bending' in col)  & ('_m' not in col) & ('_s' not in col)]]:
         ax7.plot(loads[column],".", label = loads[column].name[:2]) 
     ax7.legend(fontsize=7, markerscale= 4, loc='center left', bbox_to_anchor=(1, 0.5))
