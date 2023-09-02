@@ -31,10 +31,6 @@ year   = '*'
 month  = '*'
 day    = '*'
 
-year   = '2022'
-month  = '11'
-day    = '*'
-
 
 
 # File path
