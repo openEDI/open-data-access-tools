@@ -25,6 +25,7 @@ AWS:
         - s3://oedi-data-lake/tracking-the-sun/2020/
         - s3://oedi-data-lake/tracking-the-sun/2021/
         - s3://oedi-data-lake/tracking-the-sun/2022/
+        - s3://oedi-data-lake/tracking-the-sun/2023/
     - Identifier: atb
       Name: oedi_atb
       Locations:
@@ -45,10 +46,20 @@ AWS:
         - s3://oedi-data-lake/pvdaq/parquet/mount/
         - s3://oedi-data-lake/pvdaq/parquet/other-instruments/
         - s3://oedi-data-lake/pvdaq/parquet/pvdata/
+    - Identifier: nso
+      Name: oedi_nso
+      Locations:
+        - s3://oedi-data-lake-rawdata/NSO-2/inflow_mast_1min/
+        - s3://oedi-data-lake-rawdata/NSO-2/inflow_mast_20Hz/
+        - s3://oedi-data-lake-rawdata/NSO-2/lidar/
+        - s3://oedi-data-lake-rawdata/NSO-2/loads_1min/
+        - s3://oedi-data-lake-rawdata/NSO-2/loads_20Hz/
+        - s3://oedi-data-lake-rawdata/NSO-2/wake_masts_1min/
+        - s3://oedi-data-lake-rawdata/NSO-2/wake_masts_20Hz/
 
   Staging Location: s3://user-owned-staging-bucket/
   Tags:
     - Key: Project
       Value: OEDI
     - Key: Release
-      Value: 0.2.2
+      Value: 0.2.3
