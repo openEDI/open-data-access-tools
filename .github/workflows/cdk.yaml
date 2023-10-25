@@ -39,5 +39,5 @@ jobs:
         aws-region: ${{ secrets.AWS_REGION_NAME }}
         role-to-assume: ${{ secrets.AWS_IAM_ROLE_TO_ASSUME }}
     - name: Run CDK List
-      working_directory: ./oedi/AWS/
+      working-directory: ./oedi/AWS/
       run: cdk list
