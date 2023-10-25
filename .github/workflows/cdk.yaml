@@ -26,7 +26,7 @@ jobs:
         aws-region: ${{ secrets.AWS_REGION_NAME }}
         role-to-assume: ${{ secrets.AWS_IAM_ROLE_TO_ASSUME }}
     - name: CDK List
-      users: youyo/aws-cdk-github-actions@v2
+      uses: youyo/aws-cdk-github-actions@v2
       with:
         cdk_subcommand: "list"
         actions_comment: true
