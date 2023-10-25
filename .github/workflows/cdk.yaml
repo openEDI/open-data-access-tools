@@ -39,8 +39,10 @@ jobs:
       with:
         aws-region: ${{ secrets.AWS_REGION_NAME }}
         role-to-assume: ${{ secrets.AWS_IAM_ROLE_TO_ASSUME }}
-    - name: Run CDK List
+    - name: Deploy OEDI data lake
       working-directory: ./oedi/AWS/
       run: |
         oedi config sync
         cdk list
+        cdk deploy --require-approval=never
+        oedi aws run-crawlers
