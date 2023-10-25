@@ -1,6 +1,9 @@
-name: Docker Actions
+name: OEDI Tools Docker Image Release
 on:
   push:
+    branches:
+    - master
+  pull_request:
     branches:
     - master
 
