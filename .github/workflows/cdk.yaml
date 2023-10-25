@@ -27,7 +27,7 @@ jobs:
         role-to-assume: ${{ secrets.AWS_IAM_ROLE_TO_ASSUME }}
     - name: CDK List
       uses: youyo/aws-cdk-github-actions@v2
-      working_dir: ./oedi/AWS/
       with:
+        working_dir: ./oedi/AWS/
         cdk_subcommand: "list"
         actions_comment: true
