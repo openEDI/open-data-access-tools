@@ -24,15 +24,16 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Set up Node
+    - name: Set up Node 20
       uses: actions/setup-node@v3
       with:
-        node-version: "16"
+        node-version: "20"
     - name: Install CDK & Python dependencies
       run: |
         npm install -g aws-cdk
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+        pip install -e .
     - name: Assume AWS IAM role
       uses: aws-actions/configure-aws-credentials@v4
       with:
