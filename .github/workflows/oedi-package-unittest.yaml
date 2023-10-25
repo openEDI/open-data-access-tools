@@ -1,4 +1,4 @@
-name: Open Data Access Tools for OEDI
+name: OEDI Tools Unittest
 on:
   push:
     branches:

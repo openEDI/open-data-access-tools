@@ -1,11 +1,15 @@
-name: Open Data Access Tools for OEDI
+name: OEDI Data Lake (dev) Deploy
 on:
   push:
     branches:
-    - release
+    - master
+    paths:
+    - ./oedi/config.yaml
   pull_request:
     branches:
-    - release
+    - master
+    paths:
+    - ./oedi/config.yaml
 
 jobs:
   release:
@@ -38,7 +42,7 @@ jobs:
       uses: aws-actions/configure-aws-credentials@v4
       with:
         aws-region: ${{ secrets.AWS_REGION_NAME }}
-        role-to-assume: ${{ secrets.AWS_IAM_ROLE_TO_ASSUME }}
+        role-to-assume: ${{ secrets.AWS_OEDI_IAM_ROLE }}
     - name: Deploy OEDI data lake
       working-directory: ./oedi/AWS/
       run: |
