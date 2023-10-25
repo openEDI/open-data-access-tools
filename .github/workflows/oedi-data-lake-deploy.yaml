@@ -1,0 +1,52 @@
+name: OEDI Data Lake (dev) Deploy
+on:
+  push:
+    branches:
+    - master
+    paths:
+    - ./oedi/config.yaml
+  pull_request:
+    branches:
+    - master
+    paths:
+    - ./oedi/config.yaml
+
+jobs:
+  release:
+    name: Deploy OEDI data lake
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    strategy:
+      matrix:
+        python-version: [3.9]
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Set up Node 20
+      uses: actions/setup-node@v3
+      with:
+        node-version: "20"
+    - name: Install CDK & Python dependencies
+      run: |
+        npm install -g aws-cdk
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install -e .
+    - name: Assume AWS IAM role
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-region: ${{ secrets.AWS_REGION_NAME }}
+        role-to-assume: ${{ secrets.AWS_OEDI_IAM_ROLE }}
+    - name: Deploy OEDI data lake
+      working-directory: ./oedi/AWS/
+      run: |
+        oedi config sync
+        cdk list
+        cdk deploy --require-approval=never
+        oedi aws run-crawlers
