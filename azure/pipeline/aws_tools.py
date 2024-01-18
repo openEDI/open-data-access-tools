@@ -7,23 +7,23 @@ from dotenv import load_dotenv
 import subprocess
 import h5py
 
-def get_tags():
+def get_tags(org, billingid, task, owner):
     tags = [
         {
             'key': 'org',
-            'value': 'oedi'
+            'value': org
         },
         {
             'key': 'billingid',
-            'value': '210090'
+            'value': billingid
         },
         {
             'key': 'task',
-            'value': 'kerchunk'
+            'value': task
         },
         {
             'key': 'owner',
-            'value': 'mheine'
+            'value': owner
         }
     ]
     return tags
@@ -62,42 +62,6 @@ def get_dataset(bucket, prefix=None, extension='.h5', resolution=None):
     files = [file for file in files if file.endswith(extension)]
     
     return files
-    # if not resolution:
-    #     if not extension:
-    #         files = s3.glob(f'{bucket}/{prefix}/*.*')
-    #     else:
-    #         files = s3.glob(f'{bucket}/{prefix}/*{extension}')
-    # elif bucket == 'nrel-pds-wtk':
-    #     subsets_1 = ['North_Atlantic', 'gulf_of_mexico']    # yearly and yearly_hr
-    #     subsets_2 = ['pr100']   # hourly and 5min
-    #     subsets_3 = ['south_atlantic']
-    #     if any([subset in prefix for subset in subsets_1]):
-    #         if resolution == 'hourly':
-    #             files = s3.glob(f'{bucket}/{prefix}/yearly_hr/*.h5')
-    #         elif resolution == '5min':
-    #             files = s3.glob(f'{bucket}/{prefix}/yearly/*.h5')
-    #     if any([subset in prefix for subset in subsets_2]):
-    #         if resolution == 'hourly':
-    #             files = s3.glob(f'{bucket}/{prefix}/hourly/*.h5')
-    #         elif resolution == '5min':
-    #             files = s3.glob(f'{bucket}/{prefix}/5min/*.h5')
-    #     else:
-    #         if resolution == 'hourly':
-    #             files = s3.glob(f'{bucket}/{prefix}/*.h5')
-    #         elif resolution == '5min':
-    #             files = s3.glob(f'{bucket}/{prefix}/*/*.h5')
-    # return files
-
-def get_AWSServiceRoleForBatch():
-    # Not used
-    iam = boto3.client('iam')
-    try:
-        ARN = iam.get_role(RoleName='AWSServiceRoleForBatch')['Role']['Arn']
-    except:
-        ARN = iam.create_service_linked_role(
-            AWSServiceName='batch.amazonaws.com'
-        )['Role']['Arn']
-    return ARN
 
 def get_StepFunctionRole():
     # TODO: Add code that creates the role if it doesn't exist
@@ -256,16 +220,9 @@ def create_launch_templates():
 def create_cluster():
     batch = boto3.client('batch')
 
-# def update_container():
-#     # TODO: Modify this to use the docker sdk
-#     subprocess.run(['sh', 'update_trans_container.sh'])
-
 def create_aws_resources():
     create_state_machine('kerchunk-h5')
-    # create_compute_environment()
-    # create_job_queue()
     create_job_def()
-    # update_container()
 
 def process_h5_dataset(files, staging_bucket, s3_comb_ref_file, az_comb_ref_file, state_machine_name='kerchunk_h5', region_name='us-west-2'):
     smi = create_state_machine_input(files, staging_bucket, s3_comb_ref_file, az_comb_ref_file)
@@ -274,7 +231,6 @@ def process_h5_dataset(files, staging_bucket, s3_comb_ref_file, az_comb_ref_file
     sf.start_execution(stateMachineArn=stateMachineArn, input=smi)
 
 def copy_s3_dataset_to_azure(files, staging_bucket, dry_run=False):
-    #batch = boto3.client('batch', region_name=region_name)
     CONTAINER_NAME = 'oedi'
     sas = load_oedi_sas()
     load_dotenv()   # Store AWS credentials in .env file
@@ -283,23 +239,13 @@ def copy_s3_dataset_to_azure(files, staging_bucket, dry_run=False):
         'copy',
         f'https://s3.us-west-2.amazonaws.com/{staging_bucket}',
         f'https://nrel.blob.core.windows.net/{CONTAINER_NAME}?{sas}',
-        # '--exclude-pattern',
-        # '*'
         '--include-path',
         ';'.join(files)
     ]
-    # for file in files:
-    #     #cmd.append('--include-pattern')
-    #     cmd.append(file)
+
     if dry_run:
         cmd.append('--dry-run')
-        # source = f'https://s3.us-west-2.amazonaws.com/{staging_bucket}/{file}'
-        # dest = f'https://nrel.blob.core.windows.net/{CONTAINER_NAME}/{file}?{sas}'
-        # print(source)
-        # print(dest)
-        #os.system(f'azcopy cp "{source}" "{dest}" --dry-run')
-        # subprocess.run(['azcopy', 'cp', source, dest, '--dry-run'])
-    print(cmd)
+
     subprocess.run(cmd)
 
 def create_combined_ref(files, staging_bucket, comb_ref_file=None, remote_protocol='s3'):
@@ -343,18 +289,3 @@ def copy_local_file_to_azure(source, dest, sas=None, container='oedi'):
     blob = client.get_blob_client(dest)
     with open(source, 'rb') as f:
         blob.upload_blob(f.read())
-
-# We need:
-#X  A container to hold the code that will perform etl and ref generation
-#X  A container to combine the references
-#   A function to build the AWS resources including:
-#       A function that will load the container into ECR
-#       A function that will initialize a cluster and job queue
-#       A function to create a state machine (started)
-#   A function to process a dataset including:
-#X      A get_dataset function to glob all of the files of a particular data set
-#       A function to run the state machine
-#X          A function to create state machine input
-#   A way to test the results in s3 staging
-#   A function to copy data to Azure
-#   Logging functionality to track progress throughout

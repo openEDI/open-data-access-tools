@@ -6,30 +6,29 @@ def get_fs(account='nrel', container='oedi'):
 def get_size(path, units='B'):
     fs = get_fs()
     size = fs.du(path, total=True)
-    match units:
-        case 'B':
-            pass
-        case 'kB':
-            size = size * 10 ** -3
-        case 'MB':
-            size = size * 10 ** -6
-        case 'GB':
-            size = size * 10 ** -9
-        case 'TB':
-            size = size * 10 ** -12
-        case 'PB':
-            size = size * 10 ** -15
-        case 'kiB':
-            size = size * 2 ** -10
-        case 'MiB':
-            size = size * 2 ** -20
-        case 'GiB':
-            size = size * 2 ** -30
-        case 'TiB':
-            size = size * 2 ** -40
-        case 'PiB':
-            size = size * 2 ** -50
-        case _:
-            raise NotImplementedError(f'Units "{units}" not recognized.')
+    if units=='B':
+        pass
+    elif units=='kB':
+        size = size * 10 ** -3
+    elif units=='MB':
+        size = size * 10 ** -6
+    elif units=='GB':
+        size = size * 10 ** -9
+    elif units=='TB':
+        size = size * 10 ** -12
+    elif units=='PB':
+        size = size * 10 ** -15
+    elif units=='kiB':
+        size = size * 2 ** -10
+    elif units=='MiB':
+        size = size * 2 ** -20
+    elif units=='GiB':
+        size = size * 2 ** -30
+    elif units=='TiB':
+        size = size * 2 ** -40
+    elif units=='PiB':
+        size = size * 2 ** -50
+    else:
+        raise NotImplementedError(f'Units "{units}" not recognized.')
 
     return size

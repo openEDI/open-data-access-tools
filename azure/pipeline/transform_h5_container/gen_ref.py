@@ -1,6 +1,5 @@
 import ujson
-from etl_tools import gen_ref_comb, load_oedi_sas
-from aws_tools import copy_local_file_to_azure
+from etl_tools import gen_ref_comb
 import xarray as xr
 import os
 import s3fs
@@ -15,9 +14,7 @@ CONTAINER_NAME = 'oedi'
 s3 = s3fs.S3FileSystem()
 
 # Get input from container environment
-# s3_source_files = ujson.loads(os.getenv('s3_files'))
 s3_comb_ref_file = os.getenv('s3_comb_ref_file')
-# az_comb_ref_file = os.getenv('az_comb_ref_file')
 staging_bucket = os.getenv('staging_bucket')
 run_name = os.getenv('run_name')
 
@@ -55,9 +52,3 @@ if s3_comb_ref_file:
     local_s3_ref = 's3_ref.json'
     gen_ref_comb(s3_refs, ref_file=local_s3_ref, identical_dims=identical_dims, remote_protocol='s3')
     s3.put_file(local_s3_ref, f's3://{staging_bucket}/{s3_comb_ref_file}')
-
-# if az_comb_ref_file:
-#     local_az_ref = 'az_ref.json'
-#     gen_ref_comb(az_refs, ref_file=local_az_ref, identical_dims=identical_dims, remote_protocol='abfs')
-#     s3.put_file(local_az_ref, f's3://{staging_bucket}/{az_comb_ref_file}')
-#     copy_local_file_to_azure(local_az_ref, az_comb_ref_file)

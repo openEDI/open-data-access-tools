@@ -4,6 +4,7 @@ import xarray as xr
 import planetary_computer
 import os
 import sys
+import logging
 
 # Get input
 # First arg should be the path for the combined ref file
@@ -41,7 +42,7 @@ elif 'WIND' in ref_paths[0]:
 else:
     raise NotImplementedError('The only implemented Eagle datasets are sup3rcc and WIND.')
 
-print(f'Identical dims: {identical_dims}')
+logging.info(f'Identical dims: {identical_dims}')
 
 # Open all reference files
 refs = []
@@ -55,11 +56,5 @@ gen_ref_comb(refs, ref_file=comb_ref_file, identical_dims=identical_dims)
 # Send to Azure
 sas_token = load_oedi_sas()
 blob_address = f'https://nrel.blob.core.windows.net/{CONTAINER_NAME}'
-# comb_ref_file_name = comb_ref_file.split('/')[-1]
-# az_path = {DATASET}/{comb_ref_file_name}
-# fs = planetary_computer.get_adlfs_filesystem('nrel', 'oedi')
-# if fs.exists(az_path):
-#     raise Exception(f'Path "{az_path}" already exists in Azure.')
-# else:
 dest = f'{blob_address}/{az_path}?{sas_token}'
 os.system(f'azcopy cp "{comb_ref_file}" "{dest}"')

@@ -15,4 +15,3 @@ for arg in args[1:]:
     dest = f"'{blob_address}/{dest}?{sas_token}'"
 
     os.system(f'azcopy copy {source} {dest} --overwrite ifSourceNewer')
-    #subprocess.run(['azcopy', 'copy', source, dest])

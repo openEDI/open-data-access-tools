@@ -4,6 +4,7 @@ import subprocess
 import math
 from glob import glob
 import re
+import logging
 
 def run_job(job_file):
     job_submission = subprocess.run(['sbatch', job_file], capture_output=True)
@@ -12,7 +13,7 @@ def run_job(job_file):
         jobid = output.split()[3]
     else:
         jobid = 0
-        print(f'Job submission failure: {job_submission.stderr.decode()}')
+        logging.error(f'Job submission failure: {job_submission.stderr.decode()}')
     return jobid
 
 def cancel_jobs(job_ids):
@@ -189,7 +190,6 @@ def gen_hpc_to_azure_job(files, transformed_files, az_paths, dependency=None, tr
     job_file = f'{job_dir}{job_name}.sh'
 
     # Estimate time requirements
-    
     total_bytes = 0
     for file in files:
         total_bytes += os.stat(file).st_size
@@ -197,7 +197,7 @@ def gen_hpc_to_azure_job(files, transformed_files, az_paths, dependency=None, tr
     time_factor = 1.5   # Provide extra time in case things move a little slower than usual
     time_required_hrs = math.ceil(time_factor * total_bytes * 8 * 10 ** -6 / transfer_speed / 60 / 60)
     if time_required_hrs > 240:
-        print('Warning: Transfer job is estimated to take longer than the maximum of 240 hrs.')
+        logging.info('Warning: Transfer job is estimated to take longer than the maximum of 240 hrs.')
         time_required_hrs = 240
 
     # Create transfer args
@@ -253,14 +253,8 @@ def process_h5_dataset(files, comb_ref_file=None, time_limit_hrs=None, mem_facto
     transformed_files = []
     az_paths = []
     # Loop over files
-    print(f'Starting {len(files)} transformation jobs.')
+    logging.info(f'Starting {len(files)} transformation jobs.')
     for file in files:
-        # Get max dataset size to determine memory allocation
-        # f = h5py.File(file)
-        # max_dataset_size = 0
-        # for key in f.keys():
-        #     max_dataset_size = max(max_dataset_size, f[key].nbytes * 10 ** -9)
-        # mem_GB = int(max_dataset_size * mem_factor)
 
         # It was found that files as small as 415 GB timed out when only given 4 hours.
         # In practice, there is a lot of variablity in the lengths of job runs. This may
@@ -296,7 +290,7 @@ def process_h5_dataset(files, comb_ref_file=None, time_limit_hrs=None, mem_facto
     
     # Generate job file to copy dataset to Azure
     if not skip_transfer_to_azure:
-        print('Starting job to copy dataset to Azure.')
+        logging.info('Starting job to copy dataset to Azure.')
         copy_job_file = gen_hpc_to_azure_job(files, transformed_files, az_paths, dependency=job_ids, debug=debug)
         copy_job_id = run_job(copy_job_file)
         if copy_job_id == 0:
@@ -309,7 +303,7 @@ def process_h5_dataset(files, comb_ref_file=None, time_limit_hrs=None, mem_facto
 
     # Generate job file to combine references
     # NOTE THAT DEBUG IS CURRENTLY SET TO TRUE TO EXPEDITE JOBS WHILE ACCOUNT IN STANDBY
-    print('Starting job to combine references.')
+    logging.info('Starting job to combine references.')
     if comb_ref_file:
         ref_job_file = gen_hpc_combine_refs_job(comb_ref_file, ref_files, dependency=copy_job_id, debug=True)
         ref_job_id = run_job(ref_job_file)
@@ -319,7 +313,7 @@ def process_h5_dataset(files, comb_ref_file=None, time_limit_hrs=None, mem_facto
         else:
             job_ids.append(ref_job_id)
     
-    print('All jobs scheduled!')
+    logging.info('All jobs scheduled!')
 
     comb_ref_file_name = comb_ref_file.split('/')[-1]
     if 'hourly' in comb_ref_file_name:
@@ -367,7 +361,7 @@ def process_h5_redos(files, redos, comb_ref_file=None, time_limit_hrs=None, debu
     transformed_files = []
     az_paths = []
     # Loop over files
-    print(f'Starting {len(redos)} transformation jobs.')
+    logging.info(f'Starting {len(redos)} transformation jobs.')
     for file in files:
 
         # It was found that files as small as 415 GB timed out when only given 4 hours.
@@ -404,7 +398,7 @@ def process_h5_redos(files, redos, comb_ref_file=None, time_limit_hrs=None, debu
 
     # Generate job file to copy dataset to Azure
     if not skip_transfer_to_azure:
-        print('Starting job to copy dataset to Azure.')
+        logging.info('Starting job to copy dataset to Azure.')
         copy_job_file = gen_hpc_to_azure_job(files, transformed_files, az_paths, dependency=job_ids, debug=debug)
         copy_job_id = run_job(copy_job_file)
         if copy_job_id == 0:
@@ -417,7 +411,7 @@ def process_h5_redos(files, redos, comb_ref_file=None, time_limit_hrs=None, debu
 
     # Generate job file to combine references
     if comb_ref_file:
-        print('Starting job to combine references.')
+        logging.info('Starting job to combine references.')
         ref_job_file = gen_hpc_combine_refs_job(comb_ref_file, ref_files, dependency=copy_job_id, debug=debug)
         ref_job_id = run_job(ref_job_file)
         if ref_job_id == 0:
@@ -426,7 +420,7 @@ def process_h5_redos(files, redos, comb_ref_file=None, time_limit_hrs=None, debu
         else:
             job_ids.append(ref_job_id)
     
-    print('All jobs scheduled!')
+    logging.info('All jobs scheduled!')
     
     comb_ref_file_name = comb_ref_file.split('/')[-1]
     if 'hourly' in comb_ref_file_name:
@@ -463,14 +457,14 @@ def scan_err(dataset='WIND/Great_Lakes', resolution='5min'):
             elif len(text) > 0:
                 other_errors.append(err)
                 other_redos.append(file)
-    print(f'Timeouts: {len(timeouts)}')
-    print(f'Other errors: {len(other_errors)}')
-    print(f'Total Files: {len(files)}')
+    logging.info(f'Timeouts: {len(timeouts)}')
+    logging.info(f'Other errors: {len(other_errors)}')
+    logging.info(f'Total Files: {len(files)}')
 
     sizes = []
     for redo in timeout_redos:
         sizes.append(os.stat(redo).st_size * 10 ** -9)
     if len(sizes) > 0:
-        print(f'The smallest file that timed out in {dataset} was {min(sizes):.0f} GB.')
+        logging.info(f'The smallest file that timed out in {dataset} was {min(sizes):.0f} GB.')
 
     return files, timeout_redos, other_redos

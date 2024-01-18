@@ -9,6 +9,7 @@ import planetary_computer
 import os
 from time import time
 import s3fs
+import logging
 
 def time_index_bytestring_to_float(dset):
     t = pd.Series(dset)
@@ -63,316 +64,6 @@ def load_oedi_sas():
 
     return sas
 
-def transform_wtk_h5_file_old(h5_file, chunk_size=2, weeks_per_chunk=8):
-    # This is an updated version of transform_h5_file, designed for wtk. wtk does not have a nice rectangular coordinate grid,
-    # so the data will be left in 2 dims rather than be converted to 3 dims.
-
-    # h5_file should be a path to a local h5 file. The file will be opened in write-mode, transformed and then closed.
-    # chunk_size is the desired size of each chunk in MiB
-    # weeks_per_chunk determines the length of chunks in the time_index dimension
-
-    # Summary of data transformations:
-
-    # 1. time_index is converted from byte-string to int (when read by xarray, this will automatically convert to np.datetime64)
-    # 2. A gid dataset is created to index the locations
-    # 3. time_index and gid are converted to dimension scales
-    # 4. Each variable is rechunked so that we will have consistent chunk sizes accross all files
-    # 5. The dimension scales are attached to each variable's dimensions
-    # 6. The scale_factor metadata is inverted (new_sf = 1 / old_sf)
-    # 7. The meta variable is unpacked
-
-    # Notes:
-    # Once again, the download/upload steps are what will take all of the time here. To scale up to wtk, this transformation
-    # should either happen on Eagle (where the data are already local) or the transformation should be containerized for use
-    # with AWS batch.
-
-    f = h5py.File(h5_file, 'r+')
-    file_name = h5_file.split('/')[-1]
-
-    # Get the length of time_index
-    time_len = f['time_index'].len()
-
-    # Convert time_index from  bytes to float.
-    t = pd.Series(f['time_index'])
-    t = t.str.decode('utf8')
-    t = t.str.split('+', expand=True)[0]
-    t = np.array(t,dtype=np.datetime64)
-    t = t.astype('int')
-
-    # Determine time_index chunksize
-    time_step = t[1] - t[0]
-    time_index_chunk_len = min(weeks_per_chunk * 7 * 24 * 60 * 60 / time_step, time_len)
-
-    # Replace time_index variable with int. 'units' metadata required for xarray to interpret as datetime.
-    attrs = {}
-    for key in f['time_index'].attrs.keys():
-        attrs[key] = f['time_index'].attrs[key]
-    del f['time_index']
-    f.create_dataset('time_index', data=t)
-    for key, val in attrs.items():
-        f['time_index'].attrs[key] = val
-    f['time_index'].attrs['units'] = b'seconds since 1970-01-01'
-    del t
-    del attrs
-
-    print(f'{file_name}: time_index processed.')
-    # Create lon/lat datasets from meta
-    # f.create_dataset('latitude', data=f['meta']['latitude'])
-    # f.create_dataset('longitude', data=f['meta']['longitude'])
-    # del f['coordinates']
-
-    # Create gid variable
-    nloc = len(f['coordinates'])
-    f.create_dataset('gid', data=np.arange(nloc, dtype=np.int32), fillvalue=-1)
-    print(f'{file_name}: gid created.')
-
-    # Start tracking identical_dims (anything with only a gid dimension)
-    identical_dims = ['gid']
-
-    # Convert to dimension scales
-    f['time_index'].make_scale()
-    f['gid'].make_scale()
-
-    # Attach dim scales to lon/lat
-    # f['latitude'].dims[0].attach_scale(f['gid'])
-    # f['longitude'].dims[0].attach_scale(f['gid'])
-
-    # Get var names
-    vars = [var for var in f.keys() if var not in ['meta', 'time_index', 'latitude', 'longitude', 'gid', 'coordinates']]
-
-    # Loop over the variables and rechunk and add scales
-    for var in vars:
-        # Check dims
-        if not f[var].shape[0] == time_len:
-            raise Exception(f'Dim 0 of {var} has different length than time_index.')
-        if not f[var].shape[1] == nloc:
-            raise Exception(f'Dim 1 of {var} has different length than gid.')
-
-        print(f'{file_name}: Processing {var}...')
-
-        # Copy attrs
-        temp_attrs = {}
-        for attr in f[var].attrs.keys():
-            temp_attrs[attr] = f[var].attrs[attr]
-
-        # Copy data
-        data = f[var][:]
-
-        # Determine location chunk size
-        element_size = f[var].dtype.itemsize    # size of single element in bytes
-        gid_chunk_len = min(chunk_size * 2 ** 20 / time_index_chunk_len // element_size, nloc)
-
-        # Delete original dataset
-        del f[var]
-
-        # Create new rechunked dataset
-        chunks = (time_index_chunk_len, gid_chunk_len)
-        f.create_dataset(var, data=data, chunks=chunks)
-        for key, val in temp_attrs.items():
-            f[var].attrs[key] = val
-        f[var].attrs['chunks'] = chunks
-
-        # Fix scale_factor
-        if 'scale_factor' in f[var].attrs.keys():
-            f[var].attrs['scale_factor'] = 1 / f[var].attrs['scale_factor']
-
-        # Attach scales to the dims
-        f[var].dims[0].attach_scale(f['time_index'])
-        f[var].dims[1].attach_scale(f['gid'])
-
-        # Progress report
-        # print(f'{file_name}: {var} processed.')
-        print(f'{file_name}: Complete.')
-
-    # Unpack metadata variables
-    #chunks = f['meta'].chunks
-    for var in f['meta'].dtype.names:
-        data = f['meta'][var]
-        element_size = data.dtype.itemsize
-        gid_chunk_len = min(chunk_size * 2 ** 20 // element_size, nloc)
-        chunks = (gid_chunk_len,)
-        f.create_dataset(var, data=data, chunks=chunks)
-
-        # Add chunks attribute
-        f[var].attrs['chunks'] = chunks
-
-        # Attach dimension scales to the dimensions
-        f[var].dims[0].attach_scale(f['gid'])
-
-        # Append to identical_dims
-        identical_dims.append(var)
-    del f['meta']
-    print(f'{file_name}: meta unpacked.')
-
-    # Delete coordinates, since we have lat/lon
-    del f['coordinates']
-
-    # if 'coordinates' in f.keys():
-    #     data = f['coordinates'] # No attrs
-    #     element_size = data.dtype.itemsize
-    #     gid_chunk_len = min(chunk_size * 2 ** 20 // element_size, nloc)
-    #     chunks = (gid_chunk_len,)
-    #     del f['coordinates']
-    #     f.create_dataset('coordinates', data=data, chunks=chunks)
-
-    #     # Add chunks attribute
-    #     f[var].attrs['chunks'] = chunks
-
-    #     # Attach dimension scales to the dimensions
-    #     f[var].dims[0].attach_scale(f['gid'])
-    # print(f'{file_name}: coordinates rechunked.')
-
-    # Add identical_dims to file metadata so we can pass to kerchunk later
-    f.attrs['identical_dims'] = identical_dims
-
-    # Close the dataset to ensure changes are written
-    f.close()
-
-    print(f'{file_name}: Done with transormations!')
-    return
-
-def transform_wtk_h5_file_with_h5repack(in_file, out_file, chunk_size=2, weeks_per_chunk=8):
-    # This is an updated version of transform_h5_file, designed for wtk. wtk does not have a nice rectangular coordinate grid,
-    # so the data will be left in 2 dims rather than be converted to 3 dims.
-
-    # h5_file should be a path to a local h5 file. The file will be opened in write-mode, transformed and then closed.
-    # chunk_size is the desired size of each chunk in MiB
-    # weeks_per_chunk determines the length of chunks in the time_index dimension
-
-    # Summary of data transformations:
-
-    # 1. time_index is converted from byte-string to int (when read by xarray, this will automatically convert to np.datetime64)
-    # 2. A gid dataset is created to index the locations
-    # 3. time_index and gid are converted to dimension scales
-    # 4. Each variable is rechunked so that we will have consistent chunk sizes accross all files
-    # 5. The dimension scales are attached to each variable's dimensions
-    # 6. The scale_factor metadata is inverted (new_sf = 1 / old_sf)
-    # 7. The meta variable is unpacked
-
-    # Notes:
-    # Once again, the download/upload steps are what will take all of the time here. To scale up to wtk, this transformation
-    # should either happen on Eagle (where the data are already local) or the transformation should be containerized for use
-    # with AWS batch.
-
-    f_in = h5py.File(in_file, 'r')
-    file_name = out_file.split('/')[-1]
-
-    # Get the length of time_index and coordinates
-    time_len = f_in['time_index'].len()
-    nloc = len(f_in['coordinates'])
-
-    # Convert time_index from  bytes to float.
-    t = pd.Series(f_in['time_index'])
-    t = t.str.decode('utf8')
-    t = t.str.split('+', expand=True)[0]
-    t = np.array(t,dtype=np.datetime64)
-    t = t.astype('int')
-
-    # Determine time_index chunksize
-    time_step = t[1] - t[0]
-    time_index_chunk_len = min(weeks_per_chunk * 7 * 24 * 60 * 60 / time_step, time_len)
-
-    # Get var names
-    vars = [var for var in f_in.keys() if var not in ['meta', 'time_index', 'latitude', 'longitude', 'gid', 'coordinates']]
-
-    layouts = []
-    # Loop over vars to determine chunk sizes
-    for var in vars:
-        # Check dims
-        if not f_in[var].shape[0] == time_len:
-            raise Exception(f'Dim 0 of {var} has different length than time_index.')
-        if not f_in[var].shape[1] == nloc:
-            raise Exception(f'Dim 1 of {var} has different length than gid.')
-
-        # Determine location chunk size
-        element_size = f_in[var].dtype.itemsize    # size of single element in bytes
-        gid_chunk_len = min(chunk_size * 2 ** 20 / time_index_chunk_len // element_size, nloc)
-
-        layouts.append('-l')
-        layouts.append(f'{var}:CHUNK={int(time_index_chunk_len)}x{int(gid_chunk_len)}')
-    f_in.close()
-
-    # Copy the h5 file to scratch while rechunking datasets
-    print(f'Repacking {in_file} to {out_file}.')
-    subprocess.run(['h5repack', '-i', in_file, '-o', out_file] + layouts)
-    print(f'Repack complete.')
-    
-    # Open out_file
-    f_out = h5py.File(out_file, 'a')
-    
-    # Replace time_index variable with int. 'units' metadata required for xarray to interpret as datetime.
-    # Original dataset must be deleted and replaced because the data type is changing
-    attrs = {}
-    for key in f_out['time_index'].attrs.keys():
-        attrs[key] = f_out['time_index'].attrs[key]
-    del f_out['time_index'] # Must be deleted because you can't create a dataset with the same name as an existing dataset
-    f_out.create_dataset('time_index', data=t)
-    for key, val in attrs.items():
-        f_out['time_index'].attrs[key] = val
-    f_out['time_index'].attrs['units'] = b'seconds since 1970-01-01'
-    del t
-    del attrs
-
-    # Create gid variable
-    nloc = len(f_out['coordinates'])
-    f_out.create_dataset('gid', data=np.arange(nloc, dtype=np.int32), fillvalue=-1)
-    print(f'{file_name}: gid created.')
-
-    # Convert to dimension scales
-    f_out['time_index'].make_scale()
-    f_out['gid'].make_scale()
-
-    # Start tracking identical_dims (anything with only a gid dimension)
-    identical_dims = ['gid']
-
-    # Loop over the variables and add scales
-    for var in vars:
-
-        print(f'{file_name}: Processing {var}...')
-
-        # Fix scale_factor
-        if 'scale_factor' in f_out[var].attrs.keys():
-            f_out[var].attrs['scale_factor'] = 1 / f_out[var].attrs['scale_factor']
-
-        # Attach scales to the dims
-        f_out[var].dims[0].attach_scale(f_out['time_index'])
-        f_out[var].dims[1].attach_scale(f_out['gid'])
-
-        # Progress report
-        print(f'{file_name}: Complete.')
-
-    # Unpack metadata variables
-    #chunks = f['meta'].chunks
-    for var in f_out['meta'].dtype.names:
-        # data = f_out['meta'][var]
-        element_size = f_out['meta'][var].dtype.itemsize
-        gid_chunk_len = min(chunk_size * 2 ** 20 // element_size, nloc)
-        chunks = (gid_chunk_len,)
-        f_out.create_dataset(var, data=f_out['meta'][var], chunks=chunks)
-
-        # Add chunks attribute
-        f_out[var].attrs['chunks'] = chunks
-
-        # Attach dimension scales to the dimensions
-        f_out[var].dims[0].attach_scale(f_out['gid'])
-
-        # Append to identical_dims
-        identical_dims.append(var)
-    del f_out['meta']
-    print(f'{file_name}: meta unpacked.')
-
-    # Delete coordinates, since we have lat/lon
-    del f_out['coordinates']
-
-    # Add identical_dims to file metadata so we can pass to kerchunk later
-    f_out.attrs['identical_dims'] = identical_dims
-
-    # Close the dataset to ensure changes are written
-    f_out.close()
-
-    print(f'{file_name}: Done with transormations!')
-    return
-
 def transform_wtk_h5_file(in_file, out_file, chunk_size=2, weeks_per_chunk=None, in_file_on_s3=False):
     # This is an updated version of transform_h5_file, designed for wtk. wtk does not have a nice rectangular coordinate grid,
     # so the data will be left in 2 dims rather than be converted to 3 dims.
@@ -399,7 +90,7 @@ def transform_wtk_h5_file(in_file, out_file, chunk_size=2, weeks_per_chunk=None,
     # Begin logging
     st = time()
     file_name = out_file.split('/')[-1]
-    print(f'{elapsed_time(st)} - {file_name}: Starting transformation.')
+    logging.info(f'{elapsed_time(st)} - {file_name}: Starting transformation.')
 
     # Open input file
     if in_file_on_s3:
@@ -415,7 +106,7 @@ def transform_wtk_h5_file(in_file, out_file, chunk_size=2, weeks_per_chunk=None,
 
     # Copy file attrs
     copy_attrs(f_in, f_out)
-    print(f'{elapsed_time(st)} - {file_name}: File attrs copied!')
+    logging.info(f'{elapsed_time(st)} - {file_name}: File attrs copied!')
 
     # Get the length of time_index and coordinates
     time_len = f_in['time_index'].len()
@@ -431,7 +122,7 @@ def transform_wtk_h5_file(in_file, out_file, chunk_size=2, weeks_per_chunk=None,
 
     # Create gid variable
     f_out.create_dataset('gid', data=np.arange(nloc, dtype=np.int32), fillvalue=-1)
-    print(f'{elapsed_time(st)} - {file_name}: gid created.')
+    logging.info(f'{elapsed_time(st)} - {file_name}: gid created.')
 
     # Convert to dimension scales
     f_out['time_index'].make_scale()
@@ -450,18 +141,18 @@ def transform_wtk_h5_file(in_file, out_file, chunk_size=2, weeks_per_chunk=None,
             weeks_per_chunk = 12
         else:
             weeks_per_chunk = 8     # other resolution
-            print(f'Warning: Non-standard resolution of {time_step / 60} min detected.')
+            logging.info(f'Warning: Non-standard resolution of {time_step / 60} min detected.')
 
     time_index_chunk_len = int(min(weeks_per_chunk * 7 * 24 * 60 * 60 / time_step, time_len))
 
-    print(f'{elapsed_time(st)} - {file_name}: time_index and gid created')
+    logging.info(f'{elapsed_time(st)} - {file_name}: time_index and gid created')
 
     # Get var names
     vars = [var for var in f_in.keys() if var not in ['meta', 'time_index', 'latitude', 'longitude', 'gid', 'coordinates']]
 
     # Loop over vars copying them to the new file
     for var in vars:
-        print(f'{elapsed_time(st)} - {file_name}: Processing {var}...')
+        logging.info(f'{elapsed_time(st)} - {file_name}: Processing {var}...')
         
         # Check dims
         if not f_in[var].shape[0] == time_len:
@@ -475,16 +166,10 @@ def transform_wtk_h5_file(in_file, out_file, chunk_size=2, weeks_per_chunk=None,
 
         # Create dataset in new file
         chunks=(time_index_chunk_len, gid_chunk_len)
-        
-        # f_out.create_dataset(var, data=f_in[var], chunks=chunks)
-        # copy_attrs(f_in[var], f_out[var])
-        
-        # --- New code
         f_out.create_dataset(var, shape=f_in[var].shape, dtype=f_in[var].dtype, chunks=chunks)
         copy_dataset(f_in, f_out, var)
         copy_attrs(f_in[var], f_out[var])
-        # ---
-        
+
         # Add chunks attribute
         f_out[var].attrs['chunks'] = chunks
     
@@ -497,16 +182,16 @@ def transform_wtk_h5_file(in_file, out_file, chunk_size=2, weeks_per_chunk=None,
         f_out[var].dims[1].attach_scale(f_out['gid'])
 
         # Progress report
-        print(f'{elapsed_time(st)} - {file_name}: Done!')
-    
-    print(f'{elapsed_time(st)} - {file_name}: All variables transformed!')
+        logging.info(f'{elapsed_time(st)} - {file_name}: Done!')
+
+    logging.info(f'{elapsed_time(st)} - {file_name}: All variables transformed!')
 
     # Start tracking identical_dims (anything with only a gid dimension)
     identical_dims = ['gid']
 
     # Unpack metadata variables
     for var in f_in['meta'].dtype.names:
-        print(f'{elapsed_time(st)} - {file_name}: Unpacking {var} from meta...')
+        logging.info(f'{elapsed_time(st)} - {file_name}: Unpacking {var} from meta...')
         element_size = f_in['meta'][var].dtype.itemsize
         gid_chunk_len = min(chunk_size * 2 ** 20 // element_size, nloc)
         chunks = (gid_chunk_len,)
@@ -521,9 +206,9 @@ def transform_wtk_h5_file(in_file, out_file, chunk_size=2, weeks_per_chunk=None,
         # Append to identical_dims
         identical_dims.append(var)
         
-        print(f'{elapsed_time(st)} - {file_name}: Done!')
+        logging.info(f'{elapsed_time(st)} - {file_name}: Done!')
     
-    print(f'{elapsed_time(st)} - {file_name}: meta unpacked!')
+    logging.info(f'{elapsed_time(st)} - {file_name}: meta unpacked!')
 
     # Add identical_dims to file metadata so we can pass to kerchunk later
     f_out.attrs['identical_dims'] = identical_dims
@@ -532,7 +217,7 @@ def transform_wtk_h5_file(in_file, out_file, chunk_size=2, weeks_per_chunk=None,
     f_in.close()
     f_out.close()
 
-    print(f'{elapsed_time(st)} - {file_name}: Done with transormations!')
+    logging.info(f'{elapsed_time(st)} - {file_name}: Done with transormations!')
 
     return
 
@@ -593,7 +278,7 @@ def transform_sup3rcc_h5_file(infile, outfile):
     f2['latitude'].make_scale()
     f2['longitude'].make_scale()
 
-    print('Dimension scales created.')
+    logging.info('Dimension scales created.')
 
     # Get var names
     vars = [var for var in f1.keys() if var not in ['meta', 'time_index']]
@@ -610,7 +295,7 @@ def transform_sup3rcc_h5_file(infile, outfile):
         # data sets have different lengths for the time_index (as is the case for Sup3rcc)
         chunks = (24, 130, 295)
         f2.create_dataset(var, data=f1[var][:].reshape(time_len, 650, 1475), chunks=chunks)  # Results in 1.8 MB chunks for pressure data
-        print(f'{var} reshaped and transferred to new dataset.')
+        logging.info(f'{var} reshaped and transferred to new dataset.')
 
         # Add attributes
         for attr in f1[var].attrs.keys():
@@ -630,7 +315,7 @@ def transform_sup3rcc_h5_file(infile, outfile):
         f2[var].dims[1].attach_scale(f2['latitude'])
         f2[var].dims[2].attach_scale(f2['longitude'])
 
-        print(f'Dimension scales attached to {var}.')
+        logging.info(f'Dimension scales attached to {var}.')
 
     # Add metadata variables
     for var in f1['meta'].dtype.names:
@@ -648,8 +333,6 @@ def transform_sup3rcc_h5_file(infile, outfile):
             # Attach dimension scales to the dimensions
             f2[var].dims[0].attach_scale(f2['latitude'])
             f2[var].dims[1].attach_scale(f2['longitude'])
-
-            #print(f'Dimension scales attached to {var}.')
 
     # Close the new dataset to ensure changes are written
     f1.close()
