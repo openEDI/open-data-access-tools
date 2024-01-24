@@ -1,7 +1,7 @@
 # Open Data Access Tools
 The Open Energy Data Initiative (OEDI) provides a number of tools to enable the use of the open data published through this initiative. The source is largely written in Python, including Jupyter notebooks.
 
-Copyright (c) 2023 Alliance for Sustainable Energy, LLC and Skye Analytics, Inc.
+Copyright (c) 2024 Alliance for Sustainable Energy, LLC and Skye Analytics, Inc.
 
 Open Data Access Tools: NREL SWR-20-57.
 Azure Data Tools: SWR-23-92.
