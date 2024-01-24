@@ -1,0 +1,21 @@
+{
+    "jobName": "test3",
+    "jobDefinition": "arn:aws:batch:us-west-2:351672045885:job-definition/kerchunk-h5-new:1",
+    "jobQueue": "arn:aws:batch:us-west-2:351672045885:job-queue/kerchunk-h5",
+    "dependsOn": [],
+    "arrayProperties": {},
+    "parameters": {},
+    "containerOverrides": {
+      "resourceRequirements": [],
+      "environment": [
+        {
+          "name": "staging_bucket",
+          "value": "kerchunk-staging"
+        },
+        {
+          "name": "s3_file",
+          "value": "nrel-pds-wtk/south_atlantic/yearly_hr/v1.0.0/satlantic_2000_hr.h5"
+        }
+      ]
+    }
+  }

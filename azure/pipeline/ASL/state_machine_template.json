@@ -1,0 +1,74 @@
+{
+    "Comment": "Takes a set of s3 paths to h5 files as input and transforms them to be compatible with kerchunk. Kerchunk reference files are generated for each file for both s3 and Azure,then the combined reference files are generated. All files are uploaded to an s3 staging bucket for testing.",
+    "StartAt": "Map",
+    "States": {
+        "Map": {
+            "Type": "Map",
+            "Parameters": {
+                "ContainerOverrides": {
+                    "Command": ["python", "transform.py"],
+                    "Environment": [
+                        {
+                            "Name": "s3_file",
+                            "Value.$": "$$.Map.Item.Value"
+                        },
+                        {
+                            "Name": "staging_bucket",
+                            "Value.$": "$.staging_bucket"
+                        }
+                    ]
+                }
+            },
+            "ItemProcessor": {
+                "ProcessorConfig": {
+                    "Mode": "INLINE"
+                },
+                "StartAt": "transform-h5-files",
+                "States": {
+                    "transform-h5-files": {
+                        "Type": "Task",
+                        "Resource": "arn:aws:states:::batch:submitJob.sync",
+                        "Parameters": {
+                            "JobName": "transform-file",
+                            "JobDefinition": "arn:aws:batch:us-west-2:351672045885:job-definition/kerchunk-h5",
+                            "JobQueue": "arn:aws:batch:us-west-2:351672045885:job-queue/kerchunk-h5",
+                            "ContainerOverrides.$": "$.ContainerOverrides"
+                        },
+                        "End": true
+                    }
+                }
+            },
+            "ItemsPath": "$.s3_files",
+            "MaxConcurrency": 20,
+            "Next": "generate-references",
+            "ResultPath": null
+        },
+        "generate-references": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::batch:submitJob.sync",
+            "Parameters": {
+                "JobName": "refjob",
+                "JobDefinition": "arn:aws:batch:us-west-2:351672045885:job-definition/kerchunk-h5",
+                "JobQueue": "arn:aws:batch:us-west-2:351672045885:job-queue/kerchunk-h5",
+                "ContainerOverrides": {
+                    "Command": ["python", "gen_ref.py"],
+                    "Environment": [
+                        {
+                            "Name": "staging_bucket",
+                            "Value.$": "$.staging_bucket"
+                        },
+                        {
+                            "Name": "run_name",
+                            "Value.$": "$.run_name"
+                        },
+                        {
+                            "Name": "s3_comb_ref_file",
+                            "Value.$": "$.s3_comb_ref_file"
+                        }
+                    ]
+                }
+            },
+            "End": true
+        }
+    }
+}
