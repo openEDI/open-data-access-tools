@@ -34,6 +34,13 @@ AWS:
         - s3://oedi-data-lake/ATB/electricity/parquet/2021/
         - s3://oedi-data-lake/ATB/electricity/parquet/2022/
         - s3://oedi-data-lake/ATB/electricity/parquet/2023/
+    - Identifier: atb_transportation
+      Name: oedi_atb_transportation
+        Locations:
+          - s3://oedi-data-lake/ATB/transportation/parquet/2022/fuels_marine
+          - s3://oedi-data-lake/ATB/transportation/parquet/2022/fuels
+          - s3://oedi-data-lake/ATB/transportation/parquet/2022/vehicles
+          - s3://oedi-data-lake/ATB/transportation/parquet/2022/vehicles_fuels
     - Identifier: pvdaq
       Name: oedi_pvdaq
       Locations:
