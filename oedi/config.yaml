@@ -10,13 +10,46 @@ AWS:
         - s3://oedi-data-lake/pv-rooftop/developable-planes/
         - s3://oedi-data-lake/pv-rooftop/rasd/
         - s3://oedi-data-lake/pv-rooftop-pr/developable-planes/
-    - Identifier: buildstock
-      Name: oedi_buildstock
+      Table Prefixes:
+        - pv_rooftop_
+        - pv_rooftop_
+        - pv_rooftop_
+        - pv_rooftop_
+        - pv_rooftop_pr_
+    - Identifier: comstock
+      Name: oedi_comstock_amy2018_release_2
       Locations:
-        - s3://oedi-data-lake/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2021/comstock_amy2018_release_1/
-        - s3://oedi-data-lake/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2021/comstock_tmy3_release_1/
-        - s3://oedi-data-lake/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2021/resstock_amy2018_release_1/
-        - s3://oedi-data-lake/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2021/resstock_tmy3_release_1/
+        - s3://oedi-data-lake/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2023/comstock_amy2018_release_2/metadata/
+        - s3://oedi-data-lake/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2023/comstock_amy2018_release_2/weather/amy2018/
+        - s3://oedi-data-lake/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2023/comstock_amy2018_release_2/metadata_and_annual_results/national/parquet/
+        - s3://oedi-data-lake/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2023/comstock_amy2018_release_2/timeseries_individual_buildings/by_puma_midwest/
+        - s3://oedi-data-lake/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2023/comstock_amy2018_release_2/timeseries_individual_buildings/by_puma_northeast/
+        - s3://oedi-data-lake/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2023/comstock_amy2018_release_2/timeseries_individual_buildings/by_puma_south/
+        - s3://oedi-data-lake/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2023/comstock_amy2018_release_2/timeseries_individual_buildings/by_puma_west/
+        - s3://oedi-data-lake/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2023/comstock_amy2018_release_2/timeseries_individual_buildings/by_state/
+      Table Prefixes:
+        - amy_2018_
+        - weather_
+        - metadata_and_annual_results_national_
+        - timeseries_individual_buildings_
+        - timeseries_individual_buildings_
+        - timeseries_individual_buildings_
+        - timeseries_individual_buildings_
+        - timeseries_individual_buildings_
+    - Identifier: resstock
+      Name: oedi_resstock_2022_tmy3_1.1
+      Locations:
+        - s3://oedi-data-lake/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2022/resstock_tmy3_release_1.1/metadata/
+        - s3://oedi-data-lake/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2022/resstock_tmy3_release_1.1/metadata_and_annual_results/national/parquet/
+        - s3://oedi-data-lake/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2022/resstock_tmy3_release_1.1/metadata_income/parquet/
+        - s3://oedi-data-lake/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2022/resstock_tmy3_release_1.1/timeseries_individual_buildings/by_state/
+        - s3://oedi-data-lake/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2022/resstock_tmy3_release_1.1/weather/
+      Table Prefixes:
+        - resstock_tmy3_
+        - metadata_and_annual_results_national_
+        - metadata_income_
+        - timeseries_individual_buildings_
+        - resstock_tmy3_
     - Identifier: tracking_the_sun
       Name: oedi_tracking_the_sun
       Locations:
@@ -26,6 +59,7 @@ AWS:
         - s3://oedi-data-lake/tracking-the-sun/2021/
         - s3://oedi-data-lake/tracking-the-sun/2022/
         - s3://oedi-data-lake/tracking-the-sun/2023/
+      Table Prefix: tracking_the_sun_
     - Identifier: atb
       Name: oedi_atb
       Locations:
@@ -38,6 +72,16 @@ AWS:
         - s3://oedi-data-lake/ATB/transportation/parquet/2022/fuels
         - s3://oedi-data-lake/ATB/transportation/parquet/2022/vehicles
         - s3://oedi-data-lake/ATB/transportation/parquet/2022/vehicles_fuels
+      Table Prefixes:
+        - atb_electricity_
+        - atb_electricity_
+        - atb_electricity_
+        - atb_electricity_
+        - atb_electricity_
+        - atb_transportation_2022_
+        - atb_transportation_2022_
+        - atb_transportation_2022_
+        - atb_transportation_2022_
     - Identifier: pvdaq
       Name: oedi_pvdaq
       Locations:
@@ -50,6 +94,7 @@ AWS:
         - s3://oedi-data-lake/pvdaq/parquet/mount/
         - s3://oedi-data-lake/pvdaq/parquet/other-instruments/
         - s3://oedi-data-lake/pvdaq/parquet/pvdata/
+      Table Prefix: pvdaq_
     - Identifier: nso
       Name: oedi_nso
       Locations:
@@ -60,10 +105,10 @@ AWS:
         - s3://oedi-data-lake-rawdata/NSO-2/loads_20Hz/
         - s3://oedi-data-lake-rawdata/NSO-2/wake_masts_1min/
         - s3://oedi-data-lake-rawdata/NSO-2/wake_masts_20Hz/
-
+      Table Prefix: 'nso_'
   Staging Location: s3://user-owned-staging-bucket/
   Tags:
     - Key: Project
       Value: OEDI
     - Key: Release
-      Value: 0.2.4
+      Value: 0.2.5

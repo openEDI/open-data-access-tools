@@ -27,5 +27,11 @@ class AWSDataLakeStack(Stack):
             data_lake.create_database()
             data_lake.create_crawler_role()
             #TODO: data_lake.create_workgroup()
-            for dataset_location in database['Locations']:
-                data_lake.create_crawler(location=dataset_location, tags=tags)
+            if 'Table Prefixes' in database.keys():
+                table_prefixes = database['Table Prefixes'] # Prefix for each table
+            elif 'Table Prefix' in database.keys():
+                table_prefixes = [database['Table Prefix']] * len(database['Locations']) # One prefix for all tables
+            else:
+                table_prefixes = ['table_'] * len(database['Locations']) # No prefix specified, use generic prefix
+            for dataset_location, table_prefix in zip(database['Locations'], table_prefixes):
+                data_lake.create_crawler(location=dataset_location, table_prefix=table_prefix, tags=tags)

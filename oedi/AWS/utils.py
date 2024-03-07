@@ -32,6 +32,7 @@ def generate_crawler_name(s3url):
     bucket, path = parse_s3url(s3url)
     dashed_path = path.replace("/", "-")
     name = f"{bucket}-{dashed_path}".replace("_", "-")
+#    name = name[-128:]  # Crawler names have a limit of 128 characters
     return name.lower()
 
 
@@ -93,5 +94,5 @@ def generate_table_prefix(s3url):
         prefix = os.path.dirname(path).replace("/", "-") + "_"
 
     table_prefix = prefix.replace("-", "_").lower()
-
+    table_prefix = table_prefix[-128:]  # A table prefix has a limit of 128 characters
     return table_prefix

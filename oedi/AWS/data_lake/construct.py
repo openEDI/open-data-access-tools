@@ -63,10 +63,9 @@ class AWSDataLakeConstruct(Construct):
             managed_policies=managed_policies,
         )
 
-    def create_crawler(self, location, tags):
+    def create_crawler(self, location, table_prefix, tags):
         """Create crawler in data lake by given dataset location."""
         crawler_name = generate_crawler_name(s3url=location)
-        table_prefix = generate_table_prefix(s3url=location)
 
         if not self.crawler_role:
             self.crawler_role()
