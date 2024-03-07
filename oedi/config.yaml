@@ -94,7 +94,7 @@ AWS:
         - s3://oedi-data-lake/pvdaq/parquet/mount/
         - s3://oedi-data-lake/pvdaq/parquet/other-instruments/
         - s3://oedi-data-lake/pvdaq/parquet/pvdata/
-      Table Prefix: pv_daq_
+      Table Prefix: pvdaq_
     - Identifier: nso
       Name: oedi_nso
       Locations:
@@ -105,10 +105,10 @@ AWS:
         - s3://oedi-data-lake-rawdata/NSO-2/loads_20Hz/
         - s3://oedi-data-lake-rawdata/NSO-2/wake_masts_1min/
         - s3://oedi-data-lake-rawdata/NSO-2/wake_masts_20Hz/
-      Table Prefix: 'NSO_'
+      Table Prefix: 'nso_'
   Staging Location: s3://user-owned-staging-bucket/
   Tags:
     - Key: Project
       Value: OEDI
     - Key: Release
-      Value: 0.2.4
+      Value: 0.2.5
