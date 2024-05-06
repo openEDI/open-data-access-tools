@@ -1,6 +1,6 @@
 import mock
 
-from moto.athena import mock_aws
+from moto import mock_aws
 
 from oedi.AWS.athena import OEDIAthena
 
