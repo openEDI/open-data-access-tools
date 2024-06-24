@@ -1,5 +1,5 @@
-black
-pytest
-sphinx
-moto
-mock
+black==24.4.2
+pytest==8.2.0
+Sphinx==7.3.7
+moto==5.0.6
+mock==5.1.0

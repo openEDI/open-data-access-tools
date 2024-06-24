@@ -1,0 +1,31 @@
+{
+    "jobDefinitionName": "kerchunk-h5",
+    "type": "container",
+    "containerProperties": {
+        "image": "351672045885.dkr.ecr.us-west-2.amazonaws.com/transform_h5_container",
+        "jobRoleArn": "arn:aws:iam::351672045885:role/ecsTaskExecutionRole",
+        "executionRoleArn": "arn:aws:iam::351672045885:role/ecsTaskExecutionRole",
+        "resourceRequirements": [
+        {
+            "value": "1",
+            "type": "VCPU"
+        },
+        {
+            "value": "100000",
+            "type": "MEMORY"
+        }
+        ],
+        "environment": [],
+        "secrets": [],
+        "linuxParameters": {
+            "tmpfs": [],
+            "devices": []
+        },
+        "mountPoints": [],
+        "ulimits": []
+    },
+    "platformCapabilities": [
+        "EC2"
+    ],
+    "parameters": {}
+}
