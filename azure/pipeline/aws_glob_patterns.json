@@ -1,0 +1,1 @@
+{"nrel-pds-wtk":{"pr100":{"hourly":"nrel-pds-wtk\/pr100\/hourly\/*.h5","5min":"nrel-pds-wtk\/pr100\/5min\/*.h5"},"south_atlantic":{"hourly":"nrel-pds-wtk\/south_atlantic\/yearly_hr\/v1.0.0\/*.h5","5min":"nrel-pds-wtk\/south_atlantic\/monthly\/v1.0.0\/*.h5"}}}

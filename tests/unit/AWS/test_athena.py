@@ -1,11 +1,11 @@
 import mock
 
-from moto.athena import mock_athena
+from moto import mock_aws
 
 from oedi.AWS.athena import OEDIAthena
 
 
-@mock_athena
+@mock_aws
 @mock.patch("oedi.AWS.athena.Connection")
 def test_oedi_athena__properties(mock_connection):
     staging_location = "s3://my-testing-bucket/"
@@ -20,7 +20,7 @@ def test_oedi_athena__properties(mock_connection):
     assert mock_connection.called
 
 
-@mock_athena
+@mock_aws
 @mock.patch("oedi.AWS.athena.Connection")
 @mock.patch("oedi.AWS.athena.OEDIAthena._pandas_cursor_execute")
 @mock.patch("oedi.AWS.athena.OEDIAthena._load_wkt")
