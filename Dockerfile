@@ -1,4 +1,4 @@
-FROM node:16-bullseye-slim
+FROM node:20-bullseye-slim
 
 # Setup environment variables
 ENV LC_ALL=C.UTF-8
