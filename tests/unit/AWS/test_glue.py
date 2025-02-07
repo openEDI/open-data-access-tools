@@ -1,7 +1,7 @@
 import copy
 import boto3
 import mock
-from moto import mock_glue
+from moto import mock_aws
 
 from oedi.AWS.glue import OEDIGlue
 from tests.unit.test_config import OEDI_TEST_CONFIG_FILE
@@ -109,7 +109,7 @@ CRAWLERS = [
 ]
 
 
-@mock_glue
+@mock_aws
 def test_oedi_glue__get_databasses():
     # Setup
     client = boto3.client("glue", region_name="us-west-1")
@@ -144,7 +144,7 @@ def create_table_input(
     return table_input
 
 
-@mock_glue
+@mock_aws
 def test_oedi_glue__get_table():
     # Setup
     client = boto3.client("glue", region_name="us-west-1")
@@ -166,7 +166,7 @@ def test_oedi_glue__get_table():
     assert table["PartitionKeys"] == partition_keys
 
 
-@mock_glue
+@mock_aws
 def test_oedi_glue__list_tables():
     # Setup
     client = boto3.client("glue", region_name="us-west-1")
@@ -190,7 +190,7 @@ def test_oedi_glue__list_tables():
     assert "CreateTime" in tables[0]
 
 
-@mock_glue
+@mock_aws
 def test_oedi_glue__get_table_columns():
     # Setup
     client = boto3.client("glue", region_name="us-west-1")
@@ -213,7 +213,7 @@ def test_oedi_glue__get_table_columns():
     assert len(columns) == 2
 
 
-@mock_glue
+@mock_aws
 def test_oedi_glue__get_partition_keys():
     # Setup
     client = boto3.client("glue", region_name="us-west-1")
@@ -237,7 +237,7 @@ def test_oedi_glue__get_partition_keys():
     assert len(partition_keys) == 3
 
 
-@mock_glue
+@mock_aws
 def test_oedi_glue__get_partition_values():
     # Setup
     client = boto3.client("glue", region_name="us-west-1")
@@ -270,7 +270,7 @@ def get_crawler(crawler_name):
     raise Exception(f"Crawler '{crawler_name}' does not exist.")
 
 
-@mock_glue
+@mock_aws
 @mock.patch("oedi.AWS.glue.OEDIGlue.get_crawler", side_effect=get_crawler)
 def test_oedi_glue__get_crawler(mock_get_crawler):
     glue = OEDIGlue()
@@ -279,7 +279,7 @@ def test_oedi_glue__get_crawler(mock_get_crawler):
     assert crawler["Name"] == crawler_name
 
 
-@mock_glue
+@mock_aws
 @mock.patch("oedi.AWS.glue.OEDIGlue.get_crawler", side_effect=get_crawler)
 def test_oedi_glue__list_crawlers(mock_get_crawler):
     glue = OEDIGlue(config_file=OEDI_TEST_CONFIG_FILE)
@@ -287,7 +287,7 @@ def test_oedi_glue__list_crawlers(mock_get_crawler):
     assert len(crawlers) == 5
 
 
-@mock_glue
+@mock_aws
 @mock.patch("oedi.AWS.glue.OEDIGlue.get_crawler", side_effect=get_crawler)
 def test_oedi_glue__get_crawler_state(mock_get_crawler):
     glue = OEDIGlue(config_file=OEDI_TEST_CONFIG_FILE)
@@ -295,6 +295,6 @@ def test_oedi_glue__get_crawler_state(mock_get_crawler):
     assert len(crawlers) == 5
 
 
-@mock_glue
+@mock_aws
 def test_oedi_glue__start_crawler():
     pass
