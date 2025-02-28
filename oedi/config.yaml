@@ -59,6 +59,7 @@ AWS:
         - s3://oedi-data-lake/tracking-the-sun/2021/
         - s3://oedi-data-lake/tracking-the-sun/2022/
         - s3://oedi-data-lake/tracking-the-sun/2023/
+        - s3://oedi-data-lake/tracking-the-sun/2024/
       Table Prefix: tracking_the_sun_
     - Identifier: atb
       Name: oedi_atb
@@ -111,4 +112,4 @@ AWS:
     - Key: Project
       Value: OEDI
     - Key: Release
-      Value: 0.2.5
+      Value: 0.2.6
